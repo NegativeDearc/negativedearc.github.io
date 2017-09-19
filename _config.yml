@@ -13,12 +13,11 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: ChenXiaoWei's Personal Blog
+title: 陈晓伟的个人博客
+encoding: utf-8
 email: datingwithme@live.cn
 description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  嗨，我的工作是持续改进，喜欢系统工程、编程、企业管理。相信事物的本质在哲学上都是相近的。
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://negativedearc.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: null
