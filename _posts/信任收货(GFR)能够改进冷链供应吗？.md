@@ -1,0 +1,59 @@
+---
+layout: post
+title: 信任收货(GFR)能够改进冷链供应吗？
+tags: ['Lean', 'SCM', '精益']
+categories: ['工作']
+published: true
+date: 2017-09-05 10:28:00
+---
+
+在冷链(chilled sector)环节，速度是最重要的&mdash;&mdash;产品在分拨中心（DC）只待几个小时就被送往商店。时间的压力意味着一些零售商(retails)并没有足够的时间去把所有东西都清点清楚。然而，尽管有一些好的理由，但是变化无处不在（change is in the air，and on the ground.这里意指空中的订单信息流和落地的实物流）。
+
+&nbsp;
+
+**举个例子**
+
+假设(let&#39;s say)你收到了一票100箱的货物，如果它有10层高，你可以很快确认是否有短少。但是，当托盘都被堆满，并且混合了多种产品，这时问题就来了。你只能在司机卸货完成后，依赖(reliant on)某个人去接收、清点、记录收货的准确度。
+
+在冷链环节下，这很有挑战。托盘经常都被堆满了非常类似(similar-looking)的商品，标签难以辨识，在清点之前，必须拆包（break down）成散件（individuals）。人们在冷冻环境，在有限的科技帮助下，面临达到标准（meet the target performance）的工作压力，
+
+
+**零售商知道的秘密：清点冷冻产品并不总是100%准确**
+
+但如果（but-if）零售商如果能够信任供应商提供的商品，那么就没有那么必要去完全清点收货。相反，他们可以更加专注于清点&ldquo;他们售出的产品&rdquo;（what they&#39;re sending out their stores）。
+
+
+
+**信任收货（Good Faith Receiving）能够做什么？**
+
+这个时候信任收货就出现了。GFR认为一些可以信赖的供应商，可以&ldquo;照单全收&rdquo;（accept what the delivery document states），但需要启用来自第三方的审核，由供应商（注：分拨中心）承担费用，去按照某种抽样方法随机检查商品的准确度。
+
+
+
+**如何执行？**
+
+审核员（the auditor）会检查可靠的托盘数量（robust number of pallets），统计过去3个月的拣货准确率（注：很显然是分拨端的拣货准确率影响了零售商的收货准确率）。利用这些数据确定一个从每个账单里面扣除（deduction）的基准值。所以如果供应商的拣货准确率是99%，那么在最后账单里面，会扣取1%不准确导致的费用。
+
+
+
+**信任收货的好处**
+
+*   首先第一点是，供应商可以按时收到报酬，根据他们实际发送的货物（注：是paperwork上标注的产品），将不会有任何混乱（complication）和延迟。
+*   其次第二点是，供应商可以减少人力的投入，取消清点和记录的工作
+*   第三点，零售商和供应商都能够显著的减少调查纠纷（investigate disputes）和个人索赔（reconcile individual claims）处理的必要&mdash;&mdash;这对双方来说都是节约。
+
+
+
+**没有想象中的那么革命性**
+
+信任收货看起来是个突破性的做法（ground-breaking practise），但从一定程度上来说（in some ways），它依赖流程的改进、科技和自动化与供应链的整合（evolving within..）&mdash;&mdash;以第三方的供应商和整合者（consolidators）为首，提供精准（quintessential）的准确率。
+
+这意味着GFR对能够达到高准确率的供应商奏效，而不是所有供应商，另外一些零售商根本不需要GFR，因为他们所要的精准收货的流程已经被整合者实现了。（their receiving process to mirro the accuracy levels already being achieved by the consolidators）。
+
+
+
+**结论**
+
+GFR对供应链到底意味着什么？GFR确保供应商可以及时收账，同时对实物不一致（inconsistent&nbsp;）进行惩罚（penalize）。但GFR对零售商的操作准确度、实物的可用性并没有提升。供应商需要确保他们的订单准确性、拣货的准确性是高的并且一致（consistent）的，以两种相同的代价，消除浪费。GFR是一种从中获益的方式&mdash;&mdash;但不是唯一的。
+
+一条精益的端对端（end-to-end）的流程依赖每一个经过效率和准确度优化的环节。对业务最大的挑战是确保所有成分在掌控之中并为你服务&mdash;&mdash;以更好的服务客户（better serve your customer）。但想要达到这种程度是经常需要改变的。
