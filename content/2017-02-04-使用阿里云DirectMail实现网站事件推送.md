@@ -1,10 +1,8 @@
----
-layout: page
 title: 使用阿里云DirectMail实现网站事件推送
-tags: ['Python', 'DirectMail']
-categories: ['编程']
+tags: Python, DirectMail
+category: 编程
 date: 2017-02-04 11:06:00
----
+
 接上期文章，监听数据库事件之后，我们有了特定情形下通知的诉求，通常来说e-mail比较经济方便。起初在163注册了一个邮箱，结果发现什么admin@cxwloves.cc啊，web_admin@cxwloves.cc之类基本大家都能想到的账号全都被注册干净了，让人不得不怀疑背后是否存在一条产业链。
 
 无奈选了一个比较冷门的地址注册，在邮箱设置里面打开SMTP/POP3服务，同时开启了第三方客户端登陆码。这样Python就能连接上了。兴冲冲的准备发出一份Hello World邮件，结果提示邮件被Rejected，原因是被认定为垃圾邮件。

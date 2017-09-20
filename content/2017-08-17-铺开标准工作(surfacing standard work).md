@@ -1,11 +1,8 @@
----
-layout: post
-title: "铺开标准工作(surfacing standard work)"
-tags: ['Lean', '精益']
-categories: ['工作']
-published: 'true'
+title: 铺开标准工作(surfacing standard work)
+tags: Lean, 精益
+category: 工作
 date: 2017-08-17 12:07:00
----
+
 根据经验法则(rule of numb)，约有20%的精益医疗组织的工作需要被文档标准化下来(be documented)。那么你的组织，是不是也接近这个数字(come close to the amount)？A3报告是一种将新流程或者改进后流程标准化的方式(one approach)。
 &nbsp;
 

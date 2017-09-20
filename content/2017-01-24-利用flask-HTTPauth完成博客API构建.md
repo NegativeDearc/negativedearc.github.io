@@ -1,10 +1,8 @@
----
-layout: page
 title: 利用flask-HTTPauth完成博客API构建
-tags: ['Python', 'Flask', 'Flask-HTTPauth']
-categories: ['编程']
+tags: Python, Flask, Flask-HTTPauth
+category: 编程
 date: 2017-01-24 16:13:00
----
+
 为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。
 
 - github地址 https://github.com/miguelgrinberg/Flask-HTTPAuth

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
+import os
 
 AUTHOR = u'NegativeDearc'
 SITENAME = u'\u9648\u6653\u4f1f\u7684\u4e2a\u4eba\u535a\u5ba2'
@@ -33,3 +34,6 @@ DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+
+# Theme
+THEME = os.path.join(os.path.dirname(__file__), "themes", "aboutwilson")

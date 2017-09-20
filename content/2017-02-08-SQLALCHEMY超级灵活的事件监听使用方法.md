@@ -1,10 +1,7 @@
----
-layout: page
 title: SQLALCHEMY超级灵活的事件监听使用方法
-tags: ['Python', 'Sqlalchemy']
-categories: ['编程']
+tags: Python, Sqlalchemy
+category: 编程
 date: 2017-02-08 17:12:00
----
 
 SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。
 

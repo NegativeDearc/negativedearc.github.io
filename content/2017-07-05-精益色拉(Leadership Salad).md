@@ -1,10 +1,8 @@
----
-layout: page
 title: 精益色拉(Leadership Salad)
-tags: ['Lean', '精益']
-categories: ['工作']
+tags: Lean, 精益
+category: 工作
 date: 2017-07-05 11:39:00
----
+
 我不会认定(convinced)推荐改善活动(facilitate kaizen events)就能造就精益文化，我也不会说使用VSM、平衡记分卡、A3报告、5S、视觉管理、标准作业、防错法、统计过程控制、质量功能展开、失效模式分析、控制图、工艺水准(process leveling)或是安灯就能产生精益文化。
 
  

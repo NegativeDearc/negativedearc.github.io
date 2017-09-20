@@ -1,11 +1,8 @@
----
-layout: post
-title: "另一种短暂的时髦(flavor of the month)？"
-tags: ['Lean', '精益']
-categories: ['工作']
-published: 'true'
+title: 另一种短暂的时髦(flavor of the month)？
+tags: Lean, 精益
+category: 工作
 date: 2017-07-13 15:06:00
----
+
 如果你在医疗保健领域工作足够长的话，你会看到很多项目来了又走，甚至还有一些会重复的回来。各种各样的增强质量和提高安全的方法毫无例外地(no exception to)失败了并且不被赞同(out of favor)。
 
  
