@@ -3,16 +3,8 @@ layout: page
 title: About
 permalink: /about/
 ---
+Hi,
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+This is XiaoWei Chen.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
-
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+我的工作是持续改进，喜欢系统工程、编程、企业管理。相信事物的本质在哲学上都是相近的。

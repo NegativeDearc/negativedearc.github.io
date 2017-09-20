@@ -16,8 +16,7 @@
 title: 陈晓伟的个人博客
 encoding: utf-8
 email: datingwithme@live.cn
-description: > # this means to ignore newlines until "baseurl:"
-  嗨，我的工作是持续改进，喜欢系统工程、编程、企业管理。相信事物的本质在哲学上都是相近的。
+description: ""
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://negativedearc.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: null
@@ -30,15 +29,6 @@ plugins:
   - jekyll-feed
   - jekyll-archives
 
-jekyll-archives:
-      enabled: all
-      layout: archive
-      permalinks:
-        year: /:year/
-        month: /:year/:month/
-        day: /:year/:month/:day/
-        tag: /tag/:name/
-        category: /category/:name/
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
