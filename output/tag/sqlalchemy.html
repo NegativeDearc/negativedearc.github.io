@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>陈晓伟的个人博客 - 'Sqlalchemy']</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">陈晓伟的个人博客 </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html">SQLALCHEMY超级灵活的事件监听使用方法</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-02-08T17:12:00+08:00">
+                Published: Wed 08 February 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/negativedearc.html">NegativeDearc</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[&#39;Python&#39;</a> <a href="/tag/sqlalchemy.html">&#39;Sqlalchemy&#39;]</a> </p>
+</footer><!-- /.post-info --><p>SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。</p>
+<p _="%" endhighlight>{% highlight python %}
+q = session.query(SomeClass)</p>
+<p>而在flask-sqlalchemy中，作者新增了一个BaseQuery类，使我们可以对一个有效模型类，进行查询，例如</p>
+<p>{% highlight python lineanchors %}
+class User(db.Model):
+    <strong>tablename</strong> = "user"
+    id = db.Column(db.INTEGER, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)</p>
+<div class="highlight"><pre><span></span>@classmethod
+def exist_susan(cls):
+    rv = cls.query.filter(name= &#39;Susan&#39;).one()
+    return True if rv else False
+</pre></div>
+
+
+<p>{% endhighlight %}</p>
+<p>由于这种方法自动替我们处理好了session，省心快捷，在我的开发当中，大量使用了这种写法。然而在后期这种写法对模型进行事件监听的造成了很多困难。</p>
+<h4>监听after_delete事件失败</h4>
+<p _="%" endhighlight>{% highlight python %}
+cls.query.filter(cls.id == row_id).delete()</p>
+<h4>监听after_delete时间成功</h4>
+<p _="%" endhighlight>{% highlight python %}
+rv = cls.query.filter(cls.id == row_id).first()
+db.session.delete(rv)
+db.session.commit()</p>
+<p>在此，我总结了一个常见事件对应的推荐写法供大家参考。</p>
+<p _="%" endhighlight>1.使用after_insert/before_insert事件
+{% highlight python %}
+user = User(name="susan",age=20)
+db.session.add(user)
+db.session.commit()</p>
+<p>2.使用after_update/before_update事件</p>
+<p _="%" endhighlight>{% highlight python %}
+#以下写法无效
+db.session.query(User).filter(User.name == "susan").update({"age": 18})
+db.session.commit()</p>
+<p>为什么会无效呢，是不是感觉很奇怪，查了API发现</p>
+<blockquote>
+<p>The <a href="!https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.before_delete">MapperEvents.before_delete()</a>and <a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.after_delete">MapperEvents.after_delete()</a> events are not invoked from this method. Instead, the <a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.SessionEvents.after_bulk_delete">SessionEvents.after_bulk_delete()</a> method is provided to act upon a mass DELETE of entity rows</p>
+</blockquote>
+<p>所以你想用上面的写法，你得把事件改为after_bulk_delete事件。在flask-sqlalchemy已经替你完成了session的自动化产生和销毁，并且全局唯一，想要使用这个事件，还需要做很多额外的工作去处理session问题。但如果你只想针对某个字段使用update监听，我们还有另外的方法——即使用Attribute Event中的<a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#attribute-events">set</a>方法</p>
+<p _="%" endhighlight>{% highlight python %}
+susan = db.session.query(User).filter(User.name == "susan")
+susan.age = 18 # set 方法监听成功
+db.session.commit()</p>
+<p>这样也完成了一次update操作。</p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

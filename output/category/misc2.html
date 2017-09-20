@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>陈晓伟的个人博客 - misc</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">陈晓伟的个人博客 </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="9">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html" rel="bookmark"
+                           title="Permalink to 利用flask-HTTPauth完成博客API构建">利用flask-HTTPauth完成博客API构建</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-01-24T16:13:00+08:00">
+                Published: Tue 24 January 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/negativedearc.html">NegativeDearc</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[&#39;Python&#39;</a> <a href="/tag/flask.html">&#39;Flask&#39;</a> <a href="/tag/flask-httpauth.html">&#39;Flask-HTTPauth&#39;]</a> </p>
+</footer><!-- /.post-info -->                <p>为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。</p>
+<ul>
+<li>github地址 https://github.com/miguelgrinberg/Flask-HTTPAuth</li>
+<li>中文文档地址 http://www.pythondoc.com/flask-restful/third.html</li>
+<li>英文文档地址 http://flask-httpauth.readthedocs.io/en/latest/</li>
+</ul>
+<p>建议阅读英文文档，之前由于对HTTP协议一无所知，在带token认证这一步卡了很久。后来查到如下：</p>
+<blockquote>
+<p>The <code>verify_token</code> callback receives the authentication credentials provided by the client on the <code>Authorization</code> header. This can be a …</p></blockquote>
+                <a class="readmore" href="/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html" rel="bookmark"
+                           title="Permalink to 利用flask设计类似网易评论的回复系统">利用flask设计类似网易评论的回复系统</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-01-20T10:05:00+08:00">
+                Published: Fri 20 January 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/negativedearc.html">NegativeDearc</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[&#39;Python&#39;</a> <a href="/tag/flask.html">&#39;Flask&#39;</a> <a href="/tag/jinja.html">&#39;Jinja&#39;]</a> </p>
+</footer><!-- /.post-info -->                <p>本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。</p>
+<p>这篇文章将作为记录我开发博客系统遇到的大大小小的坑中的首篇——也是卡住我最多时间思考的地方。</p>
+<p><strong>如何制作一个类似网易盖楼的评论系统？</strong></p>
+<p>问题就分解成了：</p>
+<ol>
+<li>如何设计数据库的评论表</li>
+<li>如何在视图中展示出嵌套的样式</li>
+</ol>
+<p>在网上查了一些资料，</p>
+<ul>
+<li>评论表有的是回复和评论功用一张表，但是必须要指定每一条评论的id以及它的回复对象pid，若是第一条回复，它的回复对象则是null。</li>
+<li>也有方案是以回复和评论以两张表分开的形式存储</li>
+</ul>
+<p>从降低耦合的角度出发，第二种方案更好，在第一种方案中假如需要删除评论，也许就会其他评论造成断档的问题。由于水平有限，我还是采取了第一种方案，理由是建表简单。</p>
+<p>但是考虑到上述问题，我也设计了一个评论必须经过审核的逻辑，没有经过审核的评论是无法展示的，也就避免了展示后被删除的可能。</p>
+<p>{% highlight sql %}</p>
+<p>CREATE TABLE "Comment" (
+    id INTEGER NOT NULL, 
+    uid VARCHAR(50) NOT NULL, 
+    rdr_name VARCHAR(20) NOT NULL, 
+    rdr_mail VARCHAR(20 …</p>
+                <a class="readmore" href="/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/category/misc.html">&laquo;</a>
+    Page 2 / 2
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>利用flask设计类似网易评论的回复系统</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">陈晓伟的个人博客 </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html" rel="bookmark"
+           title="Permalink to 利用flask设计类似网易评论的回复系统">利用flask设计类似网易评论的回复系统</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-01-20T10:05:00+08:00">
+                Published: Fri 20 January 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/negativedearc.html">NegativeDearc</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[&#39;Python&#39;</a> <a href="/tag/flask.html">&#39;Flask&#39;</a> <a href="/tag/jinja.html">&#39;Jinja&#39;]</a> </p>
+</footer><!-- /.post-info -->      <p>本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。</p>
+<p>这篇文章将作为记录我开发博客系统遇到的大大小小的坑中的首篇——也是卡住我最多时间思考的地方。</p>
+<p><strong>如何制作一个类似网易盖楼的评论系统？</strong></p>
+<p>问题就分解成了：</p>
+<ol>
+<li>如何设计数据库的评论表</li>
+<li>如何在视图中展示出嵌套的样式</li>
+</ol>
+<p>在网上查了一些资料，</p>
+<ul>
+<li>评论表有的是回复和评论功用一张表，但是必须要指定每一条评论的id以及它的回复对象pid，若是第一条回复，它的回复对象则是null。</li>
+<li>也有方案是以回复和评论以两张表分开的形式存储</li>
+</ul>
+<p>从降低耦合的角度出发，第二种方案更好，在第一种方案中假如需要删除评论，也许就会其他评论造成断档的问题。由于水平有限，我还是采取了第一种方案，理由是建表简单。</p>
+<p>但是考虑到上述问题，我也设计了一个评论必须经过审核的逻辑，没有经过审核的评论是无法展示的，也就避免了展示后被删除的可能。</p>
+<p>{% highlight sql %}</p>
+<p>CREATE TABLE "Comment" (
+    id INTEGER NOT NULL, 
+    uid VARCHAR(50) NOT NULL, 
+    rdr_name VARCHAR(20) NOT NULL, 
+    rdr_mail VARCHAR(20) NOT NULL, 
+    rdr_message VARCHAR(200) NOT NULL, 
+    reply_id VARCHAR(50) NOT NULL, 
+    reply_to_id VARCHAR(50), 
+    message_date DATETIME NOT NULL, 
+    approved BOOLEAN NOT NULL, 
+    PRIMARY KEY (id), 
+    UNIQUE (id), 
+    UNIQUE (reply_id), 
+    CHECK (approved IN (0, 1))
+);</p>
+<p>{% endhighlight %}</p>
+<p>其中uid指向文章编号，reply_id会在每一次插入自动生成，reply_to_id就是它回复的评论的id。</p>
+<p>有了这样的数据库，接下来就是要考虑如何提取数据的问题了。在一个文章地下，会有数十条评论，每一条评论下面还有层层嵌套的评论。查询的开销非常大，幸运的是，这样的递归查询，已经有了解决方案了——就是使用CTE（Common Table Expression），在我所用的sqlite3中版本号需要 &gt;3.8.3。</p>
+<p>首先遍历出所有评论，对每一条评论递归查询出它所有的回复。</p>
+<p>{% highlight sql %}</p>
+<p>with recursive
+     cte(id, reply_id, reply_to_id, rdr_message, rdr_name, message_date) as (
+     select id, reply_id, reply_to_id, rdr_message, rdr_name ,message_date from Comment where reply_id = 'fa102480-dd21-11e6-b1ae-f4066974556c' and approved = 1 and uid = '3928f38e-d702-11e6-94'
+     union all
+     select Comment.id, Comment.reply_id, Comment.reply_to_id, Comment.rdr_message, Comment.rdr_name, Comment.message_date from Comment join cte on Comment.reply_id = cte.reply_to_id
+     )
+select * from cte</p>
+<p>{% endhighlight %}</p>
+<p>这样就获得了一个自下而上的的评论列表。这样结构的数据很难直接看出相互的继承关系，所以需要进一步处理使其结构嵌套起来。在python后端完成。</p>
+<p>{% highlight python %}</p>
+<p>def nest(lst):
+    """
+    aim to turn flatten list (which fetched from sql) to nested structure
+    :param lst: list
+    :return: nested list
+    """
+    if not lst:
+        return None
+    first = lst[0]
+    del lst[0]
+    return {"pid": first, "id": nest(lst)}</p>
+<p>{% endhighlight %}</p>
+<p>这个递归函数会形成一个嵌套的字典表示层级关系提供给jinja模板进行递归渲染。</p>
+<p>{% highlight html %}</p>
+<p>{\% macro render_comment(comment, show_btn=True) \%}
+    <li class="comment">
+        {{ media(comment["pid"], btn=show_btn) }}
+        {% if comment["id"] %}
+            <ul class="comment-ul">{{ render_comment(comment["id"], False) }}</ul>
+        {% endif %}
+    </li>
+{\% endmacro \%}</p>
+<p>{% endhighlight %}</p>
+<p>其中的media也是一个宏，在我的界面里面我利用了bootstrap的media列表来展示评论，具体细节就不展示了，可以替换为任意的样式。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
