@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>利用flask设计类似网易评论的回复系统 — 陈晓伟的个人博客</title>
+	<meta name="description" content="Title: 利用flask设计类似网易评论的回复系统; Date: 2017-01-20; Author: NegativeDearc">
+	<meta name="author" content="NegativeDearc">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="/theme/html5.js"></script>
+		<![endif]-->
+	<link href="/theme/css/ipython.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/theme/css/bootswatch.min.css" rel="stylesheet">
+	<link href="/theme/css/local.css" rel="stylesheet">
+	<link href="/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="/">陈晓伟的个人博客</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">利用flask设计类似网易评论的回复系统</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">NegativeDearc</h4>
+		</span>
+		<time datetime="2017-01-20T10:05:00+08:00" itemprop="datePublished">Fri 20 January 2017</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="/category/bian-cheng.html" rel="category">编程</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="/tag/python.html" rel="tag">Python</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="/tag/flask.html" rel="tag">Flask</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="/tag/jinja.html" rel="tag">Jinja</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。</p>
+<p>这篇文章将作为记录我开发博客系统遇到的大大小小的坑中的首篇——也是卡住我最多时间思考的地方。</p>
+<p><strong>如何制作一个类似网易盖楼的评论系统？</strong></p>
+<p>问题就分解成了：</p>
+<ol>
+<li>如何设计数据库的评论表</li>
+<li>如何在视图中展示出嵌套的样式</li>
+</ol>
+<p>在网上查了一些资料，</p>
+<ul>
+<li>评论表有的是回复和评论功用一张表，但是必须要指定每一条评论的id以及它的回复对象pid，若是第一条回复，它的回复对象则是null。</li>
+<li>也有方案是以回复和评论以两张表分开的形式存储</li>
+</ul>
+<p>从降低耦合的角度出发，第二种方案更好，在第一种方案中假如需要删除评论，也许就会其他评论造成断档的问题。由于水平有限，我还是采取了第一种方案，理由是建表简单。</p>
+<p>但是考虑到上述问题，我也设计了一个评论必须经过审核的逻辑，没有经过审核的评论是无法展示的，也就避免了展示后被删除的可能。</p>
+<div class="highlight"><pre><span></span>CREATE TABLE &quot;Comment&quot; (
+    id INTEGER NOT NULL, 
+    uid VARCHAR(50) NOT NULL, 
+    rdr_name VARCHAR(20) NOT NULL, 
+    rdr_mail VARCHAR(20) NOT NULL, 
+    rdr_message VARCHAR(200) NOT NULL, 
+    reply_id VARCHAR(50) NOT NULL, 
+    reply_to_id VARCHAR(50), 
+    message_date DATETIME NOT NULL, 
+    approved BOOLEAN NOT NULL, 
+    PRIMARY KEY (id), 
+    UNIQUE (id), 
+    UNIQUE (reply_id), 
+    CHECK (approved IN (0, 1))
+);
+</pre></div>
+
+
+<p>其中uid指向文章编号，reply_id会在每一次插入自动生成，reply_to_id就是它回复的评论的id。</p>
+<p>有了这样的数据库，接下来就是要考虑如何提取数据的问题了。在一个文章地下，会有数十条评论，每一条评论下面还有层层嵌套的评论。查询的开销非常大，幸运的是，这样的递归查询，已经有了解决方案了——就是使用CTE（Common Table Expression），在我所用的sqlite3中版本号需要 &gt;3.8.3。</p>
+<p>首先遍历出所有评论，对每一条评论递归查询出它所有的回复。</p>
+<div class="highlight"><pre><span></span>with recursive
+     cte(id, reply_id, reply_to_id, rdr_message, rdr_name, message_date) as (
+     select id, reply_id, reply_to_id, rdr_message, rdr_name ,message_date from Comment where reply_id = &#39;fa102480-dd21-11e6-b1ae-f4066974556c&#39; and approved = 1 and uid = &#39;3928f38e-d702-11e6-94&#39;
+     union all
+     select Comment.id, Comment.reply_id, Comment.reply_to_id, Comment.rdr_message, Comment.rdr_name, Comment.message_date from Comment join cte on Comment.reply_id = cte.reply_to_id
+     )
+select * from cte
+</pre></div>
+
+
+<p>这样就获得了一个自下而上的的评论列表。这样结构的数据很难直接看出相互的继承关系，所以需要进一步处理使其结构嵌套起来。在python后端完成。</p>
+<div class="highlight"><pre><span></span>def nest(lst):
+    &quot;&quot;&quot;
+    aim to turn flatten list (which fetched from sql) to nested structure
+    :param lst: list
+    :return: nested list
+    &quot;&quot;&quot;
+    if not lst:
+        return None
+    first = lst[0]
+    del lst[0]
+    return {&quot;pid&quot;: first, &quot;id&quot;: nest(lst)}
+</pre></div>
+
+
+<p>这个递归函数会形成一个嵌套的字典表示层级关系提供给jinja模板进行递归渲染。</p>
+<div class="highlight"><pre><span></span>\{\% macro render_comment(comment, show_btn=True) \%\}
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;comment&quot;</span><span class="nt">&gt;</span>
+        \{\{ media(comment[&quot;pid&quot;], btn=show_btn) \}\}
+        <span class="cp">{%</span> <span class="k">if</span> <span class="nv">comment</span><span class="o">[</span><span class="s2">&quot;id&quot;</span><span class="o">]</span> <span class="cp">%}</span>
+            <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;comment-ul&quot;</span><span class="nt">&gt;</span>\{\{ render_comment(comment[&quot;id&quot;], False) \}\}<span class="nt">&lt;/ul&gt;</span>
+        <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+    <span class="nt">&lt;/li&gt;</span>
+\{\% endmacro \%\}
+</pre></div>
+
+
+<p>其中的media也是一个宏，在我的界面里面我利用了bootstrap的media列表来展示评论，具体细节就不展示了，可以替换为任意的样式。</p></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="">陈晓伟的个人博客</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="#">You can add links in your config file</a></li>
+							<li><a href="#">Another social link</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<!-- <li><a href="/category/编程.html">编程 (5)</a></li> -->
+							<!-- fix the bug that chinese name categories can not be parse to url -->
+							<li><a href="/category/bian-cheng.html">编程 (5)</a></li>
+							<!-- <li><a href="/category/工作.html">工作 (7)</a></li> -->
+							<!-- fix the bug that chinese name categories can not be parse to url -->
+							<li><a href="/category/gong-zuo.html">工作 (7)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; NegativeDearc 2016-2017</p>
+			<p>Powered by Pelican, Themed by aboutwilson</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>
