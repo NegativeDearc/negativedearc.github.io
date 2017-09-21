@@ -11,9 +11,12 @@
 		<script src="/theme/html5.js"></script>
 		<![endif]-->
 	<link href="/theme/css/ipython.css" rel="stylesheet">
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/theme/css/bootswatch.min.css" rel="stylesheet">
 	<link href="/theme/css/local.css" rel="stylesheet">
 	<link href="/theme/css/pygments.css" rel="stylesheet">
 </head>
@@ -30,7 +33,7 @@
 		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 			<h4 itemprop="name">NegativeDearc</h4>
 		</span>
-		<time datetime="2017-01-24T16:13:00+08:00" itemprop="datePublished">Tue 24 January 2017</time>
+		<time datetime="2017-01-24T16:13:00+08:00" itemprop="datePublished">周二 24 一月 2017</time>
 	</div>
 	<div>
 		Category:
@@ -62,30 +65,32 @@
 <p>The <code>verify_token</code> callback receives the authentication credentials provided by the client on the <code>Authorization</code> header. This can be a simple token, or can contain multiple arguments, which the function will have to parse and extract from the string</p>
 </blockquote>
 <p>需要把客户端生成的token放入HTTP请求头部的Authorization字段中，在ajax中是这样的：</p>
-<p>{% highlight javascript %}</p>
-<p>$.ajax({
+<div class="highlight"><pre><span></span>$.ajax({
     beforeSend:function (request) {
-      request.setRequestHeader("Authorization", BasicAuthorizationCode(token,"unused"));
+      request.setRequestHeader(&quot;Authorization&quot;, BasicAuthorizationCode(token,&quot;unused&quot;));
     },
-    type:'...',
-    url:'...'
-    data:{"_method":"DELETE"},
-    dataType:"json",
+    type:&#39;...&#39;,
+    url:&#39;...&#39;
+    data:{&quot;_method&quot;:&quot;DELETE&quot;},
+    dataType:&quot;json&quot;,
     success:function () {
       ...
     }
-});</p>
-<p>{% endhighlight %}</p>
+});
+</pre></div>
+
+
 <p>请求里面带了unused字段，替代密码的占位符，可以被任意字符替代，以上则完成了一次BASIC认证。其中BasicAuthorizationCode是一个对token进行base64二进制转化的函数。</p>
 <p>带token的认证方式，减少了用户名和密码传输的次数，但还是需要用户名密码获得token，在我的博客中我分配了一个URL专门用来处理请求token。必须是经过登陆的用户才能请求token，但如果我们想在js代码中请求到该URL势必要将用户名和密码明文写入代码之中。</p>
 <p>由于我没有查到如何处理这种情况，我采取了一个折中的办法：</p>
-<p>{% highlight python %}</p>
-<p>@main.route('/test/token', methods=["GET", "POST"])
+<div class="highlight"><pre><span></span>@main.route(&#39;/test/token&#39;, methods=[&quot;GET&quot;, &quot;POST&quot;])
 @login_required
 def main_verify_token(expires=600):
     token = g.user.generate_auth_token(expiration=expires)
-    return jsonify({"token": token})</p>
-<p>{% endhighlight %}</p>
+    return jsonify({&quot;token&quot;: token})
+</pre></div>
+
+
 <p>使用flask-login的装饰器确保只有经过登陆的用户才能访问该路由。尽管功能上已经可以满足我的要求了，但在概念上仍然模糊。</p>
 <ol>
 <li>什么是无状态？</li>

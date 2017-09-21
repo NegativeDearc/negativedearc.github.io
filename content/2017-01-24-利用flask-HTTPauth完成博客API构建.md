@@ -15,8 +15,7 @@ date: 2017-01-24 16:13:00
 
 需要把客户端生成的token放入HTTP请求头部的Authorization字段中，在ajax中是这样的：
 
-{% highlight javascript %}
-
+```
 $.ajax({
     beforeSend:function (request) {
       request.setRequestHeader("Authorization", BasicAuthorizationCode(token,"unused"));
@@ -29,8 +28,7 @@ $.ajax({
       ...
     }
 });
-
-{% endhighlight %}
+```
 
 请求里面带了unused字段，替代密码的占位符，可以被任意字符替代，以上则完成了一次BASIC认证。其中BasicAuthorizationCode是一个对token进行base64二进制转化的函数。
 
@@ -38,15 +36,13 @@ $.ajax({
 
 由于我没有查到如何处理这种情况，我采取了一个折中的办法：
 
-{% highlight python %}
-
+```
 @main.route('/test/token', methods=["GET", "POST"])
 @login_required
 def main_verify_token(expires=600):
     token = g.user.generate_auth_token(expiration=expires)
     return jsonify({"token": token})
-
-{% endhighlight %}
+```
 
 使用flask-login的装饰器确保只有经过登陆的用户才能访问该路由。尽管功能上已经可以满足我的要求了，但在概念上仍然模糊。
 

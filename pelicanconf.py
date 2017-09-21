@@ -35,5 +35,5 @@ DEFAULT_PAGINATION = 10
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 
-# Theme
+# Theme path, will affect any css/js files related with the theme
 THEME = os.path.join(os.path.dirname(__file__), "themes", "aboutwilson")

@@ -11,9 +11,12 @@
 		<script src="/theme/html5.js"></script>
 		<![endif]-->
 	<link href="/theme/css/ipython.css" rel="stylesheet">
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/theme/css/bootswatch.min.css" rel="stylesheet">
 	<link href="/theme/css/local.css" rel="stylesheet">
 	<link href="/theme/css/pygments.css" rel="stylesheet">
 </head>
@@ -30,7 +33,7 @@
 		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 			<h4 itemprop="name">NegativeDearc</h4>
 		</span>
-		<time datetime="2017-02-04T11:06:00+08:00" itemprop="datePublished">Sat 04 February 2017</time>
+		<time datetime="2017-02-04T11:06:00+08:00" itemprop="datePublished">周六 04 二月 2017</time>
 	</div>
 	<div>
 		Category:
@@ -64,21 +67,23 @@
 </ol>
 <p>整个请求过程涉及了相当数量的库，有urllib，urllib2，hashlib，base64，hmac等。这儿以Python 2.7 为例简单介绍步骤中一些关键的算法。</p>
 <p>HMAC_SHA1：</p>
-<p>{% highlight python linenos %}</p>
-<p>def HMAC_SHA1(key, string_to_sign=None):
+<div class="highlight"><pre><span></span>def HMAC_SHA1(key, string_to_sign=None):
     # generate HMAC_SHA1 token
     signature = base64.b64encode(
         hmac.new(key, string_to_sign, hashlib.sha1).digest()
     )
-    return signature</p>
-<p>{% endhighlight %}</p>
+    return signature
+</pre></div>
+
+
 <p>当地时间向UTC时间的转换：</p>
-<p>{% highlight python linenos %}</p>
-<p>def local_to_utc():
+<div class="highlight"><pre><span></span>def local_to_utc():
     # turn local time to UTC
-    UTC_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
-    return datetime.utcnow().strftime(format=UTC_FORMAT)</p>
-<p>{% endhighlight %}</p>
+    UTC_FORMAT = &quot;%Y-%m-%dT%H:%M:%SZ&quot;
+    return datetime.utcnow().strftime(format=UTC_FORMAT)
+</pre></div>
+
+
 <p>URL编码注意点：</p>
 <ul>
 <li>空格需要编码，使用urllib.quote_plus()会导致空格转换成+而非%20，应该使用urllib.quote()</li>

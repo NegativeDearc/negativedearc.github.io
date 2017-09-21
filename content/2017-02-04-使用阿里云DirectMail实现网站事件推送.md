@@ -27,27 +27,23 @@ date: 2017-02-04 11:06:00
 
 HMAC_SHA1：
 
-{% highlight python linenos %}
-
+```
 def HMAC_SHA1(key, string_to_sign=None):
     # generate HMAC_SHA1 token
     signature = base64.b64encode(
         hmac.new(key, string_to_sign, hashlib.sha1).digest()
     )
     return signature
-
-{% endhighlight %}
+```
 
 当地时间向UTC时间的转换：
 
-{% highlight python linenos %}
-
+```
 def local_to_utc():
     # turn local time to UTC
     UTC_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
     return datetime.utcnow().strftime(format=UTC_FORMAT)
-
-{% endhighlight %}
+```
 
 URL编码注意点：
 
