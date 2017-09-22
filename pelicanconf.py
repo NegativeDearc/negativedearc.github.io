@@ -21,7 +21,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
+LINKS = ((u'香阁公主', 'http://www.cxwloves.cc/'),
          ('Python.org', 'http://python.org/'),
          ('Jinja2', 'http://jinja.pocoo.org/'),
          ('You can modify those links in your config file', '#'),)
@@ -37,3 +37,6 @@ DEFAULT_PAGINATION = 10
 
 # Theme path, will affect any css/js files related with the theme
 THEME = os.path.join(os.path.dirname(__file__), "themes", "aboutwilson")
+
+# Static path
+STATIC_PATHS = ["images"]

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>捕获边际效益 — 陈晓伟的个人博客</title>
+	<meta name="description" content="Title: 捕获边际效益; Date: 2017-09-22; Author: NegativeDearc">
+	<meta name="author" content="NegativeDearc">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="/theme/html5.js"></script>
+		<![endif]-->
+	<link href="/theme/css/ipython.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/theme/css/bootswatch.min.css" rel="stylesheet">
+	<link href="/theme/css/local.css" rel="stylesheet">
+	<link href="/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="/">陈晓伟的个人博客</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">捕获边际效益</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">NegativeDearc</h4>
+		</span>
+		<time datetime="2017-09-22T10:20:00+08:00" itemprop="datePublished">周五 22 九月 2017</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="/category/gong-zuo.html" rel="category">工作</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="/tag/lean.html" rel="tag">Lean</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="/tag/jing-yi.html" rel="tag">精益</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="/tag/scm.html" rel="tag">SCM</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>精益环境在不同行业有很多形态，物流企业与生产单位的差别最主要的体现在缺少“均衡”的条件。作为距离市场最末的环节，需求往往被放大，压力也自然最高。传统物流企业，与客户、承运商、外包公司关系千丝万缕，在部署精益项目的时候困难重重。</p>
+<p align="center">
+<img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-1.png"  style="zoom:70%" alt="图-1">
+</p>
+
+<p>在这样一个极富挑战的环境下，项目应该如何去做？</p>
+<h4><strong>背景</strong></h4>
+<p>公司某个运作单位为一位500强客户提供服务。客户依据销售，在一天中频繁的下单，但依照约定：我们以某个时间点对订单进行截止处理。</p>
+<p>处理模式还在沿用几十年前的“Pallet to Zero”策略。仓库的某个零层区域，在非拣货时段是空出的，任务开始后，这个区域将被短暂的作为中转站完成订单的分拣工作，可被视为“Pick Face”。这种利用率低下的策略是由客户的SAP系统决定的，无法改变。</p>
+<p>如果我们想要优化这样一个拣货的策略和路径问题，应该如何着手？</p>
+<h4><strong>设定衡量方式</strong></h4>
+<p>策略的改变会引起效率的改变，体现在处理时间上。</p>
+<h4><strong>现在的做法</strong></h4>
+<ol>
+<li>对截止的订单，按照“取货位”进行计数，仅取一次，视为单一订单(sigle pick)，取多次，视为批量订单，做批采操作(batch order)</li>
+<li>单一订单，将在出货前才从库位拉出，做到“仅取一次”</li>
+<li>批量订单，依据某种逻辑进入PTZ区域</li>
+<li>人工进行分拣(Order Pick)</li>
+</ol>
+<p>从数据分析的角度来看，这是一块订单数据的group by和resort的变形记。逻辑的调整究竟会对整个操作时间产生什么样的影响呢？</p>
+<p><strong>时间的构成：</strong></p>
+<ul>
+<li>取货时间(定义为从原库位开始到PTZ区域的时间)<ul>
+<li>使用车辆运行时间</li>
+</ul>
+</li>
+<li>分拣时间（PTZ区域到发货库位的时间）<ul>
+<li>人工小车行程时间（不增值）</li>
+<li>折返引发的时间（不增值）</li>
+<li>拣货操作时间</li>
+</ul>
+</li>
+</ul>
+<p>很显然，取货时间在逻辑调整后并不产生变化，原因是：1-9，9个数字，先输入1，还是先输入9并没有差别。</p>
+<p>而人工拣货路线将完全取决于逻辑的设定。</p>
+<p align="center">
+<img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-2.png"  style="zoom:70%" alt="图-2">
+</p>
+
+<p>上图是某一份订单(客户的原始订单)在PTZ区域的排布。工人在通道里将以“Z”形路线进行取货。</p>
+<h4><strong>改进后</strong></h4>
+<p>通过对时间的定义，依照订单信息和运作基础数据，可以设定整个拣货过程时间的计算。同时，我们对订单的处理逻辑进行了改变，主要有根据SKU排序、源发地排序、ABC排序等。</p>
+<p align="center">
+<img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-3.png"  style="zoom:70%" alt="图-3">
+</p>
+
+<p>仅仅是处理逻辑的改变，带来的时间的节约，效率的提升也是可观的。在某一整月里，一共有18个工作日，而其中8天将有机会产生边际效应，平均单次节约达5%-10%。</p>
+<p>现在，订单处理小组有了一个系统，可以通过对时间效率的计算自动选择最优的方案。另外我们还做了一些优化，整合了订单与装车信息的关联，来确保发往统一客户、城市、车辆的订单在Order Pick之后不会被打乱，这也产生了10%的效率的提升。</p>
+<h4><strong>更加先进的做法</strong></h4>
+<p>从图-2可以看出，解决这种批量的问题，如果可以缩小订单规模可以产生更加明显的提升</p>
+<ul>
+<li>将订单拆成波次，使单次处理量降低，处理频率提高</li>
+<li>对PTZ区域进行改造， 增加横向通道制造小规模区域，通过订单信息的聚类可减少无意义的行程时间</li>
+</ul>
+<p>这些将作为下一阶段的课题进行研究。</p>
+<h4><strong>总结</strong></h4>
+<p>物流企业的成本是动态的，如果仅仅是沿用一套固定的模式，将会错过巨大的改进可能。</p></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="">陈晓伟的个人博客</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="#">You can add links in your config file</a></li>
+							<li><a href="#">Another social link</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<!-- <li><a href="/category/编程.html">编程 (5)</a></li> -->
+							<!-- fix the bug that chinese name categories can not be parse to url -->
+							<li><a href="/category/bian-cheng.html">编程 (5)</a></li>
+							<!-- <li><a href="/category/工作.html">工作 (8)</a></li> -->
+							<!-- fix the bug that chinese name categories can not be parse to url -->
+							<li><a href="/category/gong-zuo.html">工作 (8)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://www.cxwloves.cc/">香阁公主</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; NegativeDearc 2016-2017</p>
+			<p>Powered by Pelican, Themed by aboutwilson</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>
