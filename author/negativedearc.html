@@ -30,6 +30,48 @@
         
         
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/bu-huo-bian-ji-xiao-yi.html">
+		<h2 itemprop="name headline">捕获边际效益</h2>
+	</a>
+	<time datetime="2017-09-22T10:20:00+08:00" itemprop="datePublished">Fri 22 September 2017</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">NegativeDearc</span>
+	</span>
+	<div class="summary"><p>精益环境在不同行业有很多形态，物流企业与生产单位的差别最主要的体现在缺少“均衡”的条件。作为距离市场最末的环节，需求往往被放大，压力也自然最高。传统物流企业，与客户、承运商、外包公司关系千丝万缕，在部署精益项目的时候困难重重。</p>
+<p align="center">
+<img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-1.png"  style="zoom:70%" alt="图-1">
+</p>
+
+<p>在这样一个极富挑战的环境下，项目应该如何去做？</p>
+<h4><strong>背景</strong></h4>
+<p>公司某个运作单位为一位500强客户提供服务。客户依据销售，在一天中频繁的下单，但依照约定：我们以某个时间点对订单进行截止处理。</p>
+<p>处理模式还在沿用几十年前的“Pallet to Zero”策略。仓库的某个零层区域，在非拣货时段是空出的，任务开始后，这个区域将被短暂的作为中转站完成订单的分拣工作，可被视为“Pick Face”。这种利用率低下的策略是由客户的SAP系统决定的，无法改变。</p>
+<p>如果我们想要优化这样一个拣货的策略和路径问题，应该如何着手？</p>
+<h4><strong>设定衡量方式</strong></h4>
+<p>策略的改变会引起效率的改变，体现在处理时间上。</p>
+<h4><strong>现在的做法</strong></h4>
+<ol>
+<li>对截止的订单，按照“取货位”进行计数，仅取一次，视为单一订单(sigle pick)，取多次，视为批量订单 …</li></ol></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="/category/gong-zuo.html" rel="category">工作</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/lean.html" rel="tag">Lean</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/jing-yi.html" rel="tag">精益</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/scm.html" rel="tag">SCM</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
 	<a href="/xin-ren-shou-huo-gfrneng-gou-gai-jin-leng-lian-gong-ying-ma.html">
 		<h2 itemprop="name headline">信任收货(GFR)能够改进冷链供应吗？</h2>
 	</a>
@@ -201,6 +243,13 @@
 		<a href="/category/gong-zuo.html" rel="category">工作</a>
 	</span>
 	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="/tag/lean.html" rel="tag">Lean</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/jing-yi.html" rel="tag">精益</a>
+	</span>
 </div>
 <hr>
         
@@ -312,40 +361,6 @@
 	</span>
 </div>
 <hr>
-        
-<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html">
-		<h2 itemprop="name headline">利用sqlite3进行全文检索</h2>
-	</a>
-	<time datetime="2017-01-25T10:57:00+08:00" itemprop="datePublished">Wed 25 January 2017</time>
-	&nbsp;—&nbsp;
-	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-		<span itemprop="name">NegativeDearc</span>
-	</span>
-	<div class="summary"><p>在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：</p>
-<ul>
-<li>根据图片名检索数据库，获取图片的使用情况</li>
-</ul>
-<p>搜索了一番，找到了如下网页 http://www.sqlite.org/fts3.html 。 sqlite也能实现全文检索。官网介绍了fts3，fts4插件，需求的版本应分别高于3.5.0和3.7.4。而fts1，fts2因为年久失修不被推荐使用。据介绍，ft4显著快于ft4，但可能会多占用1~2%的磁盘空间。</p>
-<h4>如何使用？</h4>
-<div class="highlight"><pre><span></span>-- 不指定Column，将自动创建一个Column为content的fts3表，当然还有rowid:
-CREATE VIRTUAL TABLE data USING fts3();
-
--- 传入一组逗号隔开的列表创建Column:
-CREATE VIRTUAL TABLE pages USING fts4(title, keywords, body);
-
--- 更加详细的建表方式，但会忽略所有约束 …</pre></div></div>
-	Category:
-	<span itemprop="articleSection">
-		<a href="/category/bian-cheng.html" rel="category">编程</a>
-	</span>
-	Tags:
- 
-	<span itemprop="keywords">
-		<a href="/tag/sqlite.html" rel="tag">Sqlite</a>
-	</span>
-</div>
-<hr>
  <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
@@ -383,15 +398,15 @@ CREATE VIRTUAL TABLE pages USING fts4(title, keywords, body);
 							<!-- <li><a href="/category/编程.html">编程 (5)</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
 							<li><a href="/category/bian-cheng.html">编程 (5)</a></li>
-							<!-- <li><a href="/category/工作.html">工作 (7)</a></li> -->
+							<!-- <li><a href="/category/工作.html">工作 (8)</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
-							<li><a href="/category/gong-zuo.html">工作 (7)</a></li>
+							<li><a href="/category/gong-zuo.html">工作 (8)</a></li>
 						</ul>
 					</div>
 					<div class="col-md-3">
 						<h4>Links</h4>
 						<ul class="list-unstyled my-list-style">
-							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://www.cxwloves.cc/">香阁公主</a></li>
 							<li><a href="http://python.org/">Python.org</a></li>
 							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
 							<li><a href="#">You can modify those links in your config file</a></li>
