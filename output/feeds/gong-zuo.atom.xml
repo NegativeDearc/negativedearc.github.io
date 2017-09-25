@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 工作</title><link href="/" rel="alternate"></link><link href="/feeds/gong-zuo.atom.xml" rel="self"></link><id>/</id><updated>2017-09-25T09:02:00+08:00</updated><entry><title>捕获边际效益</title><link href="/bu-huo-bian-ji-xiao-yi.html" rel="alternate"></link><published>2017-09-22T10:20:00+08:00</published><updated>2017-09-22T10:20:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-09-22:/bu-huo-bian-ji-xiao-yi.html</id><summary type="html">&lt;p&gt;精益环境在不同行业有很多形态，物流企业与生产单位的差别最主要的体现在缺少“均衡”的条件。作为距离市场最末的环节，需求往往被放大，压力也自然最高。传统物流企业，与客户、承运商、外包公司关系千丝万缕，在部署精益项目的时候困难重重。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 工作</title><link href="https://negativedearc.github.io/" rel="alternate"></link><link href="https://negativedearc.github.io/feeds/gong-zuo.atom.xml" rel="self"></link><id>https://negativedearc.github.io/</id><updated>2017-09-25T09:02:00+08:00</updated><entry><title>捕获边际效益</title><link href="https://negativedearc.github.io/bu-huo-bian-ji-xiao-yi.html" rel="alternate"></link><published>2017-09-22T10:20:00+08:00</published><updated>2017-09-22T10:20:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-09-22:/bu-huo-bian-ji-xiao-yi.html</id><summary type="html">&lt;p&gt;精益环境在不同行业有很多形态，物流企业与生产单位的差别最主要的体现在缺少“均衡”的条件。作为距离市场最末的环节，需求往往被放大，压力也自然最高。传统物流企业，与客户、承运商、外包公司关系千丝万缕，在部署精益项目的时候困难重重。&lt;/p&gt;
 &lt;p align="center"&gt;
-&lt;img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-1.png"  style="zoom:70%" alt="图-1"&gt;
+&lt;img src="https://negativedearc.github.io/images/2017-09-22-bu-huo-bian-ji-xiao-ying-1.png"  style="zoom:70%" alt="图-1"&gt;
 &lt;/p&gt;
 
 &lt;p&gt;在这样一个极富挑战的环境下，项目应该如何去做？&lt;/p&gt;
@@ -15,7 +15,7 @@
 &lt;ol&gt;
 &lt;li&gt;对截止的订单，按照“取货位”进行计数，仅取一次，视为单一订单(sigle pick)，取多次，视为批量订单 …&lt;/li&gt;&lt;/ol&gt;</summary><content type="html">&lt;p&gt;精益环境在不同行业有很多形态，物流企业与生产单位的差别最主要的体现在缺少“均衡”的条件。作为距离市场最末的环节，需求往往被放大，压力也自然最高。传统物流企业，与客户、承运商、外包公司关系千丝万缕，在部署精益项目的时候困难重重。&lt;/p&gt;
 &lt;p align="center"&gt;
-&lt;img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-1.png"  style="zoom:70%" alt="图-1"&gt;
+&lt;img src="https://negativedearc.github.io/images/2017-09-22-bu-huo-bian-ji-xiao-ying-1.png"  style="zoom:70%" alt="图-1"&gt;
 &lt;/p&gt;
 
 &lt;p&gt;在这样一个极富挑战的环境下，项目应该如何去做？&lt;/p&gt;
@@ -49,14 +49,14 @@
 &lt;p&gt;很显然，取货时间在逻辑调整后并不产生变化，原因是：1-9，9个数字，先输入1，还是先输入9并没有差别。&lt;/p&gt;
 &lt;p&gt;而人工拣货路线将完全取决于逻辑的设定。&lt;/p&gt;
 &lt;p align="center"&gt;
-&lt;img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-2.png"  style="zoom:70%" alt="图-2"&gt;
+&lt;img src="https://negativedearc.github.io/images/2017-09-22-bu-huo-bian-ji-xiao-ying-2.png"  style="zoom:70%" alt="图-2"&gt;
 &lt;/p&gt;
 
 &lt;p&gt;上图是某一份订单(客户的原始订单)在PTZ区域的排布。工人在通道里将以“Z”形路线进行取货。&lt;/p&gt;
 &lt;h4&gt;&lt;strong&gt;改进后&lt;/strong&gt;&lt;/h4&gt;
 &lt;p&gt;通过对时间的定义，依照订单信息和运作基础数据，可以设定整个拣货过程时间的计算。同时，我们对订单的处理逻辑进行了改变，主要有根据SKU排序、源发地排序、ABC排序等。&lt;/p&gt;
 &lt;p align="center"&gt;
-&lt;img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-3.png"  style="zoom:70%" alt="图-3"&gt;
+&lt;img src="https://negativedearc.github.io/images/2017-09-22-bu-huo-bian-ji-xiao-ying-3.png"  style="zoom:70%" alt="图-3"&gt;
 &lt;/p&gt;
 
 &lt;p&gt;仅仅是处理逻辑的改变，带来的时间的节约，效率的提升也是可观的。在某一整月里，一共有18个工作日，而其中8天将有机会产生边际效应，平均单次节约达5%-10%。&lt;/p&gt;
@@ -69,7 +69,7 @@
 &lt;/ul&gt;
 &lt;p&gt;这些将作为下一阶段的课题进行研究。&lt;/p&gt;
 &lt;h4&gt;&lt;strong&gt;总结&lt;/strong&gt;&lt;/h4&gt;
-&lt;p&gt;物流企业的成本是动态的，如果仅仅是沿用一套固定的模式，将会错过巨大的改进可能。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category><category term="SCM"></category></entry><entry><title>当我们在谈论VSM的时候我们在谈论什么？</title><link href="/dang-wo-men-zai-tan-lun-vsmde-shi-hou-wo-men-zai-tan-lun-shi-yao.html" rel="alternate"></link><published>2017-09-21T11:26:00+08:00</published><updated>2017-09-25T09:02:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-09-21:/dang-wo-men-zai-tan-lun-vsmde-shi-hou-wo-men-zai-tan-lun-shi-yao.html</id><summary type="html">&lt;p&gt;VSM是当下时髦的工具，越来越多的组织正在把VSM当作召开Workshop、交流改善想法的第一语言。VSM是描述流程的“可视化的文档”，包含“信息流”和“实物流”，始于顾客需求，终于顾客满意。&lt;/p&gt;
+&lt;p&gt;物流企业的成本是动态的，如果仅仅是沿用一套固定的模式，将会错过巨大的改进可能。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category><category term="SCM"></category></entry><entry><title>当我们在谈论VSM的时候我们在谈论什么？</title><link href="https://negativedearc.github.io/dang-wo-men-zai-tan-lun-vsmde-shi-hou-wo-men-zai-tan-lun-shi-yao.html" rel="alternate"></link><published>2017-09-21T11:26:00+08:00</published><updated>2017-09-25T09:02:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-09-21:/dang-wo-men-zai-tan-lun-vsmde-shi-hou-wo-men-zai-tan-lun-shi-yao.html</id><summary type="html">&lt;p&gt;VSM是当下时髦的工具，越来越多的组织正在把VSM当作召开Workshop、交流改善想法的第一语言。VSM是描述流程的“可视化的文档”，包含“信息流”和“实物流”，始于顾客需求，终于顾客满意。&lt;/p&gt;
 &lt;p&gt;大多数的VSM增值比率不会超过 5%，很多流程甚至会低于1%，这些数字令人吃惊但也蕴含了大量的机会，驱动着团队成员为之努力。&lt;/p&gt;
 &lt;h3&gt;VSM与SIPOC的关系&lt;/h3&gt;
 &lt;p&gt;SIPOC是美国质量管理大师戴明发明的，用来描述完整流程的5大要素，有时候也作COPIS。VSM是更加详细的流程描述工具，包含了具体的数值分析。&lt;/p&gt;
@@ -126,7 +126,7 @@
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;布局图&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;p align="center"&gt;&lt;img src="/images/2017-09-20-dang-wo-men-tan-lun-VSM-de-shi-shi-hou-wo-men-zai-tan-lun-shen-me-1.jpg" alt="图-1" style="zoom: 70%"&gt;&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-09-20-dang-wo-men-tan-lun-VSM-de-shi-shi-hou-wo-men-zai-tan-lun-shen-me-1.jpg" alt="图-1" style="zoom: 70%"&gt;&lt;/p&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;第一块区域-信息流&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;占比3/6。从客户出发，描绘出信息的处理流程。与客户要求相关的需求，特别是数量、频次将被转换成TAKT。信息流程是电子信息还是纸质信息，由不同的箭头符号区分，同时标注信息是由生产计划还是EDI信息等控制的方式。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;第二块区域-实物流&lt;/strong&gt;&lt;/p&gt;
@@ -149,7 +149,7 @@
 &lt;p&gt;停机时间有两段，一段39min，一段7分钟。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Ideal Run Rate, Takt time&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;客户需求的节拍是 100pcs/day，机器的理想工作频率为 2pcs/min，历史生产能力为 93pcs/day。&lt;/p&gt;
-&lt;p&gt;&lt;p align="center"&gt;&lt;img src="/images/2017-09-20-dang-wo-men-tan-lun-VSM-de-shi-shi-hou-wo-men-zai-tan-lun-shen-me-3.jpg" alt="图-3" style="zoom: 70%"&gt;&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-09-20-dang-wo-men-tan-lun-VSM-de-shi-shi-hou-wo-men-zai-tan-lun-shen-me-3.jpg" alt="图-3" style="zoom: 70%"&gt;&lt;/p&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;缓冲和安全库存&lt;/strong&gt;&lt;/p&gt;
@@ -184,9 +184,9 @@
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;符号及图标&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;p align="center"&gt;&lt;img src="/images/2017-09-20-dang-wo-men-tan-lun-VSM-de-shi-shi-hou-wo-men-zai-tan-lun-shen-me-4.jpg" alt="图-4" style="zoom: 70%"&gt;&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-09-20-dang-wo-men-tan-lun-VSM-de-shi-shi-hou-wo-men-zai-tan-lun-shen-me-4.jpg" alt="图-4" style="zoom: 70%"&gt;&lt;/p&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>信任收货(GFR)能够改进冷链供应吗？</title><link href="/xin-ren-shou-huo-gfrneng-gou-gai-jin-leng-lian-gong-ying-ma.html" rel="alternate"></link><published>2017-09-05T10:28:00+08:00</published><updated>2017-09-05T10:28:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-09-05:/xin-ren-shou-huo-gfrneng-gou-gai-jin-leng-lian-gong-ying-ma.html</id><summary type="html">&lt;p&gt;在冷链(chilled sector)环节，速度是最重要的&amp;mdash;&amp;mdash;产品在分拨中心（DC）只待几个小时就被送往商店。时间的压力意味着一些零售商(retails)并没有足够的时间去把所有东西都清点清楚。然而，尽管有一些好的理由，但是变化无处不在（change is in the air，and on the ground.这里意指空中的订单信息流和落地的实物流）。&lt;/p&gt;
+&lt;/ul&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>信任收货(GFR)能够改进冷链供应吗？</title><link href="https://negativedearc.github.io/xin-ren-shou-huo-gfrneng-gou-gai-jin-leng-lian-gong-ying-ma.html" rel="alternate"></link><published>2017-09-05T10:28:00+08:00</published><updated>2017-09-05T10:28:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-09-05:/xin-ren-shou-huo-gfrneng-gou-gai-jin-leng-lian-gong-ying-ma.html</id><summary type="html">&lt;p&gt;在冷链(chilled sector)环节，速度是最重要的&amp;mdash;&amp;mdash;产品在分拨中心（DC）只待几个小时就被送往商店。时间的压力意味着一些零售商(retails)并没有足够的时间去把所有东西都清点清楚。然而，尽管有一些好的理由，但是变化无处不在（change is in the air，and on the ground.这里意指空中的订单信息流和落地的实物流）。&lt;/p&gt;
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;举个例子&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;假设(let&amp;#39;s say)你收到了一票100箱的货物，如果它有10层高，你可以很快确认是否有短少。但是，当托盘都被堆满，并且混合了多种产品，这时问题就来了。你只能在司机卸货完成后，依赖(reliant on)某个人去接收、清点、记录收货的准确度。&lt;/p&gt;
@@ -218,7 +218,7 @@
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;结论&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;GFR对供应链到底意味着什么？GFR确保供应商可以及时收账，同时对实物不一致（inconsistent&amp;nbsp;）进行惩罚（penalize）。但GFR对零售商的操作准确度、实物的可用性并没有提升。供应商需要确保他们的订单准确性、拣货的准确性是高的并且一致（consistent）的，以两种相同的代价，消除浪费。GFR是一种从中获益的方式&amp;mdash;&amp;mdash;但不是唯一的。&lt;/p&gt;
-&lt;p&gt;一条精益的端对端（end-to-end）的流程依赖每一个经过效率和准确度优化的环节。对业务最大的挑战是确保所有成分在掌控之中并为你服务&amp;mdash;&amp;mdash;以更好的服务客户（better serve your customer）。但想要达到这种程度是经常需要改变的。&lt;/p&gt;</content><category term="Lean"></category><category term="SCM"></category><category term="精益"></category></entry><entry><title>铺开标准工作(surfacing standard work)</title><link href="/pu-kai-biao-zhun-gong-zuo-surfacing-standard-work.html" rel="alternate"></link><published>2017-08-17T12:07:00+08:00</published><updated>2017-08-17T12:07:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-08-17:/pu-kai-biao-zhun-gong-zuo-surfacing-standard-work.html</id><summary type="html">&lt;p&gt;根据经验法则(rule of numb)，约有20%的精益医疗组织的工作需要被文档标准化下来(be documented)。那么你的组织，是不是也接近这个数字(come close to the amount)？A3报告是一种将新流程或者改进后流程标准化的方式(one approach)。
+&lt;p&gt;一条精益的端对端（end-to-end）的流程依赖每一个经过效率和准确度优化的环节。对业务最大的挑战是确保所有成分在掌控之中并为你服务&amp;mdash;&amp;mdash;以更好的服务客户（better serve your customer）。但想要达到这种程度是经常需要改变的。&lt;/p&gt;</content><category term="Lean"></category><category term="SCM"></category><category term="精益"></category></entry><entry><title>铺开标准工作(surfacing standard work)</title><link href="https://negativedearc.github.io/pu-kai-biao-zhun-gong-zuo-surfacing-standard-work.html" rel="alternate"></link><published>2017-08-17T12:07:00+08:00</published><updated>2017-08-17T12:07:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-08-17:/pu-kai-biao-zhun-gong-zuo-surfacing-standard-work.html</id><summary type="html">&lt;p&gt;根据经验法则(rule of numb)，约有20%的精益医疗组织的工作需要被文档标准化下来(be documented)。那么你的组织，是不是也接近这个数字(come close to the amount)？A3报告是一种将新流程或者改进后流程标准化的方式(one approach)。
 &amp;nbsp;&lt;/p&gt;
 &lt;p&gt;思考一下你曾经完成的A3报告。在问题分析环节，什么问题是最常(the most common issues)被5Y工具暴露出来的(drill down，钻取)？有很大比例的分析人员找到了根源(arrive at the cause of)&lt;/p&gt;
 &lt;ul&gt;
@@ -244,7 +244,7 @@
 &lt;li&gt;更高质量的标准工作：更多的员工输入了高质量的调研和制定标准措施&lt;/li&gt;
 &lt;li&gt;更好接受度和更少的抱怨，员工输入(input)并分享了责任感(ownership)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;标准化工作的需求可以在很多维度(numerous way)识别出来。选择流程的标准(criteria of process)应该包含问题发生的频率和流程的危险程度(criticality)。当你想要为标准工作寻找和优先确定一名候选人，重点关注A3驱动的标准工作将能提高你的有效性。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>另一种短暂的时髦(flavor of the month)？</title><link href="/ling-yi-chong-duan-zan-de-shi-mao-flavor-of-the-month.html" rel="alternate"></link><published>2017-07-13T15:06:00+08:00</published><updated>2017-07-13T15:06:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-07-13:/ling-yi-chong-duan-zan-de-shi-mao-flavor-of-the-month.html</id><summary type="html">&lt;p&gt;如果你在医疗保健领域工作足够长的话，你会看到很多项目来了又走，甚至还有一些会重复的回来。各种各样的增强质量和提高安全的方法毫无例外地(no exception to)失败了并且不被赞同(out of favor)。&lt;/p&gt;
+&lt;p&gt;标准化工作的需求可以在很多维度(numerous way)识别出来。选择流程的标准(criteria of process)应该包含问题发生的频率和流程的危险程度(criticality)。当你想要为标准工作寻找和优先确定一名候选人，重点关注A3驱动的标准工作将能提高你的有效性。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>另一种短暂的时髦(flavor of the month)？</title><link href="https://negativedearc.github.io/ling-yi-chong-duan-zan-de-shi-mao-flavor-of-the-month.html" rel="alternate"></link><published>2017-07-13T15:06:00+08:00</published><updated>2017-07-13T15:06:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-07-13:/ling-yi-chong-duan-zan-de-shi-mao-flavor-of-the-month.html</id><summary type="html">&lt;p&gt;如果你在医疗保健领域工作足够长的话，你会看到很多项目来了又走，甚至还有一些会重复的回来。各种各样的增强质量和提高安全的方法毫无例外地(no exception to)失败了并且不被赞同(out of favor)。&lt;/p&gt;
 &lt;p&gt;几年下来，从“持续的质量改进”，到TQM，到六西格玛，到Lean，都“过气”了。学员们参加课程，接受最新的方法(being indoctrinated with the newest discipline)，同时交换着“这也过时了的”的眼神(all the while exchanging knowing glances of “this shall pass”)。&lt;/p&gt;
 &lt;p&gt;所以，是这些哲学真的过时了吗(obsolescence)？还是由于领导者的无能(inability)去维持成果？思考以下Lean的基础原则：&lt;/p&gt;
 &lt;ul&gt;
@@ -259,7 +259,7 @@
 &lt;/ul&gt;
 &lt;p&gt;很难想象(hard to conceive to)哪怕是其中的一个核心思想不受欢迎。谁能说 “这些都过时了”？&lt;/p&gt;
 &lt;p&gt;想要成功，必须要知道我们不能指望不不去量化(accountability)、维持(sustainability)生产仅通过新的lean方法就能获益。一个关键的解决方案是采用(adoption)管理体系。当一个精益活动开展了，管理体系必须紧密配合(hand-in-hand)。是管理体系，让领导推动发展，追踪绩效，执行持续改进。系统提供了过程框架，使过程可量化、可维持化，避免“过气”。&lt;/p&gt;
-&lt;p&gt;如果没有采取措施(taking the steps) 去增强精益组织文化，那些工具很显然会成为在展示架上“过气”的产品。有了管理体系，我们就能打破恶性循环，维持一套经得起时间考验的原则(stand the test of time)&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>精益色拉(Leadership Salad)</title><link href="/jing-yi-se-la-leadership-salad.html" rel="alternate"></link><published>2017-07-05T11:39:00+08:00</published><updated>2017-07-05T11:39:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-07-05:/jing-yi-se-la-leadership-salad.html</id><summary type="html">&lt;p&gt;我不会认定(convinced)推荐改善活动(facilitate kaizen events)就能造就精益文化，我也不会说使用VSM、平衡记分卡、A3报告、5S、视觉管理、标准作业、防错法、统计过程控制、质量功能展开、失效模式分析、控制图、工艺水准(process leveling)或是安灯就能产生精益文化。&lt;/p&gt;
+&lt;p&gt;如果没有采取措施(taking the steps) 去增强精益组织文化，那些工具很显然会成为在展示架上“过气”的产品。有了管理体系，我们就能打破恶性循环，维持一套经得起时间考验的原则(stand the test of time)&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>精益色拉(Leadership Salad)</title><link href="https://negativedearc.github.io/jing-yi-se-la-leadership-salad.html" rel="alternate"></link><published>2017-07-05T11:39:00+08:00</published><updated>2017-07-05T11:39:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-07-05:/jing-yi-se-la-leadership-salad.html</id><summary type="html">&lt;p&gt;我不会认定(convinced)推荐改善活动(facilitate kaizen events)就能造就精益文化，我也不会说使用VSM、平衡记分卡、A3报告、5S、视觉管理、标准作业、防错法、统计过程控制、质量功能展开、失效模式分析、控制图、工艺水准(process leveling)或是安灯就能产生精益文化。&lt;/p&gt;
 &lt;p&gt;在我超过二十年的精益教练生涯里，以我在不同的国际不同的企业使用各种各样眼花缭乱的工具的经验来说，我还没有见过仅仅使用工具就可以产生(emerge from)精益文化。&lt;/p&gt;
 &lt;p&gt;企业在对的地方使用对的工具是可以获得巨大收益的。简单的使用对的工具，把对的人拉进来也是可以使流程变得更好，浪费变得更少或者没有。但是，从长远来看(in a long run)，“持续性”(sustainability)在这种单一的哲学(sole philosophy)下会反反复复的遇到(a recurring issue)。许多企业，表现的更倾向于以上的行为(exhibit …&lt;/p&gt;</summary><content type="html">&lt;p&gt;我不会认定(convinced)推荐改善活动(facilitate kaizen events)就能造就精益文化，我也不会说使用VSM、平衡记分卡、A3报告、5S、视觉管理、标准作业、防错法、统计过程控制、质量功能展开、失效模式分析、控制图、工艺水准(process leveling)或是安灯就能产生精益文化。&lt;/p&gt;
 &lt;p&gt;在我超过二十年的精益教练生涯里，以我在不同的国际不同的企业使用各种各样眼花缭乱的工具的经验来说，我还没有见过仅仅使用工具就可以产生(emerge from)精益文化。&lt;/p&gt;
@@ -279,7 +279,7 @@
 &lt;li&gt;愿意共渡难关(weather the storm)。精益是一种思考的哲学，长期的忍耐和坚韧才能实现可持续的收益(long term forbearance must be persevere to realize the sustainable gains.)。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;精益理念不适合所有人。并不是每个企业都有胃口(have stomach)完全接受这些必要条件。我们的顾客和我们的伙伴都应该得到最好的回报(best regardless)——精益，持续改进、过程改进；他们应该得到价值和满足感，这是企业成功和收获长期回报(long term profitability)的首要条件。&lt;/p&gt;
-&lt;p&gt;所以我说，要么你拥抱精益，要么继续吃你的“色拉”。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>开启你的领导力之路</title><link href="/kai-qi-ni-de-ling-dao-li-zhi-lu.html" rel="alternate"></link><published>2017-07-04T14:05:00+08:00</published><updated>2017-07-04T14:05:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-07-04:/kai-qi-ni-de-ling-dao-li-zhi-lu.html</id><summary type="html">&lt;p&gt;回到几年前，在和一个管理团队(executive team)一起工作的时候，有人问：为什么我们不仅要写下每日、每周、每月的领导力标准作业(LSW)，而且还要追踪哪些曾经说过要做的事并分享给同僚和上级？&lt;/p&gt;
+&lt;p&gt;所以我说，要么你拥抱精益，要么继续吃你的“色拉”。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>开启你的领导力之路</title><link href="https://negativedearc.github.io/kai-qi-ni-de-ling-dao-li-zhi-lu.html" rel="alternate"></link><published>2017-07-04T14:05:00+08:00</published><updated>2017-07-04T14:05:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-07-04:/kai-qi-ni-de-ling-dao-li-zhi-lu.html</id><summary type="html">&lt;p&gt;回到几年前，在和一个管理团队(executive team)一起工作的时候，有人问：为什么我们不仅要写下每日、每周、每月的领导力标准作业(LSW)，而且还要追踪哪些曾经说过要做的事并分享给同僚和上级？&lt;/p&gt;
 &lt;p&gt;这个问题某种程度上刺激了我(a degree of irritation)，所以我给了我最好的答案：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;你正在中层管理和一线员工为树立新的领导行为模范&lt;/li&gt;
@@ -301,7 +301,7 @@
 &lt;p&gt;意志力不是与生俱来(not innate to)，而是通过练习和适应发展而来。这和我们通过有氧运动(cardio)和力量训练来提升我们身体的耐受力是一个道理。开发和保持一个新的行为，追踪和测量坚持的程度，创造应对干扰的措施(countermeasures)对行为也即习惯的执行非常重要。&lt;/p&gt;
 &lt;p&gt;英国的研究人员调查了做过前/后臀，膝盖置换手术的老年人，他们都收到过一份含有详尽康复指南的小册子(a booklet detailing the their rehab schedule)。这些小册子里面有一些空白页供他们填写每日、每周的行为以及目标。三个月过去了，研究人员发现那么写下计划和目标同时有追踪的，在很多(among the positive outcomes)积极的成果里面，最突出是他们走的速度是那么什么都没写的患者两倍快。有趣的是，那些自我记录、自我追踪、自我奖励的人也提前记录了他们可能会遭受的病痛以及相应的对策来保持与计划的一致性(stay the course with)。&lt;/p&gt;
 &lt;p&gt;用另外的方式表达，那些通过写下计划、每日检查进度、实施有效计划打破篱笆，掌握自己康复(rehabilitation)的人，很显然开辟了一条新生之路，产生了非常多积极的意义。&lt;/p&gt;
-&lt;p&gt;是的，多年前我对管理人员的答复是对的但不完整。写下每个人的领导力标准作业是个人艺术同时也是有意识地领导力(art of personal ownership and conscious leadership)。记录开展积极反馈机制，鼓励产生更好的行为。最后，提前规划可能遭遇的篱笆和对策可以产生积极的反应。在发展标准领导力的进程上，救火行为(firefighting behavior)将注定脱轨(derail)。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>授人以渔而知渔</title><link href="/shou-ren-yi-yu-er-zhi-yu.html" rel="alternate"></link><published>2017-07-03T08:47:00+08:00</published><updated>2017-07-03T08:47:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-07-03:/shou-ren-yi-yu-er-zhi-yu.html</id><summary type="html">&lt;p&gt;在改善的工作和世界里，我们经常谈到教员的发展和组织的变革。业务，正在极富见识(savvy)和严肃认真的朝两个方向发展，现在的高效发展和未来的持续改进。领导们和内部的顾问应该思考如何通过来教学来支持业务发展。&lt;/p&gt;
+&lt;p&gt;是的，多年前我对管理人员的答复是对的但不完整。写下每个人的领导力标准作业是个人艺术同时也是有意识地领导力(art of personal ownership and conscious leadership)。记录开展积极反馈机制，鼓励产生更好的行为。最后，提前规划可能遭遇的篱笆和对策可以产生积极的反应。在发展标准领导力的进程上，救火行为(firefighting behavior)将注定脱轨(derail)。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>授人以渔而知渔</title><link href="https://negativedearc.github.io/shou-ren-yi-yu-er-zhi-yu.html" rel="alternate"></link><published>2017-07-03T08:47:00+08:00</published><updated>2017-07-03T08:47:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-07-03:/shou-ren-yi-yu-er-zhi-yu.html</id><summary type="html">&lt;p&gt;在改善的工作和世界里，我们经常谈到教员的发展和组织的变革。业务，正在极富见识(savvy)和严肃认真的朝两个方向发展，现在的高效发展和未来的持续改进。领导们和内部的顾问应该思考如何通过来教学来支持业务发展。&lt;/p&gt;
 &lt;p&gt;”授人以渔“(Teach to fish)的哲学，造就了一批解决问题的军队，他们在更好的满足客户的需求和达成公司的愿景寻求平衡和一致(pull in concert to)。对很多精益领导人，教授别人同时有业务和道德的必要性(ethical imperative)。&lt;/p&gt;
 &lt;p&gt;当我训练领导人时，我提醒他们：教员是教授过程的核心。换一种(pull another way)方式来说，曾有一位有智慧的教员说过：”教授不是仅仅只有我自己，教学活动是努力的去看清世界，并保持专注于目标，同时帮助学员从一个新的角度认清现实“。这是最好的公仆型领导。&lt;/p&gt;
 &lt;p&gt;最近一个真理出现在我脑海里(Of late a new truth has been weighing on my mind)，尽管我仍然相信教授专注与人的有效性 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;在改善的工作和世界里，我们经常谈到教员的发展和组织的变革。业务，正在极富见识(savvy)和严肃认真的朝两个方向发展，现在的高效发展和未来的持续改进。领导们和内部的顾问应该思考如何通过来教学来支持业务发展。&lt;/p&gt;
@@ -324,7 +324,7 @@
 &lt;li&gt;没人可以知道所有事情，教员的角色不是需要我们无所不知。事实上，我们应该以一个如饥似渴(voracious)，好奇的，谦虚的领导者站在学员身边，共同寻找前进的路。&lt;/li&gt;
 &lt;li&gt;在教授别人的过程中，我们改变了自己。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;教学不适合胆小鬼(Coaching is not for the faint of heart.)。它需要开放，反思(introspection)，谦虚，愿意去学习。它需要弱者说“我们共同学习吧”，并被改变(It requires the vulnerability to say, “Let us learn together,” and to be personally changed by what we discover alongside the coachee)。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>科技的负担</title><link href="/ke-ji-de-fu-dan.html" rel="alternate"></link><published>2017-06-20T09:28:00+08:00</published><updated>2017-06-20T09:28:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-06-20:/ke-ji-de-fu-dan.html</id><summary type="html">&lt;p&gt;科技只有在流程支持的时候才是美好的。每当流程有所变化的时候，我们得问自己：&lt;/p&gt;
+&lt;p&gt;教学不适合胆小鬼(Coaching is not for the faint of heart.)。它需要开放，反思(introspection)，谦虚，愿意去学习。它需要弱者说“我们共同学习吧”，并被改变(It requires the vulnerability to say, “Let us learn together,” and to be personally changed by what we discover alongside the coachee)。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>科技的负担</title><link href="https://negativedearc.github.io/ke-ji-de-fu-dan.html" rel="alternate"></link><published>2017-06-20T09:28:00+08:00</published><updated>2017-06-20T09:28:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-06-20:/ke-ji-de-fu-dan.html</id><summary type="html">&lt;p&gt;科技只有在流程支持的时候才是美好的。每当流程有所变化的时候，我们得问自己：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;“我们想要达成什么样的效果？如何获知这种变化是有利的改进？”
 这是很多项目失败的地方（fallen short）。数百万美元花在了联邦授权的系统上却连基本的测量方法都没有用上。&lt;/p&gt;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 编程</title><link href="/" rel="alternate"></link><link href="/feeds/bian-cheng.atom.xml" rel="self"></link><id>/</id><updated>2017-02-08T17:12:00+08:00</updated><entry><title>SQLALCHEMY超级灵活的事件监听使用方法</title><link href="/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html" rel="alternate"></link><published>2017-02-08T17:12:00+08:00</published><updated>2017-02-08T17:12:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-02-08:/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html</id><summary type="html">&lt;p&gt;SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 编程</title><link href="https://negativedearc.github.io/" rel="alternate"></link><link href="https://negativedearc.github.io/feeds/bian-cheng.atom.xml" rel="self"></link><id>https://negativedearc.github.io/</id><updated>2017-02-08T17:12:00+08:00</updated><entry><title>SQLALCHEMY超级灵活的事件监听使用方法</title><link href="https://negativedearc.github.io/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html" rel="alternate"></link><published>2017-02-08T17:12:00+08:00</published><updated>2017-02-08T17:12:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-02-08:/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html</id><summary type="html">&lt;p&gt;SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;q = session.query(SomeClass)
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -70,7 +70,7 @@ db.session.commit()
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;这样也完成了一次update操作。&lt;/p&gt;</content><category term="Python"></category><category term="Sqlalchemy"></category></entry><entry><title>使用阿里云DirectMail实现网站事件推送</title><link href="/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html" rel="alternate"></link><published>2017-02-04T11:06:00+08:00</published><updated>2017-02-04T11:06:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-02-04:/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html</id><summary type="html">&lt;p&gt;接上期文章，监听数据库事件之后，我们有了特定情形下通知的诉求，通常来说e-mail比较经济方便。起初在163注册了一个邮箱，结果发现什么admin@cxwloves.cc啊，web_admin@cxwloves.cc之类基本大家都能想到的账号全都被注册干净了，让人不得不怀疑背后是否存在一条产业链。&lt;/p&gt;
+&lt;p&gt;这样也完成了一次update操作。&lt;/p&gt;</content><category term="Python"></category><category term="Sqlalchemy"></category></entry><entry><title>使用阿里云DirectMail实现网站事件推送</title><link href="https://negativedearc.github.io/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html" rel="alternate"></link><published>2017-02-04T11:06:00+08:00</published><updated>2017-02-04T11:06:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-02-04:/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html</id><summary type="html">&lt;p&gt;接上期文章，监听数据库事件之后，我们有了特定情形下通知的诉求，通常来说e-mail比较经济方便。起初在163注册了一个邮箱，结果发现什么admin@cxwloves.cc啊，web_admin@cxwloves.cc之类基本大家都能想到的账号全都被注册干净了，让人不得不怀疑背后是否存在一条产业链。&lt;/p&gt;
 &lt;p&gt;无奈选了一个比较冷门的地址注册，在邮箱设置里面打开SMTP/POP3服务，同时开启了第三方客户端登陆码。这样Python就能连接上了。兴冲冲的准备发出一份Hello World邮件，结果提示邮件被Rejected，原因是被认定为垃圾邮件。&lt;/p&gt;
 &lt;p&gt;百度了下发现个人注册的邮箱似乎以这种方式送达率很低，所以权衡之下找到了阿里云DirectMail做推送，每天200封的免费邮件已经足够。更让人惊喜的是邮箱地址绑定到了域名，这样浑然一体没有遗憾了。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;使用SMTP方式&lt;/strong&gt;&lt;/p&gt;
@@ -116,7 +116,7 @@ db.session.commit()
 &lt;li&gt;空格需要编码，使用urllib.quote_plus()会导致空格转换成+而非%20，应该使用urllib.quote()&lt;/li&gt;
 &lt;li&gt;"/"也需要进行编码，它的结果应该是%2F，应该使用&lt;code&gt;urllib.quote(string, safe="")&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;这两点如果没有满足，签名计算就会出错，通不过服务器的验证邮件是没有办法被发送的。&lt;/p&gt;</content><category term="Python"></category><category term="DirectMail"></category></entry><entry><title>利用sqlite3进行全文检索</title><link href="/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html" rel="alternate"></link><published>2017-01-25T10:57:00+08:00</published><updated>2017-01-25T10:57:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-01-25:/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html</id><summary type="html">&lt;p&gt;在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：&lt;/p&gt;
+&lt;p&gt;这两点如果没有满足，签名计算就会出错，通不过服务器的验证邮件是没有办法被发送的。&lt;/p&gt;</content><category term="Python"></category><category term="DirectMail"></category></entry><entry><title>利用sqlite3进行全文检索</title><link href="https://negativedearc.github.io/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html" rel="alternate"></link><published>2017-01-25T10:57:00+08:00</published><updated>2017-01-25T10:57:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-25:/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html</id><summary type="html">&lt;p&gt;在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;根据图片名检索数据库，获取图片的使用情况&lt;/li&gt;
 &lt;/ul&gt;
@@ -207,7 +207,7 @@ WHERE  [docs] MATCH &amp;#39;&amp;quot;20170124165204*&amp;quot;&amp;#39;;
 &lt;ul&gt;
 &lt;li&gt;windows 在http://www.sqlite.org/download.html 下载对应版本的sqlite.dll复制替换到python27/DLLs/文件夹&lt;/li&gt;
 &lt;li&gt;linux 重新编译sqlite 加上-DSQLITE_ENABLE_FTS4 flag&lt;/li&gt;
-&lt;/ul&gt;</content><category term="Sqlite"></category></entry><entry><title>利用flask-HTTPauth完成博客API构建</title><link href="/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html" rel="alternate"></link><published>2017-01-24T16:13:00+08:00</published><updated>2017-01-24T16:13:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-01-24:/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html</id><summary type="html">&lt;p&gt;为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。&lt;/p&gt;
+&lt;/ul&gt;</content><category term="Sqlite"></category></entry><entry><title>利用flask-HTTPauth完成博客API构建</title><link href="https://negativedearc.github.io/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html" rel="alternate"></link><published>2017-01-24T16:13:00+08:00</published><updated>2017-01-24T16:13:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-24:/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html</id><summary type="html">&lt;p&gt;为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;github地址 https://github.com/miguelgrinberg/Flask-HTTPAuth&lt;/li&gt;
 &lt;li&gt;中文文档地址 http://www.pythondoc.com/flask-restful/third.html&lt;/li&gt;
@@ -258,7 +258,7 @@ def main_verify_token(expires=600):
 &lt;li&gt;如何实现无状态？&lt;/li&gt;
 &lt;li&gt;如何设计一个合理的API？&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;学习之路漫漫，除了想象力还需要扎扎实实读源码的功力&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Flask-HTTPauth"></category></entry><entry><title>利用flask设计类似网易评论的回复系统</title><link href="/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html" rel="alternate"></link><published>2017-01-20T10:05:00+08:00</published><updated>2017-01-20T10:05:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-01-20:/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html</id><summary type="html">&lt;p&gt;本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。&lt;/p&gt;
+&lt;p&gt;学习之路漫漫，除了想象力还需要扎扎实实读源码的功力&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Flask-HTTPauth"></category></entry><entry><title>利用flask设计类似网易评论的回复系统</title><link href="https://negativedearc.github.io/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html" rel="alternate"></link><published>2017-01-20T10:05:00+08:00</published><updated>2017-01-20T10:05:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-20:/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html</id><summary type="html">&lt;p&gt;本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。&lt;/p&gt;
 &lt;p&gt;这篇文章将作为记录我开发博客系统遇到的大大小小的坑中的首篇——也是卡住我最多时间思考的地方。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;如何制作一个类似网易盖楼的评论系统？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;问题就分解成了：&lt;/p&gt;
