@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2017-09-25T09:02:00+08:00</updated><entry><title>捕获边际效益</title><link href="/bu-huo-bian-ji-xiao-yi.html" rel="alternate"></link><published>2017-09-22T10:20:00+08:00</published><updated>2017-09-22T10:20:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-09-22:/bu-huo-bian-ji-xiao-yi.html</id><summary type="html">&lt;p&gt;精益环境在不同行业有很多形态，物流企业与生产单位的差别最主要的体现在缺少“均衡”的条件。作为距离市场最末的环节，需求往往被放大，压力也自然最高。传统物流企业，与客户、承运商、外包公司关系千丝万缕，在部署精益项目的时候困难重重。&lt;/p&gt;
+&lt;p align="center"&gt;
+&lt;img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-1.png"  style="zoom:70%" alt="图-1"&gt;
+&lt;/p&gt;
+
+&lt;p&gt;在这样一个极富挑战的环境下，项目应该如何去做？&lt;/p&gt;
+&lt;h4&gt;&lt;strong&gt;背景&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;公司某个运作单位为一位500强客户提供服务。客户依据销售，在一天中频繁的下单，但依照约定：我们以某个时间点对订单进行截止处理。&lt;/p&gt;
+&lt;p&gt;处理模式还在沿用几十年前的“Pallet to Zero”策略。仓库的某个零层区域，在非拣货时段是空出的，任务开始后，这个区域将被短暂的作为中转站完成订单的分拣工作，可被视为“Pick Face”。这种利用率低下的策略是由客户的SAP系统决定的，无法改变。&lt;/p&gt;
+&lt;p&gt;如果我们想要优化这样一个拣货的策略和路径问题，应该如何着手？&lt;/p&gt;
+&lt;h4&gt;&lt;strong&gt;设定衡量方式&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;策略的改变会引起效率的改变，体现在处理时间上。&lt;/p&gt;
+&lt;h4&gt;&lt;strong&gt;现在的做法&lt;/strong&gt;&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;对截止的订单，按照“取货位”进行计数，仅取一次，视为单一订单(sigle pick)，取多次，视为批量订单 …&lt;/li&gt;&lt;/ol&gt;</summary><content type="html">&lt;p&gt;精益环境在不同行业有很多形态，物流企业与生产单位的差别最主要的体现在缺少“均衡”的条件。作为距离市场最末的环节，需求往往被放大，压力也自然最高。传统物流企业，与客户、承运商、外包公司关系千丝万缕，在部署精益项目的时候困难重重。&lt;/p&gt;
+&lt;p align="center"&gt;
+&lt;img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-1.png"  style="zoom:70%" alt="图-1"&gt;
+&lt;/p&gt;
+
+&lt;p&gt;在这样一个极富挑战的环境下，项目应该如何去做？&lt;/p&gt;
+&lt;h4&gt;&lt;strong&gt;背景&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;公司某个运作单位为一位500强客户提供服务。客户依据销售，在一天中频繁的下单，但依照约定：我们以某个时间点对订单进行截止处理。&lt;/p&gt;
+&lt;p&gt;处理模式还在沿用几十年前的“Pallet to Zero”策略。仓库的某个零层区域，在非拣货时段是空出的，任务开始后，这个区域将被短暂的作为中转站完成订单的分拣工作，可被视为“Pick Face”。这种利用率低下的策略是由客户的SAP系统决定的，无法改变。&lt;/p&gt;
+&lt;p&gt;如果我们想要优化这样一个拣货的策略和路径问题，应该如何着手？&lt;/p&gt;
+&lt;h4&gt;&lt;strong&gt;设定衡量方式&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;策略的改变会引起效率的改变，体现在处理时间上。&lt;/p&gt;
+&lt;h4&gt;&lt;strong&gt;现在的做法&lt;/strong&gt;&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;对截止的订单，按照“取货位”进行计数，仅取一次，视为单一订单(sigle pick)，取多次，视为批量订单，做批采操作(batch order)&lt;/li&gt;
+&lt;li&gt;单一订单，将在出货前才从库位拉出，做到“仅取一次”&lt;/li&gt;
+&lt;li&gt;批量订单，依据某种逻辑进入PTZ区域&lt;/li&gt;
+&lt;li&gt;人工进行分拣(Order Pick)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;从数据分析的角度来看，这是一块订单数据的group by和resort的变形记。逻辑的调整究竟会对整个操作时间产生什么样的影响呢？&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;时间的构成：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;取货时间(定义为从原库位开始到PTZ区域的时间)&lt;ul&gt;
+&lt;li&gt;使用车辆运行时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;分拣时间（PTZ区域到发货库位的时间）&lt;ul&gt;
+&lt;li&gt;人工小车行程时间（不增值）&lt;/li&gt;
+&lt;li&gt;折返引发的时间（不增值）&lt;/li&gt;
+&lt;li&gt;拣货操作时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;很显然，取货时间在逻辑调整后并不产生变化，原因是：1-9，9个数字，先输入1，还是先输入9并没有差别。&lt;/p&gt;
+&lt;p&gt;而人工拣货路线将完全取决于逻辑的设定。&lt;/p&gt;
+&lt;p align="center"&gt;
+&lt;img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-2.png"  style="zoom:70%" alt="图-2"&gt;
+&lt;/p&gt;
+
+&lt;p&gt;上图是某一份订单(客户的原始订单)在PTZ区域的排布。工人在通道里将以“Z”形路线进行取货。&lt;/p&gt;
+&lt;h4&gt;&lt;strong&gt;改进后&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;通过对时间的定义，依照订单信息和运作基础数据，可以设定整个拣货过程时间的计算。同时，我们对订单的处理逻辑进行了改变，主要有根据SKU排序、源发地排序、ABC排序等。&lt;/p&gt;
+&lt;p align="center"&gt;
+&lt;img src="/images/2017-09-22-bu-huo-bian-ji-xiao-ying-3.png"  style="zoom:70%" alt="图-3"&gt;
+&lt;/p&gt;
+
+&lt;p&gt;仅仅是处理逻辑的改变，带来的时间的节约，效率的提升也是可观的。在某一整月里，一共有18个工作日，而其中8天将有机会产生边际效应，平均单次节约达5%-10%。&lt;/p&gt;
+&lt;p&gt;现在，订单处理小组有了一个系统，可以通过对时间效率的计算自动选择最优的方案。另外我们还做了一些优化，整合了订单与装车信息的关联，来确保发往统一客户、城市、车辆的订单在Order Pick之后不会被打乱，这也产生了10%的效率的提升。&lt;/p&gt;
+&lt;h4&gt;&lt;strong&gt;更加先进的做法&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;从图-2可以看出，解决这种批量的问题，如果可以缩小订单规模可以产生更加明显的提升&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;将订单拆成波次，使单次处理量降低，处理频率提高&lt;/li&gt;
+&lt;li&gt;对PTZ区域进行改造， 增加横向通道制造小规模区域，通过订单信息的聚类可减少无意义的行程时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些将作为下一阶段的课题进行研究。&lt;/p&gt;
+&lt;h4&gt;&lt;strong&gt;总结&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;物流企业的成本是动态的，如果仅仅是沿用一套固定的模式，将会错过巨大的改进可能。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category><category term="SCM"></category></entry><entry><title>当我们在谈论VSM的时候我们在谈论什么？</title><link href="/dang-wo-men-zai-tan-lun-vsmde-shi-hou-wo-men-zai-tan-lun-shi-yao.html" rel="alternate"></link><published>2017-09-21T11:26:00+08:00</published><updated>2017-09-25T09:02:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-09-21:/dang-wo-men-zai-tan-lun-vsmde-shi-hou-wo-men-zai-tan-lun-shi-yao.html</id><summary type="html">&lt;p&gt;VSM是当下时髦的工具，越来越多的组织正在把VSM当作召开Workshop、交流改善想法的第一语言。VSM是描述流程的“可视化的文档”，包含“信息流”和“实物流”，始于顾客需求，终于顾客满意。&lt;/p&gt;
+&lt;p&gt;大多数的VSM增值比率不会超过 5%，很多流程甚至会低于1%，这些数字令人吃惊但也蕴含了大量的机会，驱动着团队成员为之努力。&lt;/p&gt;
+&lt;h3&gt;VSM与SIPOC的关系&lt;/h3&gt;
+&lt;p&gt;SIPOC是美国质量管理大师戴明发明的，用来描述完整流程的5大要素，有时候也作COPIS。VSM是更加详细的流程描述工具，包含了具体的数值分析。&lt;/p&gt;
+&lt;p&gt;SIPOC更加关注流程转换活动中的KPIV，KPOV，进而确定客户的关键需求。SIPOC并不包含测量内容，在DMAIC框架里，测量将依据SIPOC开展。&lt;/p&gt;
+&lt;p&gt;VSM则把重心放在了对流程活动的描述之上，这个时候往往已经确定了关键需求，VSM是SIPOC的展开，SIPOC是VSM的基础。&lt;/p&gt;
+&lt;h3&gt;VSM的目标&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;创造高层次的视图(Visual Map)，学习真实的“实物流”，“信息流”&lt;/li&gt;
+&lt;li&gt;识别增值的步骤和非增值的浪费，并且量化&lt;/li&gt;
+&lt;li&gt;识别约束(constraint)，会用到TAKT、Line Balancing的原理&lt;/li&gt;
+&lt;li&gt;创造开展改善项目、或者六西格玛项目的可能&lt;/li&gt;
+&lt;li&gt;降低Lead Time和无效的库存 …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;VSM是当下时髦的工具，越来越多的组织正在把VSM当作召开Workshop、交流改善想法的第一语言。VSM是描述流程的“可视化的文档”，包含“信息流”和“实物流”，始于顾客需求，终于顾客满意。&lt;/p&gt;
+&lt;p&gt;大多数的VSM增值比率不会超过 5%，很多流程甚至会低于1%，这些数字令人吃惊但也蕴含了大量的机会，驱动着团队成员为之努力。&lt;/p&gt;
+&lt;h3&gt;VSM与SIPOC的关系&lt;/h3&gt;
+&lt;p&gt;SIPOC是美国质量管理大师戴明发明的，用来描述完整流程的5大要素，有时候也作COPIS。VSM是更加详细的流程描述工具，包含了具体的数值分析。&lt;/p&gt;
+&lt;p&gt;SIPOC更加关注流程转换活动中的KPIV，KPOV，进而确定客户的关键需求。SIPOC并不包含测量内容，在DMAIC框架里，测量将依据SIPOC开展。&lt;/p&gt;
+&lt;p&gt;VSM则把重心放在了对流程活动的描述之上，这个时候往往已经确定了关键需求，VSM是SIPOC的展开，SIPOC是VSM的基础。&lt;/p&gt;
+&lt;h3&gt;VSM的目标&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;创造高层次的视图(Visual Map)，学习真实的“实物流”，“信息流”&lt;/li&gt;
+&lt;li&gt;识别增值的步骤和非增值的浪费，并且量化&lt;/li&gt;
+&lt;li&gt;识别约束(constraint)，会用到TAKT、Line Balancing的原理&lt;/li&gt;
+&lt;li&gt;创造开展改善项目、或者六西格玛项目的可能&lt;/li&gt;
+&lt;li&gt;降低Lead Time和无效的库存，解放现金流&lt;/li&gt;
+&lt;li&gt;构想未来的蓝图，逻辑和理想的结合，识别差距&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;VSM两张图&lt;/h3&gt;
+&lt;p&gt;包含一张描述了现在状况的图形，以及描绘一张理想中未来的图形，其中，可能包含短期可以达到和长期的愿景，这取决于团队的意愿。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;现状图&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这真是一个残酷(brutal)的真相，用UPH, Cycle time，batch size，FTY等描述状况。这些数据最好是经过长期收集，而不是仅仅通过一次Workshop观察得来，以建立可靠的基线(baseline)。&lt;/p&gt;
+&lt;p&gt;更重要的是，需要GB/BB通过现状，引导大家思考“如果....将会怎么样”(what if)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;未来图&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;未来的状态，仍然以提高顾客满意度为第一要义(take customer statisfaction as first priority)，同时符合公司的“使命”，“愿景”，“价值观”，在经过“实用性”(practical)和“经济性(economical)的谨慎考量之后，不用去管以何种方式、短期还是长期达成。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;创建图形&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;主要步骤&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;确定顾客，在右上角画出图形&lt;/li&gt;
+&lt;li&gt;画出与顾客之间的信息流，可以是生产计划、EDI信息，客户服务等&lt;/li&gt;
+&lt;li&gt;画出供应商与顾客之间的信息传递&lt;/li&gt;
+&lt;li&gt;从左至右，在图形底部画出流程名字及人数，确定数据盒子的内容&lt;/li&gt;
+&lt;li&gt;确定流程步骤直接的库存是什么，以及库存的数量或时间&lt;/li&gt;
+&lt;li&gt;增加实物与信息之间的联系&lt;/li&gt;
+&lt;li&gt;在每个流程底部绘制“Lead time ladder”，包含增值时间与非增值时间&lt;/li&gt;
+&lt;li&gt;在“lead time ladder”末端增加盒子，计算增值比率&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;布局图&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;p align="center"&gt;&lt;img src="/images/2017-09-20-dang-wo-men-tan-lun-VSM-de-shi-shi-hou-wo-men-zai-tan-lun-shen-me-1.jpg" alt="图-1" style="zoom: 70%"&gt;&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第一块区域-信息流&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;占比3/6。从客户出发，描绘出信息的处理流程。与客户要求相关的需求，特别是数量、频次将被转换成TAKT。信息流程是电子信息还是纸质信息，由不同的箭头符号区分，同时标注信息是由生产计划还是EDI信息等控制的方式。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第二块区域-实物流&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;占比2/6。包含流程、数据盒子、人数、库存水平、运输的方式、实物流动的方式。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第三块区域-梯形图&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;占比1/6。梯形图包含增值时间和非增值时间，如果最后计算到增值比率效益 1%请不要惊讶，整个流程超过95%都是浪费。确保所有的数值在参与计算的时候，全部转换成了统一的量纲。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;数据盒子&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;数字盒子是VSM最重要的组成部分，用数字讲述流程的故事。假设正在以“”为例，生产 编号为“Part Number 1298”，我们来看一下收集了哪些数字。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;C/O&lt;/strong&gt; &lt;/p&gt;
+&lt;p&gt;PN1298零件的切换时间为 7分钟(&lt;em&gt;注：从上一个批次的最后一个好件到现在生产批次的第一个好件&lt;/em&gt;)。历史切换时间为 5分钟&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Avaibility，shift/day，schedule day/week&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;经过 12.25小时(&lt;em&gt;注：图中的735 min转换得来&lt;/em&gt;)的计划时间，零件生产完毕。每天有 3个班次，每周工作 6天。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Standard batch size&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;标准的对托转换率为 1,350pcs/pallet。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Yield，DPMO&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;报废率为 0.74%48 28个零件共计48个缺陷被发现(&lt;em&gt;注：有些零件不止一个缺陷&lt;/em&gt;)，无法返工，只能报废。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Avaibility&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;停机时间有两段，一段39min，一段7分钟。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ideal Run Rate, Takt time&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;客户需求的节拍是 100pcs/day，机器的理想工作频率为 2pcs/min，历史生产能力为 93pcs/day。&lt;/p&gt;
+&lt;p&gt;&lt;p align="center"&gt;&lt;img src="/images/2017-09-20-dang-wo-men-tan-lun-VSM-de-shi-shi-hou-wo-men-zai-tan-lun-shen-me-3.jpg" alt="图-3" style="zoom: 70%"&gt;&lt;/p&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;缓冲和安全库存&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在流程步骤之间，有库存存在，其中有一些是浪费，但另外一些是“计划”存在的库存，需要区分开。&lt;/p&gt;
+&lt;p&gt;不是所有的库存都是邪恶的，虽然理想的状态是“零库存”。“计划”存在的库存有两种，分别是缓冲和安全库存。他们不尽一样，但都是为了保证拉动生产的运行和降低产生过量库存的风险。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;缓冲&lt;/strong&gt;是为了应对生产变差，变差来自于公司的供应商，外部的流程或者内部的流程。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;安全库存&lt;/strong&gt;是为了应对来自客户的变差，客户可能会产生因为季节的原因，召回，业务的增长，产品生命周期的终结等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;增值和非增值时间&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;理论上来，最完美的状态是100%的流程都是增值的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;增值时间&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;物理状态的变化（比如货品的搬运）&lt;/li&gt;
+&lt;li&gt;客户愿意付钱的部分&lt;/li&gt;
+&lt;li&gt;一次合格率100%（DRFT）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;团队应该去回顾流程而不是简单接受需求，挑战已有的规则，说不定，现有的流程存在浪费甚至连需求都没有满足。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;非增值时间&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;set-up时间&lt;/li&gt;
+&lt;li&gt;准备时间&lt;/li&gt;
+&lt;li&gt;会议&lt;/li&gt;
+&lt;li&gt;7大浪费的任意一种&lt;/li&gt;
+&lt;li&gt;检查&lt;/li&gt;
+&lt;li&gt;不必要的产品和服务&lt;/li&gt;
+&lt;li&gt;客户不愿意付钱的部分&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果一个流程可能有多个步骤，在不同的地点进行，那么久很可能存在搬运和等待的浪费（特别是当存在批处理的时候），会极大的影响整体的表现，这些都是排名靠前的非增值时间。有时候，付出少量代价却能减少很多交货时间或者其他浪费。&lt;/p&gt;
+&lt;p&gt;例如，安排更频繁的线路把能显著减少交货时间（腾出现金和改善营运资本）但这是有代价的。&lt;/p&gt;
+&lt;p&gt;这些都是六西格玛项目经理要做的，去识别最关键的目标是什么，然后推进。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;符号及图标&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;p align="center"&gt;&lt;img src="/images/2017-09-20-dang-wo-men-tan-lun-VSM-de-shi-shi-hou-wo-men-zai-tan-lun-shen-me-4.jpg" alt="图-4" style="zoom: 70%"&gt;&lt;/p&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>信任收货(GFR)能够改进冷链供应吗？</title><link href="/xin-ren-shou-huo-gfrneng-gou-gai-jin-leng-lian-gong-ying-ma.html" rel="alternate"></link><published>2017-09-05T10:28:00+08:00</published><updated>2017-09-05T10:28:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-09-05:/xin-ren-shou-huo-gfrneng-gou-gai-jin-leng-lian-gong-ying-ma.html</id><summary type="html">&lt;p&gt;在冷链(chilled sector)环节，速度是最重要的&amp;mdash;&amp;mdash;产品在分拨中心（DC）只待几个小时就被送往商店。时间的压力意味着一些零售商(retails)并没有足够的时间去把所有东西都清点清楚。然而，尽管有一些好的理由，但是变化无处不在（change is in the air，and on the ground.这里意指空中的订单信息流和落地的实物流）。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举个例子&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设(let&amp;#39;s say)你收到了一票100箱的货物，如果它有10层高，你可以很快确认是否有短少。但是，当托盘都被堆满，并且混合了多种产品，这时问题就来了。你只能在司机卸货完成后，依赖(reliant on)某个人去接收、清点、记录收货的准确度。&lt;/p&gt;
+&lt;p&gt;在冷链环节下，这很有挑战。托盘经常都被堆满了非常类似(similar-looking)的商品，标签难以辨识，在清点之前 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;在冷链(chilled sector)环节，速度是最重要的&amp;mdash;&amp;mdash;产品在分拨中心（DC）只待几个小时就被送往商店。时间的压力意味着一些零售商(retails)并没有足够的时间去把所有东西都清点清楚。然而，尽管有一些好的理由，但是变化无处不在（change is in the air，and on the ground.这里意指空中的订单信息流和落地的实物流）。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举个例子&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设(let&amp;#39;s say)你收到了一票100箱的货物，如果它有10层高，你可以很快确认是否有短少。但是，当托盘都被堆满，并且混合了多种产品，这时问题就来了。你只能在司机卸货完成后，依赖(reliant on)某个人去接收、清点、记录收货的准确度。&lt;/p&gt;
+&lt;p&gt;在冷链环节下，这很有挑战。托盘经常都被堆满了非常类似(similar-looking)的商品，标签难以辨识，在清点之前，必须拆包（break down）成散件（individuals）。人们在冷冻环境，在有限的科技帮助下，面临达到标准（meet the target performance）的工作压力，&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;零售商知道的秘密：清点冷冻产品并不总是100%准确&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;但如果（but-if）零售商如果能够信任供应商提供的商品，那么就没有那么必要去完全清点收货。相反，他们可以更加专注于清点&amp;ldquo;他们售出的产品&amp;rdquo;（what they&amp;#39;re sending out their stores）。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;信任收货（Good Faith Receiving）能够做什么？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这个时候信任收货就出现了。GFR认为一些可以信赖的供应商，可以&amp;ldquo;照单全收&amp;rdquo;（accept what the delivery document states），但需要启用来自第三方的审核，由供应商（注：分拨中心）承担费用，去按照某种抽样方法随机检查商品的准确度。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;如何执行？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;审核员（the auditor）会检查可靠的托盘数量（robust number of pallets），统计过去3个月的拣货准确率（注：很显然是分拨端的拣货准确率影响了零售商的收货准确率）。利用这些数据确定一个从每个账单里面扣除（deduction）的基准值。所以如果供应商的拣货准确率是99%，那么在最后账单里面，会扣取1%不准确导致的费用。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;信任收货的好处&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先第一点是，供应商可以按时收到报酬，根据他们实际发送的货物（注：是paperwork上标注的产品），将不会有任何混乱（complication）和延迟。&lt;/li&gt;
+&lt;li&gt;其次第二点是，供应商可以减少人力的投入，取消清点和记录的工作&lt;/li&gt;
+&lt;li&gt;第三点，零售商和供应商都能够显著的减少调查纠纷（investigate disputes）和个人索赔（reconcile individual claims）处理的必要&amp;mdash;&amp;mdash;这对双方来说都是节约。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;没有想象中的那么革命性&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;信任收货看起来是个突破性的做法（ground-breaking practise），但从一定程度上来说（in some ways），它依赖流程的改进、科技和自动化与供应链的整合（evolving within..）&amp;mdash;&amp;mdash;以第三方的供应商和整合者（consolidators）为首，提供精准（quintessential）的准确率。&lt;/p&gt;
+&lt;p&gt;这意味着GFR对能够达到高准确率的供应商奏效，而不是所有供应商，另外一些零售商根本不需要GFR，因为他们所要的精准收货的流程已经被整合者实现了。（their receiving process to mirro the accuracy levels already being achieved by the consolidators）。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;GFR对供应链到底意味着什么？GFR确保供应商可以及时收账，同时对实物不一致（inconsistent&amp;nbsp;）进行惩罚（penalize）。但GFR对零售商的操作准确度、实物的可用性并没有提升。供应商需要确保他们的订单准确性、拣货的准确性是高的并且一致（consistent）的，以两种相同的代价，消除浪费。GFR是一种从中获益的方式&amp;mdash;&amp;mdash;但不是唯一的。&lt;/p&gt;
+&lt;p&gt;一条精益的端对端（end-to-end）的流程依赖每一个经过效率和准确度优化的环节。对业务最大的挑战是确保所有成分在掌控之中并为你服务&amp;mdash;&amp;mdash;以更好的服务客户（better serve your customer）。但想要达到这种程度是经常需要改变的。&lt;/p&gt;</content><category term="Lean"></category><category term="SCM"></category><category term="精益"></category></entry><entry><title>铺开标准工作(surfacing standard work)</title><link href="/pu-kai-biao-zhun-gong-zuo-surfacing-standard-work.html" rel="alternate"></link><published>2017-08-17T12:07:00+08:00</published><updated>2017-08-17T12:07:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-08-17:/pu-kai-biao-zhun-gong-zuo-surfacing-standard-work.html</id><summary type="html">&lt;p&gt;根据经验法则(rule of numb)，约有20%的精益医疗组织的工作需要被文档标准化下来(be documented)。那么你的组织，是不是也接近这个数字(come close to the amount)？A3报告是一种将新流程或者改进后流程标准化的方式(one approach)。
+&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;思考一下你曾经完成的A3报告。在问题分析环节，什么问题是最常(the most common issues)被5Y工具暴露出来的(drill down，钻取)？有很大比例的分析人员找到了根源(arrive at the cause of)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这个活动没有标准。&lt;/li&gt;
+&lt;li&gt;没有预期到达目标的方法。&lt;/li&gt;
+&lt;li&gt;不同的人用不同的方法做事。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在这种情形下(in this instances)，根源已经被识别出来了，不再需要更多的Y被问了。根源就是我们需要标准工作但是那里没有标准工作(in place)。我们的措施就是针对被考虑的流程(process in …&lt;/p&gt;</summary><content type="html">&lt;p&gt;根据经验法则(rule of numb)，约有20%的精益医疗组织的工作需要被文档标准化下来(be documented)。那么你的组织，是不是也接近这个数字(come close to the amount)？A3报告是一种将新流程或者改进后流程标准化的方式(one approach)。
+&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;思考一下你曾经完成的A3报告。在问题分析环节，什么问题是最常(the most common issues)被5Y工具暴露出来的(drill down，钻取)？有很大比例的分析人员找到了根源(arrive at the cause of)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这个活动没有标准。&lt;/li&gt;
+&lt;li&gt;没有预期到达目标的方法。&lt;/li&gt;
+&lt;li&gt;不同的人用不同的方法做事。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在这种情形下(in this instances)，根源已经被识别出来了，不再需要更多的Y被问了。根源就是我们需要标准工作但是那里没有标准工作(in place)。我们的措施就是针对被考虑的流程(process in question)制定(develop)标准工作。
+&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;使用A3报告是一种铺平流程标准化优越的方式，因为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;标准工作专注流程，因为有问题暴露出来了&lt;/li&gt;
+&lt;li&gt;在周密的完成调研的时候，问题的解决人员已经准备好了并且有能力创造有效的标准工作&lt;/li&gt;
+&lt;li&gt;员工被强制的要求(deliberately solicited)按照格式去完成A3报告，这加强了标准工作，因为：&lt;/li&gt;
+&lt;li&gt;更高质量的标准工作：更多的员工输入了高质量的调研和制定标准措施&lt;/li&gt;
+&lt;li&gt;更好接受度和更少的抱怨，员工输入(input)并分享了责任感(ownership)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;标准化工作的需求可以在很多维度(numerous way)识别出来。选择流程的标准(criteria of process)应该包含问题发生的频率和流程的危险程度(criticality)。当你想要为标准工作寻找和优先确定一名候选人，重点关注A3驱动的标准工作将能提高你的有效性。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>另一种短暂的时髦(flavor of the month)？</title><link href="/ling-yi-chong-duan-zan-de-shi-mao-flavor-of-the-month.html" rel="alternate"></link><published>2017-07-13T15:06:00+08:00</published><updated>2017-07-13T15:06:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-07-13:/ling-yi-chong-duan-zan-de-shi-mao-flavor-of-the-month.html</id><summary type="html">&lt;p&gt;如果你在医疗保健领域工作足够长的话，你会看到很多项目来了又走，甚至还有一些会重复的回来。各种各样的增强质量和提高安全的方法毫无例外地(no exception to)失败了并且不被赞同(out of favor)。&lt;/p&gt;
+&lt;p&gt;几年下来，从“持续的质量改进”，到TQM，到六西格玛，到Lean，都“过气”了。学员们参加课程，接受最新的方法(being indoctrinated with the newest discipline)，同时交换着“这也过时了的”的眼神(all the while exchanging knowing glances of “this shall pass”)。&lt;/p&gt;
+&lt;p&gt;所以，是这些哲学真的过时了吗(obsolescence)？还是由于领导者的无能(inability)去维持成果？思考以下Lean的基础原则：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;强烈(intense …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;如果你在医疗保健领域工作足够长的话，你会看到很多项目来了又走，甚至还有一些会重复的回来。各种各样的增强质量和提高安全的方法毫无例外地(no exception to)失败了并且不被赞同(out of favor)。&lt;/p&gt;
+&lt;p&gt;几年下来，从“持续的质量改进”，到TQM，到六西格玛，到Lean，都“过气”了。学员们参加课程，接受最新的方法(being indoctrinated with the newest discipline)，同时交换着“这也过时了的”的眼神(all the while exchanging knowing glances of “this shall pass”)。&lt;/p&gt;
+&lt;p&gt;所以，是这些哲学真的过时了吗(obsolescence)？还是由于领导者的无能(inability)去维持成果？思考以下Lean的基础原则：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;强烈(intense)的关注顾客&lt;/li&gt;
+&lt;li&gt;最小化浪费，最大化价值&lt;/li&gt;
+&lt;li&gt;系统思考，避免“孤岛思维”(silo thinking)&lt;/li&gt;
+&lt;li&gt;持续改进&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;很难想象(hard to conceive to)哪怕是其中的一个核心思想不受欢迎。谁能说 “这些都过时了”？&lt;/p&gt;
+&lt;p&gt;想要成功，必须要知道我们不能指望不不去量化(accountability)、维持(sustainability)生产仅通过新的lean方法就能获益。一个关键的解决方案是采用(adoption)管理体系。当一个精益活动开展了，管理体系必须紧密配合(hand-in-hand)。是管理体系，让领导推动发展，追踪绩效，执行持续改进。系统提供了过程框架，使过程可量化、可维持化，避免“过气”。&lt;/p&gt;
+&lt;p&gt;如果没有采取措施(taking the steps) 去增强精益组织文化，那些工具很显然会成为在展示架上“过气”的产品。有了管理体系，我们就能打破恶性循环，维持一套经得起时间考验的原则(stand the test of time)&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>精益色拉(Leadership Salad)</title><link href="/jing-yi-se-la-leadership-salad.html" rel="alternate"></link><published>2017-07-05T11:39:00+08:00</published><updated>2017-07-05T11:39:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-07-05:/jing-yi-se-la-leadership-salad.html</id><summary type="html">&lt;p&gt;我不会认定(convinced)推荐改善活动(facilitate kaizen events)就能造就精益文化，我也不会说使用VSM、平衡记分卡、A3报告、5S、视觉管理、标准作业、防错法、统计过程控制、质量功能展开、失效模式分析、控制图、工艺水准(process leveling)或是安灯就能产生精益文化。&lt;/p&gt;
+&lt;p&gt;在我超过二十年的精益教练生涯里，以我在不同的国际不同的企业使用各种各样眼花缭乱的工具的经验来说，我还没有见过仅仅使用工具就可以产生(emerge from)精益文化。&lt;/p&gt;
+&lt;p&gt;企业在对的地方使用对的工具是可以获得巨大收益的。简单的使用对的工具，把对的人拉进来也是可以使流程变得更好，浪费变得更少或者没有。但是，从长远来看(in a long run)，“持续性”(sustainability)在这种单一的哲学(sole philosophy)下会反反复复的遇到(a recurring issue)。许多企业，表现的更倾向于以上的行为(exhibit …&lt;/p&gt;</summary><content type="html">&lt;p&gt;我不会认定(convinced)推荐改善活动(facilitate kaizen events)就能造就精益文化，我也不会说使用VSM、平衡记分卡、A3报告、5S、视觉管理、标准作业、防错法、统计过程控制、质量功能展开、失效模式分析、控制图、工艺水准(process leveling)或是安灯就能产生精益文化。&lt;/p&gt;
+&lt;p&gt;在我超过二十年的精益教练生涯里，以我在不同的国际不同的企业使用各种各样眼花缭乱的工具的经验来说，我还没有见过仅仅使用工具就可以产生(emerge from)精益文化。&lt;/p&gt;
+&lt;p&gt;企业在对的地方使用对的工具是可以获得巨大收益的。简单的使用对的工具，把对的人拉进来也是可以使流程变得更好，浪费变得更少或者没有。但是，从长远来看(in a long run)，“持续性”(sustainability)在这种单一的哲学(sole philosophy)下会反反复复的遇到(a recurring issue)。许多企业，表现的更倾向于以上的行为(exhibit the habit tend to cycle)，他们非常快速的跳到改善的工具和方法因为某个人阅读了一些文章或是业内正在流行(in vogue)一些行话(buzz words)。&lt;/p&gt;
+&lt;p&gt;这不是精益。这种企业表现的行为及文化，在我看来是一种“精益色拉”。领导们简简单单的把一些工具和技术从上到下倒下来(pour on)，而非用统一的哲学(non-unified philosophy)。很快，大家都迷失了方向(very few people know where they were being leading)。到最后，那些仍有改善激情的人，会遭受“命名疲劳”(nomenclature fatigue)的困扰，把太多的新东西加到他们的餐盘里但他们不知道怎么称呼它或先吃哪样，也是一种沉重的负担(overburden)。&lt;/p&gt;
+&lt;p&gt;这里是一些创造精益文化的需求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;精益应该成为一种运作文化(adopt lean as an operation philosophy)&lt;/li&gt;
+&lt;li&gt;从办公室、会议室解放出来，回到工作、价值产生的地方并从中学习&lt;/li&gt;
+&lt;li&gt;学会使用工具&lt;/li&gt;
+&lt;li&gt;学会标准化并提高自己的工具&lt;/li&gt;
+&lt;li&gt;在持续改变的指引下拥抱学习(embrace learning in light of continuous change)&lt;/li&gt;
+&lt;li&gt;有意愿从一名精益教练身上学习&lt;/li&gt;
+&lt;li&gt;学习成为一名精益教练&lt;/li&gt;
+&lt;li&gt;愿意投身企业的发展&lt;/li&gt;
+&lt;li&gt;愿意打破层级(hierarchical barriers)，创造安心跨职能的交流、反馈环境&lt;/li&gt;
+&lt;li&gt;愿意共渡难关(weather the storm)。精益是一种思考的哲学，长期的忍耐和坚韧才能实现可持续的收益(long term forbearance must be persevere to realize the sustainable gains.)。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;精益理念不适合所有人。并不是每个企业都有胃口(have stomach)完全接受这些必要条件。我们的顾客和我们的伙伴都应该得到最好的回报(best regardless)——精益，持续改进、过程改进；他们应该得到价值和满足感，这是企业成功和收获长期回报(long term profitability)的首要条件。&lt;/p&gt;
+&lt;p&gt;所以我说，要么你拥抱精益，要么继续吃你的“色拉”。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>开启你的领导力之路</title><link href="/kai-qi-ni-de-ling-dao-li-zhi-lu.html" rel="alternate"></link><published>2017-07-04T14:05:00+08:00</published><updated>2017-07-04T14:05:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-07-04:/kai-qi-ni-de-ling-dao-li-zhi-lu.html</id><summary type="html">&lt;p&gt;回到几年前，在和一个管理团队(executive team)一起工作的时候，有人问：为什么我们不仅要写下每日、每周、每月的领导力标准作业(LSW)，而且还要追踪哪些曾经说过要做的事并分享给同僚和上级？&lt;/p&gt;
+&lt;p&gt;这个问题某种程度上刺激了我(a degree of irritation)，所以我给了我最好的答案：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;你正在中层管理和一线员工为树立新的领导行为模范&lt;/li&gt;
+&lt;li&gt;你在同僚之间必须持有这样的责任&lt;/li&gt;
+&lt;li&gt;领导力标准作业是你与一线员工环环相扣(interlocking)，双向(bi-directional)交流的关键链&lt;/li&gt;
+&lt;li&gt;领导力标准作业是维持改进成果的关键&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上就是全部答案吗？当然不是！这四点是正确的，但需要补充的是LSW还扮演了促进你个人改进的角色。意志力(willpower)和自控力(self-control)是创造和坚持(adhering)你行为之路的关键因素。&lt;/p&gt;
+&lt;p&gt;意志力不是与生俱来(not innate to)，而是通过练习和适应发展而来。这和我们通过有氧运动(cardio)和力量训练来提升我们身体的耐受力是一个道理。开发和保持一个新的行为，追踪和测量坚持的程度，创造应对干扰的措施(countermeasures)对行为也即习惯的执行非常重要。&lt;/p&gt;
+&lt;p&gt;英国的研究人员调查了做过前 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;回到几年前，在和一个管理团队(executive team)一起工作的时候，有人问：为什么我们不仅要写下每日、每周、每月的领导力标准作业(LSW)，而且还要追踪哪些曾经说过要做的事并分享给同僚和上级？&lt;/p&gt;
+&lt;p&gt;这个问题某种程度上刺激了我(a degree of irritation)，所以我给了我最好的答案：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;你正在中层管理和一线员工为树立新的领导行为模范&lt;/li&gt;
+&lt;li&gt;你在同僚之间必须持有这样的责任&lt;/li&gt;
+&lt;li&gt;领导力标准作业是你与一线员工环环相扣(interlocking)，双向(bi-directional)交流的关键链&lt;/li&gt;
+&lt;li&gt;领导力标准作业是维持改进成果的关键&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上就是全部答案吗？当然不是！这四点是正确的，但需要补充的是LSW还扮演了促进你个人改进的角色。意志力(willpower)和自控力(self-control)是创造和坚持(adhering)你行为之路的关键因素。&lt;/p&gt;
+&lt;p&gt;意志力不是与生俱来(not innate to)，而是通过练习和适应发展而来。这和我们通过有氧运动(cardio)和力量训练来提升我们身体的耐受力是一个道理。开发和保持一个新的行为，追踪和测量坚持的程度，创造应对干扰的措施(countermeasures)对行为也即习惯的执行非常重要。&lt;/p&gt;
+&lt;p&gt;英国的研究人员调查了做过前/后臀，膝盖置换手术的老年人，他们都收到过一份含有详尽康复指南的小册子(a booklet detailing the their rehab schedule)。这些小册子里面有一些空白页供他们填写每日、每周的行为以及目标。三个月过去了，研究人员发现那么写下计划和目标同时有追踪的，在很多(among the positive outcomes)积极的成果里面，最突出是他们走的速度是那么什么都没写的患者两倍快。有趣的是，那些自我记录、自我追踪、自我奖励的人也提前记录了他们可能会遭受的病痛以及相应的对策来保持与计划的一致性(stay the course with)。&lt;/p&gt;
+&lt;p&gt;用另外的方式表达，那些通过写下计划、每日检查进度、实施有效计划打破篱笆，掌握自己康复(rehabilitation)的人，很显然开辟了一条新生之路，产生了非常多积极的意义。&lt;/p&gt;
+&lt;p&gt;是的，多年前我对管理人员的答复是对的但不完整。写下每个人的领导力标准作业是个人艺术同时也是有意识地领导力(art of personal ownership and conscious leadership)。记录开展积极反馈机制，鼓励产生更好的行为。最后，提前规划可能遭遇的篱笆和对策可以产生积极的反应。在发展标准领导力的进程上，救火行为(firefighting behavior)将注定脱轨(derail)。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>授人以渔而知渔</title><link href="/shou-ren-yi-yu-er-zhi-yu.html" rel="alternate"></link><published>2017-07-03T08:47:00+08:00</published><updated>2017-07-03T08:47:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-07-03:/shou-ren-yi-yu-er-zhi-yu.html</id><summary type="html">&lt;p&gt;在改善的工作和世界里，我们经常谈到教员的发展和组织的变革。业务，正在极富见识(savvy)和严肃认真的朝两个方向发展，现在的高效发展和未来的持续改进。领导们和内部的顾问应该思考如何通过来教学来支持业务发展。&lt;/p&gt;
+&lt;p&gt;”授人以渔“(Teach to fish)的哲学，造就了一批解决问题的军队，他们在更好的满足客户的需求和达成公司的愿景寻求平衡和一致(pull in concert to)。对很多精益领导人，教授别人同时有业务和道德的必要性(ethical imperative)。&lt;/p&gt;
+&lt;p&gt;当我训练领导人时，我提醒他们：教员是教授过程的核心。换一种(pull another way)方式来说，曾有一位有智慧的教员说过：”教授不是仅仅只有我自己，教学活动是努力的去看清世界，并保持专注于目标，同时帮助学员从一个新的角度认清现实“。这是最好的公仆型领导。&lt;/p&gt;
+&lt;p&gt;最近一个真理出现在我脑海里(Of late a new truth has been weighing on my mind)，尽管我仍然相信教授专注与人的有效性 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;在改善的工作和世界里，我们经常谈到教员的发展和组织的变革。业务，正在极富见识(savvy)和严肃认真的朝两个方向发展，现在的高效发展和未来的持续改进。领导们和内部的顾问应该思考如何通过来教学来支持业务发展。&lt;/p&gt;
+&lt;p&gt;”授人以渔“(Teach to fish)的哲学，造就了一批解决问题的军队，他们在更好的满足客户的需求和达成公司的愿景寻求平衡和一致(pull in concert to)。对很多精益领导人，教授别人同时有业务和道德的必要性(ethical imperative)。&lt;/p&gt;
+&lt;p&gt;当我训练领导人时，我提醒他们：教员是教授过程的核心。换一种(pull another way)方式来说，曾有一位有智慧的教员说过：”教授不是仅仅只有我自己，教学活动是努力的去看清世界，并保持专注于目标，同时帮助学员从一个新的角度认清现实“。这是最好的公仆型领导。&lt;/p&gt;
+&lt;p&gt;最近一个真理出现在我脑海里(Of late a new truth has been weighing on my mind)，尽管我仍然相信教授专注与人的有效性(coaching demands focus on the other person)，我开始意识到，我们教员自己也正在被教学的经验改变。&lt;/p&gt;
+&lt;p&gt;在一个面对同事和客户的调研中，我问道：“在教授别人的过程中，你学习到了什么并有什么提高？”，下面是一些回答：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;教学让我体会到领导力来自从别人身上学习，谦虚的询问和保持好奇心是日常的功课和训练(This is a daily journey into the practice of humble inquiry and being curious).每日一醒。&lt;/li&gt;
+&lt;li&gt;教学也是学习(coaching is aslo learning)，我意识到了自己的短板。教学就是一杆测量你谦虚程度的尺(a measure of humility).&lt;/li&gt;
+&lt;li&gt;我学会从更多的角度去关注学员的想法。&lt;/li&gt;
+&lt;li&gt;我意识到需要诚实并直接的告诉学员需要做的更好。&lt;/li&gt;
+&lt;li&gt;每个人能都有不同的知识，教学给我了我一个学习的机会&lt;/li&gt;
+&lt;li&gt;从前我认为“回答问题，教别人如何(what &amp;amp; how)做事或思考”就是教学。这种行为对那些想要自我发展的人来说很不公平，它夺走了人们自己“边学边思考”解决问题的机会。&lt;/li&gt;
+&lt;li&gt;我学会了解构(deconstruct)自己的思维和假设，这样我可以解释的更清楚。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在这些回答里，我产生了三个理解：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;没有自我测试，无法有效的去教授别人&lt;/li&gt;
+&lt;li&gt;没人可以知道所有事情，教员的角色不是需要我们无所不知。事实上，我们应该以一个如饥似渴(voracious)，好奇的，谦虚的领导者站在学员身边，共同寻找前进的路。&lt;/li&gt;
+&lt;li&gt;在教授别人的过程中，我们改变了自己。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;教学不适合胆小鬼(Coaching is not for the faint of heart.)。它需要开放，反思(introspection)，谦虚，愿意去学习。它需要弱者说“我们共同学习吧”，并被改变(It requires the vulnerability to say, “Let us learn together,” and to be personally changed by what we discover alongside the coachee)。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>科技的负担</title><link href="/ke-ji-de-fu-dan.html" rel="alternate"></link><published>2017-06-20T09:28:00+08:00</published><updated>2017-06-20T09:28:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-06-20:/ke-ji-de-fu-dan.html</id><summary type="html">&lt;p&gt;科技只有在流程支持的时候才是美好的。每当流程有所变化的时候，我们得问自己：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“我们想要达成什么样的效果？如何获知这种变化是有利的改进？”
+这是很多项目失败的地方（fallen short）。数百万美元花在了联邦授权的系统上却连基本的测量方法都没有用上。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;任何流程，IT或是其他的，必须被监控，审计，管理。当事情朝好的方向发展，我们可以共享信息，改进可以被测量，如果事情变得糟糕，冲击会使整个项目变的悲剧。&lt;/p&gt;
+&lt;p&gt;一个系统要正常工作依赖很多条件。举个例子，如果一个放射系统和医疗信息系统接口出了问题，医生既不能查看报告也不能得到任何信息。临床医生遇到这样的问题就会导致病人护理延误。在这个系统实施之前，医生可能会寻求一些别的方法去了解病人，现在系统坏了，只能把那些可怜的病人送回家。&lt;/p&gt;
+&lt;p&gt;所以，当部署一项新技术，管理员必须确切明白当前的运作（current state）和信息流。他们要能回答向下面的问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“我现在的产能是多少？当前疗护的质量如何？我的临床医生和病人经验如何？”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果这些都不能在项目部署之前或之后量化，那么投资回报率（Return On Investment)就永远也不会知道。这些问题以及后续的改进需要那些每天在流程里工作的人们非常小心的处理。&lt;/p&gt;
+&lt;p&gt;科技提供给了我们降低成本、提高流程效率、有利的经验。但一不小心也会成为“负担 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;科技只有在流程支持的时候才是美好的。每当流程有所变化的时候，我们得问自己：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“我们想要达成什么样的效果？如何获知这种变化是有利的改进？”
+这是很多项目失败的地方（fallen short）。数百万美元花在了联邦授权的系统上却连基本的测量方法都没有用上。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;任何流程，IT或是其他的，必须被监控，审计，管理。当事情朝好的方向发展，我们可以共享信息，改进可以被测量，如果事情变得糟糕，冲击会使整个项目变的悲剧。&lt;/p&gt;
+&lt;p&gt;一个系统要正常工作依赖很多条件。举个例子，如果一个放射系统和医疗信息系统接口出了问题，医生既不能查看报告也不能得到任何信息。临床医生遇到这样的问题就会导致病人护理延误。在这个系统实施之前，医生可能会寻求一些别的方法去了解病人，现在系统坏了，只能把那些可怜的病人送回家。&lt;/p&gt;
+&lt;p&gt;所以，当部署一项新技术，管理员必须确切明白当前的运作（current state）和信息流。他们要能回答向下面的问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“我现在的产能是多少？当前疗护的质量如何？我的临床医生和病人经验如何？”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果这些都不能在项目部署之前或之后量化，那么投资回报率（Return On Investment)就永远也不会知道。这些问题以及后续的改进需要那些每天在流程里工作的人们非常小心的处理。&lt;/p&gt;
+&lt;p&gt;科技提供给了我们降低成本、提高流程效率、有利的经验。但一不小心也会成为“负担”，我们要尽可能的降低这样的风险。&lt;/p&gt;</content><category term="Lean"></category><category term="精益"></category></entry><entry><title>SQLALCHEMY超级灵活的事件监听使用方法</title><link href="/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html" rel="alternate"></link><published>2017-02-08T17:12:00+08:00</published><updated>2017-02-08T17:12:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-02-08:/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html</id><summary type="html">&lt;p&gt;SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;q = session.query(SomeClass)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;而在flask-sqlalchemy中，作者新增了一个BaseQuery类，使我们可以对一个有效模型类，进行查询，例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="nx"&gt;__tablename__&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;user&amp;quot;&lt;/span&gt;
+    &lt;span class="nx"&gt;id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Column&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;INTEGER&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;primary_key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Column&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="nx"&gt;nullable&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="kd"&gt;@classmethod&lt;/span&gt;
+    &lt;span class="nx"&gt;def&lt;/span&gt; &lt;span class="nx"&gt;exist_susan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+        &lt;span class="nx"&gt;rv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;query&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Susan&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;one&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;True&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;rv&lt;/span&gt; &lt;span class="k"&gt;else …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;q = session.query(SomeClass)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;而在flask-sqlalchemy中，作者新增了一个BaseQuery类，使我们可以对一个有效模型类，进行查询，例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="nx"&gt;__tablename__&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;user&amp;quot;&lt;/span&gt;
+    &lt;span class="nx"&gt;id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Column&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;INTEGER&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;primary_key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Column&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="nx"&gt;nullable&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="kd"&gt;@classmethod&lt;/span&gt;
+    &lt;span class="nx"&gt;def&lt;/span&gt; &lt;span class="nx"&gt;exist_susan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+        &lt;span class="nx"&gt;rv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;query&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Susan&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;one&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;True&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;rv&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="nx"&gt;False&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;由于这种方法自动替我们处理好了session，省心快捷，在我的开发当中，大量使用了这种写法。然而在后期这种写法对模型进行事件监听的造成了很多困难。&lt;/p&gt;
+&lt;h4&gt;监听after_delete事件失败&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cls.query.filter(cls.id == row_id).delete()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;监听after_delete时间成功&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;rv = cls.query.filter(cls.id == row_id).first()
+db.session.delete(rv)
+db.session.commit()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在此，我总结了一个常见事件对应的推荐写法供大家参考。&lt;/p&gt;
+&lt;p&gt;1.使用after_insert/before_insert事件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;user = User(name=&amp;quot;susan&amp;quot;,age=20)
+db.session.add(user)
+db.session.commit()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;2.使用after_update/before_update事件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#以下写法无效
+db.session.query(User).filter(User.name == &amp;quot;susan&amp;quot;).update({&amp;quot;age&amp;quot;: 18})
+db.session.commit()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;为什么会无效呢，是不是感觉很奇怪，查了API发现&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.before_delete"&gt;MapperEvents.before_delete()&lt;/a&gt;and &lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.after_delete"&gt;MapperEvents.after_delete()&lt;/a&gt; events are not invoked from this method. Instead, the &lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.SessionEvents.after_bulk_delete"&gt;SessionEvents.after_bulk_delete()&lt;/a&gt; method is provided to act upon a mass DELETE of entity rows&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以你想用上面的写法，你得把事件改为after_bulk_delete事件。在flask-sqlalchemy已经替你完成了session的自动化产生和销毁，并且全局唯一，想要使用这个事件，还需要做很多额外的工作去处理session问题。但如果你只想针对某个字段使用update监听，我们还有另外的方法——即使用Attribute Event中的&lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#attribute-events"&gt;set&lt;/a&gt;方法&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;susan = db.session.query(User).filter(User.name == &amp;quot;susan&amp;quot;)
+susan.age = 18 # set 方法监听成功
+db.session.commit()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样也完成了一次update操作。&lt;/p&gt;</content><category term="Python"></category><category term="Sqlalchemy"></category></entry><entry><title>使用阿里云DirectMail实现网站事件推送</title><link href="/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html" rel="alternate"></link><published>2017-02-04T11:06:00+08:00</published><updated>2017-02-04T11:06:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-02-04:/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html</id><summary type="html">&lt;p&gt;接上期文章，监听数据库事件之后，我们有了特定情形下通知的诉求，通常来说e-mail比较经济方便。起初在163注册了一个邮箱，结果发现什么admin@cxwloves.cc啊，web_admin@cxwloves.cc之类基本大家都能想到的账号全都被注册干净了，让人不得不怀疑背后是否存在一条产业链。&lt;/p&gt;
+&lt;p&gt;无奈选了一个比较冷门的地址注册，在邮箱设置里面打开SMTP/POP3服务，同时开启了第三方客户端登陆码。这样Python就能连接上了。兴冲冲的准备发出一份Hello World邮件，结果提示邮件被Rejected，原因是被认定为垃圾邮件。&lt;/p&gt;
+&lt;p&gt;百度了下发现个人注册的邮箱似乎以这种方式送达率很低，所以权衡之下找到了阿里云DirectMail做推送，每天200封的免费邮件已经足够。更让人惊喜的是邮箱地址绑定到了域名，这样浑然一体没有遗憾了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用SMTP方式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;阿里云处于安全考虑，关闭了25端口。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用Web API方式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;参照了阿里的文档，试了几次才成功，文档写的确实有一点问题。我这里总结起来供参考。API方式参数有两类，一类是公共方法参数，比如发信的方式，发信的AccessKey，签名加密的方式，时间戳等；第二类是私有方法参数，主要和发信相关，如收件人，主题，邮件正文，邮件html等。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;准备好所有的参数，包括公共的和私有的，签名因为尚未计算不包含进去 …&lt;/li&gt;&lt;/ol&gt;</summary><content type="html">&lt;p&gt;接上期文章，监听数据库事件之后，我们有了特定情形下通知的诉求，通常来说e-mail比较经济方便。起初在163注册了一个邮箱，结果发现什么admin@cxwloves.cc啊，web_admin@cxwloves.cc之类基本大家都能想到的账号全都被注册干净了，让人不得不怀疑背后是否存在一条产业链。&lt;/p&gt;
+&lt;p&gt;无奈选了一个比较冷门的地址注册，在邮箱设置里面打开SMTP/POP3服务，同时开启了第三方客户端登陆码。这样Python就能连接上了。兴冲冲的准备发出一份Hello World邮件，结果提示邮件被Rejected，原因是被认定为垃圾邮件。&lt;/p&gt;
+&lt;p&gt;百度了下发现个人注册的邮箱似乎以这种方式送达率很低，所以权衡之下找到了阿里云DirectMail做推送，每天200封的免费邮件已经足够。更让人惊喜的是邮箱地址绑定到了域名，这样浑然一体没有遗憾了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用SMTP方式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;阿里云处于安全考虑，关闭了25端口。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用Web API方式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;参照了阿里的文档，试了几次才成功，文档写的确实有一点问题。我这里总结起来供参考。API方式参数有两类，一类是公共方法参数，比如发信的方式，发信的AccessKey，签名加密的方式，时间戳等；第二类是私有方法参数，主要和发信相关，如收件人，主题，邮件正文，邮件html等。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;准备好所有的参数，包括公共的和私有的，签名因为尚未计算不包含进去，对其进行A-Z升序排列&lt;/li&gt;
+&lt;li&gt;按照上面的排序，以键值对&amp;amp;key=value的形式连接所有参数，然后进行URL编码，得到parameter_string&lt;/li&gt;
+&lt;li&gt;根据你的请求方式（GET或者POST），如GET方式，则GET&amp;amp;/&amp;amp; + parameter_string，对这个拼接后结果再次进行URL编码得到sign_string&lt;/li&gt;
+&lt;li&gt;计算sign_string的HMAC_SHA1得到signature&lt;/li&gt;
+&lt;li&gt;把这个signature以键值对的&amp;amp;Signature=signature形式加入parameter_string最后，对整个paramter_string进行URL编码后请求&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;整个请求过程涉及了相当数量的库，有urllib，urllib2，hashlib，base64，hmac等。这儿以Python 2.7 为例简单介绍步骤中一些关键的算法。&lt;/p&gt;
+&lt;p&gt;HMAC_SHA1：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;def HMAC_SHA1(key, string_to_sign=None):
+    # generate HMAC_SHA1 token
+    signature = base64.b64encode(
+        hmac.new(key, string_to_sign, hashlib.sha1).digest()
+    )
+    return signature
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;当地时间向UTC时间的转换：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;def local_to_utc():
+    # turn local time to UTC
+    UTC_FORMAT = &amp;quot;%Y-%m-%dT%H:%M:%SZ&amp;quot;
+    return datetime.utcnow().strftime(format=UTC_FORMAT)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;URL编码注意点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;空格需要编码，使用urllib.quote_plus()会导致空格转换成+而非%20，应该使用urllib.quote()&lt;/li&gt;
+&lt;li&gt;"/"也需要进行编码，它的结果应该是%2F，应该使用&lt;code&gt;urllib.quote(string, safe="")&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这两点如果没有满足，签名计算就会出错，通不过服务器的验证邮件是没有办法被发送的。&lt;/p&gt;</content><category term="Python"></category><category term="DirectMail"></category></entry><entry><title>利用sqlite3进行全文检索</title><link href="/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html" rel="alternate"></link><published>2017-01-25T10:57:00+08:00</published><updated>2017-01-25T10:57:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-01-25:/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html</id><summary type="html">&lt;p&gt;在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;根据图片名检索数据库，获取图片的使用情况&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;搜索了一番，找到了如下网页 http://www.sqlite.org/fts3.html 。 sqlite也能实现全文检索。官网介绍了fts3，fts4插件，需求的版本应分别高于3.5.0和3.7.4。而fts1，fts2因为年久失修不被推荐使用。据介绍，ft4显著快于ft4，但可能会多占用1~2%的磁盘空间。&lt;/p&gt;
+&lt;h4&gt;如何使用？&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- 不指定Column，将自动创建一个Column为content的fts3表，当然还有rowid:
+CREATE VIRTUAL TABLE data USING fts3();
+
+-- 传入一组逗号隔开的列表创建Column:
+CREATE VIRTUAL TABLE pages USING fts4(title, keywords, body);
+
+-- 更加详细的建表方式，但会忽略所有约束 …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;根据图片名检索数据库，获取图片的使用情况&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;搜索了一番，找到了如下网页 http://www.sqlite.org/fts3.html 。 sqlite也能实现全文检索。官网介绍了fts3，fts4插件，需求的版本应分别高于3.5.0和3.7.4。而fts1，fts2因为年久失修不被推荐使用。据介绍，ft4显著快于ft4，但可能会多占用1~2%的磁盘空间。&lt;/p&gt;
+&lt;h4&gt;如何使用？&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- 不指定Column，将自动创建一个Column为content的fts3表，当然还有rowid:
+CREATE VIRTUAL TABLE data USING fts3();
+
+-- 传入一组逗号隔开的列表创建Column:
+CREATE VIRTUAL TABLE pages USING fts4(title, keywords, body);
+
+-- 更加详细的建表方式，但会忽略所有约束
+CREATE VIRTUAL TABLE mail USING fts3(
+  subject VARCHAR(256) NOT NULL,
+  body TEXT CHECK(length(body)&amp;lt;10240)
+);
+-- 使用完成删除表
+DROP TABLE data;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;优化&lt;/h4&gt;
+&lt;p&gt;为了支持全文检索，fts会维护一个反向索引（inverted index）映射了分词及其在表中的位置。详细内容参考（http://www.sqlite.org/fts3.html#data_structures）。在查询的时候，使用"INSERT INTO &lt;fts-table&gt;(&lt;fts-table&gt;) VALUES('optimize')"这样的语法来加快后续检索速度，但它是一个开销很大的操作。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- 优化data表的查询结构.
+INSERT INTO data(data) VALUES(&amp;#39;optimize&amp;#39;);
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在SELECT查询中，注意几点可以提高查询速度&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用MATCH取代=，MATCH会利用到内置的全文索引，速度更快&lt;/li&gt;
+&lt;li&gt;使用rowid查询，会直接使用整数主键索引，速度更快&lt;/li&gt;
+&lt;li&gt;除了以上两种情况，其他查询方式都会进行全表搜索，1.5GB大概需要30s完成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- The examples in this block assume the following FTS table:
+CREATE VIRTUAL TABLE mail USING fts3(subject, body);
+
+SELECT * FROM mail WHERE rowid = 15;                -- Fast. Rowid lookup.
+SELECT * FROM mail WHERE body MATCH &amp;#39;sqlite&amp;#39;;       -- Fast. Full-text query.
+SELECT * FROM mail WHERE mail MATCH &amp;#39;search&amp;#39;;       -- Fast. Full-text query.
+SELECT * FROM mail WHERE rowid BETWEEN 15 AND 20;   -- Slow. Linear scan.
+SELECT * FROM mail WHERE subject = &amp;#39;database&amp;#39;;      -- Slow. Linear scan.
+SELECT * FROM mail WHERE subject MATCH &amp;#39;database&amp;#39;;  -- Fast. Full-text query
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;查询语法(我的实现)&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;DROP TABLE IF EXISTS [docs];
+
+CREATE VIRTUAL TABLE [docs] USING [fts4](
+    uuid, 
+    content);
+
+INSERT INTO [docs]
+    ([docs])
+    VALUES (&amp;#39;optimize&amp;#39;);
+
+INSERT INTO [docs]
+    ([uuid], 
+    [content])
+    SELECT [Article].[uuid], 
+       [Article].[content]
+FROM   [Article];
+
+SELECT [uuid], 
+       SNIPPET ([docs], &amp;#39;&lt;span class="nt"&gt;&amp;lt;b&lt;/span&gt; &lt;span class="na"&gt;style=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;color:red&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;&amp;#39;, &amp;#39;&lt;span class="nt"&gt;&amp;lt;/b&amp;gt;&lt;/span&gt;&amp;#39;, &amp;#39;...&amp;#39;, 1, 10) AS [content]
+FROM   [docs]
+WHERE  [docs] MATCH &amp;#39;&amp;quot;20170124165204*&amp;quot;&amp;#39;;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;结果如下：...img alt="" src="/static/upload/&lt;b style="color:red";&gt;20170124165204&lt;/b&gt;.jpeg" style="height:614px...&lt;/p&gt;
+&lt;p&gt;如果你使用最新的fts5搜索，它还多了一个highlight()函数，功能类似snippet()，参考： http://www.sqlite.org/fts5.html#the_highlight_function&lt;/p&gt;
+&lt;h4&gt;错误no such module: fts4&lt;/h4&gt;
+&lt;p&gt;在Python部署的时候遇到了no such module: fts4的错误，而我在使用SQLite Expert的时候并没有如上状况。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;windows 在http://www.sqlite.org/download.html 下载对应版本的sqlite.dll复制替换到python27/DLLs/文件夹&lt;/li&gt;
+&lt;li&gt;linux 重新编译sqlite 加上-DSQLITE_ENABLE_FTS4 flag&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Sqlite"></category></entry><entry><title>利用flask-HTTPauth完成博客API构建</title><link href="/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html" rel="alternate"></link><published>2017-01-24T16:13:00+08:00</published><updated>2017-01-24T16:13:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-01-24:/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html</id><summary type="html">&lt;p&gt;为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;github地址 https://github.com/miguelgrinberg/Flask-HTTPAuth&lt;/li&gt;
+&lt;li&gt;中文文档地址 http://www.pythondoc.com/flask-restful/third.html&lt;/li&gt;
+&lt;li&gt;英文文档地址 http://flask-httpauth.readthedocs.io/en/latest/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;建议阅读英文文档，之前由于对HTTP协议一无所知，在带token认证这一步卡了很久。后来查到如下：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;code&gt;verify_token&lt;/code&gt; callback receives the authentication credentials provided by the client on the &lt;code&gt;Authorization&lt;/code&gt; header. This can be a …&lt;/p&gt;&lt;/blockquote&gt;</summary><content type="html">&lt;p&gt;为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;github地址 https://github.com/miguelgrinberg/Flask-HTTPAuth&lt;/li&gt;
+&lt;li&gt;中文文档地址 http://www.pythondoc.com/flask-restful/third.html&lt;/li&gt;
+&lt;li&gt;英文文档地址 http://flask-httpauth.readthedocs.io/en/latest/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;建议阅读英文文档，之前由于对HTTP协议一无所知，在带token认证这一步卡了很久。后来查到如下：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;code&gt;verify_token&lt;/code&gt; callback receives the authentication credentials provided by the client on the &lt;code&gt;Authorization&lt;/code&gt; header. This can be a simple token, or can contain multiple arguments, which the function will have to parse and extract from the string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;需要把客户端生成的token放入HTTP请求头部的Authorization字段中，在ajax中是这样的：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$.ajax({
+    beforeSend:function (request) {
+      request.setRequestHeader(&amp;quot;Authorization&amp;quot;, BasicAuthorizationCode(token,&amp;quot;unused&amp;quot;));
+    },
+    type:&amp;#39;...&amp;#39;,
+    url:&amp;#39;...&amp;#39;
+    data:{&amp;quot;_method&amp;quot;:&amp;quot;DELETE&amp;quot;},
+    dataType:&amp;quot;json&amp;quot;,
+    success:function () {
+      ...
+    }
+});
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;请求里面带了unused字段，替代密码的占位符，可以被任意字符替代，以上则完成了一次BASIC认证。其中BasicAuthorizationCode是一个对token进行base64二进制转化的函数。&lt;/p&gt;
+&lt;p&gt;带token的认证方式，减少了用户名和密码传输的次数，但还是需要用户名密码获得token，在我的博客中我分配了一个URL专门用来处理请求token。必须是经过登陆的用户才能请求token，但如果我们想在js代码中请求到该URL势必要将用户名和密码明文写入代码之中。&lt;/p&gt;
+&lt;p&gt;由于我没有查到如何处理这种情况，我采取了一个折中的办法：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;@main.route(&amp;#39;/test/token&amp;#39;, methods=[&amp;quot;GET&amp;quot;, &amp;quot;POST&amp;quot;])
+@login_required
+def main_verify_token(expires=600):
+    token = g.user.generate_auth_token(expiration=expires)
+    return jsonify({&amp;quot;token&amp;quot;: token})
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用flask-login的装饰器确保只有经过登陆的用户才能访问该路由。尽管功能上已经可以满足我的要求了，但在概念上仍然模糊。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;什么是无状态？&lt;/li&gt;
+&lt;li&gt;如何实现无状态？&lt;/li&gt;
+&lt;li&gt;如何设计一个合理的API？&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;学习之路漫漫，除了想象力还需要扎扎实实读源码的功力&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Flask-HTTPauth"></category></entry><entry><title>利用flask设计类似网易评论的回复系统</title><link href="/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html" rel="alternate"></link><published>2017-01-20T10:05:00+08:00</published><updated>2017-01-20T10:05:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:None,2017-01-20:/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html</id><summary type="html">&lt;p&gt;本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。&lt;/p&gt;
+&lt;p&gt;这篇文章将作为记录我开发博客系统遇到的大大小小的坑中的首篇——也是卡住我最多时间思考的地方。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;如何制作一个类似网易盖楼的评论系统？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;问题就分解成了：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如何设计数据库的评论表&lt;/li&gt;
+&lt;li&gt;如何在视图中展示出嵌套的样式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在网上查了一些资料，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;评论表有的是回复和评论功用一张表，但是必须要指定每一条评论的id以及它的回复对象pid，若是第一条回复，它的回复对象则是null。&lt;/li&gt;
+&lt;li&gt;也有方案是以回复和评论以两张表分开的形式存储&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;从降低耦合的角度出发，第二种方案更好，在第一种方案中假如需要删除评论，也许就会其他评论造成断档的问题。由于水平有限，我还是采取了第一种方案，理由是建表简单。&lt;/p&gt;
+&lt;p&gt;但是考虑到上述问题，我也设计了一个评论必须经过审核的逻辑，没有经过审核的评论是无法展示的，也就避免了展示后被删除的可能。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;CREATE TABLE &amp;quot;Comment&amp;quot; (
+    id INTEGER NOT NULL, 
+    uid VARCHAR(50) NOT NULL, 
+    rdr_name VARCHAR(20) NOT NULL, 
+    rdr_mail VARCHAR(20) NOT NULL …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。&lt;/p&gt;
+&lt;p&gt;这篇文章将作为记录我开发博客系统遇到的大大小小的坑中的首篇——也是卡住我最多时间思考的地方。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;如何制作一个类似网易盖楼的评论系统？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;问题就分解成了：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如何设计数据库的评论表&lt;/li&gt;
+&lt;li&gt;如何在视图中展示出嵌套的样式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在网上查了一些资料，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;评论表有的是回复和评论功用一张表，但是必须要指定每一条评论的id以及它的回复对象pid，若是第一条回复，它的回复对象则是null。&lt;/li&gt;
+&lt;li&gt;也有方案是以回复和评论以两张表分开的形式存储&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;从降低耦合的角度出发，第二种方案更好，在第一种方案中假如需要删除评论，也许就会其他评论造成断档的问题。由于水平有限，我还是采取了第一种方案，理由是建表简单。&lt;/p&gt;
+&lt;p&gt;但是考虑到上述问题，我也设计了一个评论必须经过审核的逻辑，没有经过审核的评论是无法展示的，也就避免了展示后被删除的可能。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;CREATE TABLE &amp;quot;Comment&amp;quot; (
+    id INTEGER NOT NULL, 
+    uid VARCHAR(50) NOT NULL, 
+    rdr_name VARCHAR(20) NOT NULL, 
+    rdr_mail VARCHAR(20) NOT NULL, 
+    rdr_message VARCHAR(200) NOT NULL, 
+    reply_id VARCHAR(50) NOT NULL, 
+    reply_to_id VARCHAR(50), 
+    message_date DATETIME NOT NULL, 
+    approved BOOLEAN NOT NULL, 
+    PRIMARY KEY (id), 
+    UNIQUE (id), 
+    UNIQUE (reply_id), 
+    CHECK (approved IN (0, 1))
+);
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中uid指向文章编号，reply_id会在每一次插入自动生成，reply_to_id就是它回复的评论的id。&lt;/p&gt;
+&lt;p&gt;有了这样的数据库，接下来就是要考虑如何提取数据的问题了。在一个文章地下，会有数十条评论，每一条评论下面还有层层嵌套的评论。查询的开销非常大，幸运的是，这样的递归查询，已经有了解决方案了——就是使用CTE（Common Table Expression），在我所用的sqlite3中版本号需要 &amp;gt;3.8.3。&lt;/p&gt;
+&lt;p&gt;首先遍历出所有评论，对每一条评论递归查询出它所有的回复。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;with recursive
+     cte(id, reply_id, reply_to_id, rdr_message, rdr_name, message_date) as (
+     select id, reply_id, reply_to_id, rdr_message, rdr_name ,message_date from Comment where reply_id = &amp;#39;fa102480-dd21-11e6-b1ae-f4066974556c&amp;#39; and approved = 1 and uid = &amp;#39;3928f38e-d702-11e6-94&amp;#39;
+     union all
+     select Comment.id, Comment.reply_id, Comment.reply_to_id, Comment.rdr_message, Comment.rdr_name, Comment.message_date from Comment join cte on Comment.reply_id = cte.reply_to_id
+     )
+select * from cte
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样就获得了一个自下而上的的评论列表。这样结构的数据很难直接看出相互的继承关系，所以需要进一步处理使其结构嵌套起来。在python后端完成。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;def nest(lst):
+    &amp;quot;&amp;quot;&amp;quot;
+    aim to turn flatten list (which fetched from sql) to nested structure
+    :param lst: list
+    :return: nested list
+    &amp;quot;&amp;quot;&amp;quot;
+    if not lst:
+        return None
+    first = lst[0]
+    del lst[0]
+    return {&amp;quot;pid&amp;quot;: first, &amp;quot;id&amp;quot;: nest(lst)}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这个递归函数会形成一个嵌套的字典表示层级关系提供给jinja模板进行递归渲染。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;\{\% macro render_comment(comment, show_btn=True) \%\}
+    &lt;span class="nt"&gt;&amp;lt;li&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;comment&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+        \{\{ media(comment[&amp;quot;pid&amp;quot;], btn=show_btn) \}\}
+        &lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;comment&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;comment-ul&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;\{\{ render_comment(comment[&amp;quot;id&amp;quot;], False) \}\}&lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+        &lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;endif&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+\{\% endmacro \%\}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中的media也是一个宏，在我的界面里面我利用了bootstrap的media列表来展示评论，具体细节就不展示了，可以替换为任意的样式。&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Jinja"></category></entry></feed>
