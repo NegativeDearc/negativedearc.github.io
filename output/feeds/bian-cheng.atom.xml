@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 编程</title><link href="https://negativedearc.github.io/" rel="alternate"></link><link href="https://negativedearc.github.io/feeds/bian-cheng.atom.xml" rel="self"></link><id>https://negativedearc.github.io/</id><updated>2017-02-08T17:12:00+08:00</updated><entry><title>SQLALCHEMY超级灵活的事件监听使用方法</title><link href="https://negativedearc.github.io/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html" rel="alternate"></link><published>2017-02-08T17:12:00+08:00</published><updated>2017-02-08T17:12:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-02-08:/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html</id><summary type="html">&lt;p&gt;SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;q = session.query(SomeClass)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;而在flask-sqlalchemy中，作者新增了一个BaseQuery类，使我们可以对一个有效模型类，进行查询，例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="nx"&gt;__tablename__&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;user&amp;quot;&lt;/span&gt;
+    &lt;span class="nx"&gt;id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Column&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;INTEGER&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;primary_key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Column&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="nx"&gt;nullable&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="kd"&gt;@classmethod&lt;/span&gt;
+    &lt;span class="nx"&gt;def&lt;/span&gt; &lt;span class="nx"&gt;exist_susan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+        &lt;span class="nx"&gt;rv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;query&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Susan&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;one&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;True&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;rv&lt;/span&gt; &lt;span class="k"&gt;else …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;q = session.query(SomeClass)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;而在flask-sqlalchemy中，作者新增了一个BaseQuery类，使我们可以对一个有效模型类，进行查询，例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="nx"&gt;__tablename__&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;user&amp;quot;&lt;/span&gt;
+    &lt;span class="nx"&gt;id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Column&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;INTEGER&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;primary_key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Column&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="nx"&gt;nullable&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="kd"&gt;@classmethod&lt;/span&gt;
+    &lt;span class="nx"&gt;def&lt;/span&gt; &lt;span class="nx"&gt;exist_susan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+        &lt;span class="nx"&gt;rv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;query&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Susan&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;one&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;True&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;rv&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="nx"&gt;False&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;由于这种方法自动替我们处理好了session，省心快捷，在我的开发当中，大量使用了这种写法。然而在后期这种写法对模型进行事件监听的造成了很多困难。&lt;/p&gt;
+&lt;h4&gt;监听after_delete事件失败&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cls.query.filter(cls.id == row_id).delete()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;监听after_delete时间成功&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;rv = cls.query.filter(cls.id == row_id).first()
+db.session.delete(rv)
+db.session.commit()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在此，我总结了一个常见事件对应的推荐写法供大家参考。&lt;/p&gt;
+&lt;p&gt;1.使用after_insert/before_insert事件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;user = User(name=&amp;quot;susan&amp;quot;,age=20)
+db.session.add(user)
+db.session.commit()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;2.使用after_update/before_update事件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#以下写法无效
+db.session.query(User).filter(User.name == &amp;quot;susan&amp;quot;).update({&amp;quot;age&amp;quot;: 18})
+db.session.commit()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;为什么会无效呢，是不是感觉很奇怪，查了API发现&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.before_delete"&gt;MapperEvents.before_delete()&lt;/a&gt;and &lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.after_delete"&gt;MapperEvents.after_delete()&lt;/a&gt; events are not invoked from this method. Instead, the &lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.SessionEvents.after_bulk_delete"&gt;SessionEvents.after_bulk_delete()&lt;/a&gt; method is provided to act upon a mass DELETE of entity rows&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以你想用上面的写法，你得把事件改为after_bulk_delete事件。在flask-sqlalchemy已经替你完成了session的自动化产生和销毁，并且全局唯一，想要使用这个事件，还需要做很多额外的工作去处理session问题。但如果你只想针对某个字段使用update监听，我们还有另外的方法——即使用Attribute Event中的&lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#attribute-events"&gt;set&lt;/a&gt;方法&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;susan = db.session.query(User).filter(User.name == &amp;quot;susan&amp;quot;)
+susan.age = 18 # set 方法监听成功
+db.session.commit()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样也完成了一次update操作。&lt;/p&gt;</content><category term="Python"></category><category term="Sqlalchemy"></category></entry><entry><title>使用阿里云DirectMail实现网站事件推送</title><link href="https://negativedearc.github.io/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html" rel="alternate"></link><published>2017-02-04T11:06:00+08:00</published><updated>2017-02-04T11:06:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-02-04:/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html</id><summary type="html">&lt;p&gt;接上期文章，监听数据库事件之后，我们有了特定情形下通知的诉求，通常来说e-mail比较经济方便。起初在163注册了一个邮箱，结果发现什么admin@cxwloves.cc啊，web_admin@cxwloves.cc之类基本大家都能想到的账号全都被注册干净了，让人不得不怀疑背后是否存在一条产业链。&lt;/p&gt;
+&lt;p&gt;无奈选了一个比较冷门的地址注册，在邮箱设置里面打开SMTP/POP3服务，同时开启了第三方客户端登陆码。这样Python就能连接上了。兴冲冲的准备发出一份Hello World邮件，结果提示邮件被Rejected，原因是被认定为垃圾邮件。&lt;/p&gt;
+&lt;p&gt;百度了下发现个人注册的邮箱似乎以这种方式送达率很低，所以权衡之下找到了阿里云DirectMail做推送，每天200封的免费邮件已经足够。更让人惊喜的是邮箱地址绑定到了域名，这样浑然一体没有遗憾了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用SMTP方式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;阿里云处于安全考虑，关闭了25端口。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用Web API方式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;参照了阿里的文档，试了几次才成功，文档写的确实有一点问题。我这里总结起来供参考。API方式参数有两类，一类是公共方法参数，比如发信的方式，发信的AccessKey，签名加密的方式，时间戳等；第二类是私有方法参数，主要和发信相关，如收件人，主题，邮件正文，邮件html等。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;准备好所有的参数，包括公共的和私有的，签名因为尚未计算不包含进去 …&lt;/li&gt;&lt;/ol&gt;</summary><content type="html">&lt;p&gt;接上期文章，监听数据库事件之后，我们有了特定情形下通知的诉求，通常来说e-mail比较经济方便。起初在163注册了一个邮箱，结果发现什么admin@cxwloves.cc啊，web_admin@cxwloves.cc之类基本大家都能想到的账号全都被注册干净了，让人不得不怀疑背后是否存在一条产业链。&lt;/p&gt;
+&lt;p&gt;无奈选了一个比较冷门的地址注册，在邮箱设置里面打开SMTP/POP3服务，同时开启了第三方客户端登陆码。这样Python就能连接上了。兴冲冲的准备发出一份Hello World邮件，结果提示邮件被Rejected，原因是被认定为垃圾邮件。&lt;/p&gt;
+&lt;p&gt;百度了下发现个人注册的邮箱似乎以这种方式送达率很低，所以权衡之下找到了阿里云DirectMail做推送，每天200封的免费邮件已经足够。更让人惊喜的是邮箱地址绑定到了域名，这样浑然一体没有遗憾了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用SMTP方式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;阿里云处于安全考虑，关闭了25端口。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用Web API方式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;参照了阿里的文档，试了几次才成功，文档写的确实有一点问题。我这里总结起来供参考。API方式参数有两类，一类是公共方法参数，比如发信的方式，发信的AccessKey，签名加密的方式，时间戳等；第二类是私有方法参数，主要和发信相关，如收件人，主题，邮件正文，邮件html等。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;准备好所有的参数，包括公共的和私有的，签名因为尚未计算不包含进去，对其进行A-Z升序排列&lt;/li&gt;
+&lt;li&gt;按照上面的排序，以键值对&amp;amp;key=value的形式连接所有参数，然后进行URL编码，得到parameter_string&lt;/li&gt;
+&lt;li&gt;根据你的请求方式（GET或者POST），如GET方式，则GET&amp;amp;/&amp;amp; + parameter_string，对这个拼接后结果再次进行URL编码得到sign_string&lt;/li&gt;
+&lt;li&gt;计算sign_string的HMAC_SHA1得到signature&lt;/li&gt;
+&lt;li&gt;把这个signature以键值对的&amp;amp;Signature=signature形式加入parameter_string最后，对整个paramter_string进行URL编码后请求&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;整个请求过程涉及了相当数量的库，有urllib，urllib2，hashlib，base64，hmac等。这儿以Python 2.7 为例简单介绍步骤中一些关键的算法。&lt;/p&gt;
+&lt;p&gt;HMAC_SHA1：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;def HMAC_SHA1(key, string_to_sign=None):
+    # generate HMAC_SHA1 token
+    signature = base64.b64encode(
+        hmac.new(key, string_to_sign, hashlib.sha1).digest()
+    )
+    return signature
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;当地时间向UTC时间的转换：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;def local_to_utc():
+    # turn local time to UTC
+    UTC_FORMAT = &amp;quot;%Y-%m-%dT%H:%M:%SZ&amp;quot;
+    return datetime.utcnow().strftime(format=UTC_FORMAT)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;URL编码注意点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;空格需要编码，使用urllib.quote_plus()会导致空格转换成+而非%20，应该使用urllib.quote()&lt;/li&gt;
+&lt;li&gt;"/"也需要进行编码，它的结果应该是%2F，应该使用&lt;code&gt;urllib.quote(string, safe="")&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这两点如果没有满足，签名计算就会出错，通不过服务器的验证邮件是没有办法被发送的。&lt;/p&gt;</content><category term="Python"></category><category term="DirectMail"></category></entry><entry><title>利用sqlite3进行全文检索</title><link href="https://negativedearc.github.io/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html" rel="alternate"></link><published>2017-01-25T10:57:00+08:00</published><updated>2017-01-25T10:57:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-25:/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html</id><summary type="html">&lt;p&gt;在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;根据图片名检索数据库，获取图片的使用情况&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;搜索了一番，找到了如下网页 http://www.sqlite.org/fts3.html 。 sqlite也能实现全文检索。官网介绍了fts3，fts4插件，需求的版本应分别高于3.5.0和3.7.4。而fts1，fts2因为年久失修不被推荐使用。据介绍，ft4显著快于ft4，但可能会多占用1~2%的磁盘空间。&lt;/p&gt;
+&lt;h4&gt;如何使用？&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- 不指定Column，将自动创建一个Column为content的fts3表，当然还有rowid:
+CREATE VIRTUAL TABLE data USING fts3();
+
+-- 传入一组逗号隔开的列表创建Column:
+CREATE VIRTUAL TABLE pages USING fts4(title, keywords, body);
+
+-- 更加详细的建表方式，但会忽略所有约束 …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;根据图片名检索数据库，获取图片的使用情况&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;搜索了一番，找到了如下网页 http://www.sqlite.org/fts3.html 。 sqlite也能实现全文检索。官网介绍了fts3，fts4插件，需求的版本应分别高于3.5.0和3.7.4。而fts1，fts2因为年久失修不被推荐使用。据介绍，ft4显著快于ft4，但可能会多占用1~2%的磁盘空间。&lt;/p&gt;
+&lt;h4&gt;如何使用？&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- 不指定Column，将自动创建一个Column为content的fts3表，当然还有rowid:
+CREATE VIRTUAL TABLE data USING fts3();
+
+-- 传入一组逗号隔开的列表创建Column:
+CREATE VIRTUAL TABLE pages USING fts4(title, keywords, body);
+
+-- 更加详细的建表方式，但会忽略所有约束
+CREATE VIRTUAL TABLE mail USING fts3(
+  subject VARCHAR(256) NOT NULL,
+  body TEXT CHECK(length(body)&amp;lt;10240)
+);
+-- 使用完成删除表
+DROP TABLE data;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;优化&lt;/h4&gt;
+&lt;p&gt;为了支持全文检索，fts会维护一个反向索引（inverted index）映射了分词及其在表中的位置。详细内容参考（http://www.sqlite.org/fts3.html#data_structures）。在查询的时候，使用"INSERT INTO &lt;fts-table&gt;(&lt;fts-table&gt;) VALUES('optimize')"这样的语法来加快后续检索速度，但它是一个开销很大的操作。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- 优化data表的查询结构.
+INSERT INTO data(data) VALUES(&amp;#39;optimize&amp;#39;);
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在SELECT查询中，注意几点可以提高查询速度&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用MATCH取代=，MATCH会利用到内置的全文索引，速度更快&lt;/li&gt;
+&lt;li&gt;使用rowid查询，会直接使用整数主键索引，速度更快&lt;/li&gt;
+&lt;li&gt;除了以上两种情况，其他查询方式都会进行全表搜索，1.5GB大概需要30s完成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- The examples in this block assume the following FTS table:
+CREATE VIRTUAL TABLE mail USING fts3(subject, body);
+
+SELECT * FROM mail WHERE rowid = 15;                -- Fast. Rowid lookup.
+SELECT * FROM mail WHERE body MATCH &amp;#39;sqlite&amp;#39;;       -- Fast. Full-text query.
+SELECT * FROM mail WHERE mail MATCH &amp;#39;search&amp;#39;;       -- Fast. Full-text query.
+SELECT * FROM mail WHERE rowid BETWEEN 15 AND 20;   -- Slow. Linear scan.
+SELECT * FROM mail WHERE subject = &amp;#39;database&amp;#39;;      -- Slow. Linear scan.
+SELECT * FROM mail WHERE subject MATCH &amp;#39;database&amp;#39;;  -- Fast. Full-text query
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;查询语法(我的实现)&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;DROP TABLE IF EXISTS [docs];
+
+CREATE VIRTUAL TABLE [docs] USING [fts4](
+    uuid, 
+    content);
+
+INSERT INTO [docs]
+    ([docs])
+    VALUES (&amp;#39;optimize&amp;#39;);
+
+INSERT INTO [docs]
+    ([uuid], 
+    [content])
+    SELECT [Article].[uuid], 
+       [Article].[content]
+FROM   [Article];
+
+SELECT [uuid], 
+       SNIPPET ([docs], &amp;#39;&lt;span class="nt"&gt;&amp;lt;b&lt;/span&gt; &lt;span class="na"&gt;style=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;color:red&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;&amp;#39;, &amp;#39;&lt;span class="nt"&gt;&amp;lt;/b&amp;gt;&lt;/span&gt;&amp;#39;, &amp;#39;...&amp;#39;, 1, 10) AS [content]
+FROM   [docs]
+WHERE  [docs] MATCH &amp;#39;&amp;quot;20170124165204*&amp;quot;&amp;#39;;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;结果如下：...img alt="" src="/static/upload/&lt;b style="color:red";&gt;20170124165204&lt;/b&gt;.jpeg" style="height:614px...&lt;/p&gt;
+&lt;p&gt;如果你使用最新的fts5搜索，它还多了一个highlight()函数，功能类似snippet()，参考： http://www.sqlite.org/fts5.html#the_highlight_function&lt;/p&gt;
+&lt;h4&gt;错误no such module: fts4&lt;/h4&gt;
+&lt;p&gt;在Python部署的时候遇到了no such module: fts4的错误，而我在使用SQLite Expert的时候并没有如上状况。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;windows 在http://www.sqlite.org/download.html 下载对应版本的sqlite.dll复制替换到python27/DLLs/文件夹&lt;/li&gt;
+&lt;li&gt;linux 重新编译sqlite 加上-DSQLITE_ENABLE_FTS4 flag&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Sqlite"></category></entry><entry><title>利用flask-HTTPauth完成博客API构建</title><link href="https://negativedearc.github.io/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html" rel="alternate"></link><published>2017-01-24T16:13:00+08:00</published><updated>2017-01-24T16:13:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-24:/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html</id><summary type="html">&lt;p&gt;为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;github地址 https://github.com/miguelgrinberg/Flask-HTTPAuth&lt;/li&gt;
+&lt;li&gt;中文文档地址 http://www.pythondoc.com/flask-restful/third.html&lt;/li&gt;
+&lt;li&gt;英文文档地址 http://flask-httpauth.readthedocs.io/en/latest/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;建议阅读英文文档，之前由于对HTTP协议一无所知，在带token认证这一步卡了很久。后来查到如下：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;code&gt;verify_token&lt;/code&gt; callback receives the authentication credentials provided by the client on the &lt;code&gt;Authorization&lt;/code&gt; header. This can be a …&lt;/p&gt;&lt;/blockquote&gt;</summary><content type="html">&lt;p&gt;为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;github地址 https://github.com/miguelgrinberg/Flask-HTTPAuth&lt;/li&gt;
+&lt;li&gt;中文文档地址 http://www.pythondoc.com/flask-restful/third.html&lt;/li&gt;
+&lt;li&gt;英文文档地址 http://flask-httpauth.readthedocs.io/en/latest/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;建议阅读英文文档，之前由于对HTTP协议一无所知，在带token认证这一步卡了很久。后来查到如下：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;code&gt;verify_token&lt;/code&gt; callback receives the authentication credentials provided by the client on the &lt;code&gt;Authorization&lt;/code&gt; header. This can be a simple token, or can contain multiple arguments, which the function will have to parse and extract from the string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;需要把客户端生成的token放入HTTP请求头部的Authorization字段中，在ajax中是这样的：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$.ajax({
+    beforeSend:function (request) {
+      request.setRequestHeader(&amp;quot;Authorization&amp;quot;, BasicAuthorizationCode(token,&amp;quot;unused&amp;quot;));
+    },
+    type:&amp;#39;...&amp;#39;,
+    url:&amp;#39;...&amp;#39;
+    data:{&amp;quot;_method&amp;quot;:&amp;quot;DELETE&amp;quot;},
+    dataType:&amp;quot;json&amp;quot;,
+    success:function () {
+      ...
+    }
+});
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;请求里面带了unused字段，替代密码的占位符，可以被任意字符替代，以上则完成了一次BASIC认证。其中BasicAuthorizationCode是一个对token进行base64二进制转化的函数。&lt;/p&gt;
+&lt;p&gt;带token的认证方式，减少了用户名和密码传输的次数，但还是需要用户名密码获得token，在我的博客中我分配了一个URL专门用来处理请求token。必须是经过登陆的用户才能请求token，但如果我们想在js代码中请求到该URL势必要将用户名和密码明文写入代码之中。&lt;/p&gt;
+&lt;p&gt;由于我没有查到如何处理这种情况，我采取了一个折中的办法：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;@main.route(&amp;#39;/test/token&amp;#39;, methods=[&amp;quot;GET&amp;quot;, &amp;quot;POST&amp;quot;])
+@login_required
+def main_verify_token(expires=600):
+    token = g.user.generate_auth_token(expiration=expires)
+    return jsonify({&amp;quot;token&amp;quot;: token})
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用flask-login的装饰器确保只有经过登陆的用户才能访问该路由。尽管功能上已经可以满足我的要求了，但在概念上仍然模糊。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;什么是无状态？&lt;/li&gt;
+&lt;li&gt;如何实现无状态？&lt;/li&gt;
+&lt;li&gt;如何设计一个合理的API？&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;学习之路漫漫，除了想象力还需要扎扎实实读源码的功力&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Flask-HTTPauth"></category></entry><entry><title>利用flask设计类似网易评论的回复系统</title><link href="https://negativedearc.github.io/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html" rel="alternate"></link><published>2017-01-20T10:05:00+08:00</published><updated>2017-01-20T10:05:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-20:/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html</id><summary type="html">&lt;p&gt;本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。&lt;/p&gt;
+&lt;p&gt;这篇文章将作为记录我开发博客系统遇到的大大小小的坑中的首篇——也是卡住我最多时间思考的地方。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;如何制作一个类似网易盖楼的评论系统？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;问题就分解成了：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如何设计数据库的评论表&lt;/li&gt;
+&lt;li&gt;如何在视图中展示出嵌套的样式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在网上查了一些资料，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;评论表有的是回复和评论功用一张表，但是必须要指定每一条评论的id以及它的回复对象pid，若是第一条回复，它的回复对象则是null。&lt;/li&gt;
+&lt;li&gt;也有方案是以回复和评论以两张表分开的形式存储&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;从降低耦合的角度出发，第二种方案更好，在第一种方案中假如需要删除评论，也许就会其他评论造成断档的问题。由于水平有限，我还是采取了第一种方案，理由是建表简单。&lt;/p&gt;
+&lt;p&gt;但是考虑到上述问题，我也设计了一个评论必须经过审核的逻辑，没有经过审核的评论是无法展示的，也就避免了展示后被删除的可能。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;CREATE TABLE &amp;quot;Comment&amp;quot; (
+    id INTEGER NOT NULL, 
+    uid VARCHAR(50) NOT NULL, 
+    rdr_name VARCHAR(20) NOT NULL, 
+    rdr_mail VARCHAR(20) NOT NULL …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。&lt;/p&gt;
+&lt;p&gt;这篇文章将作为记录我开发博客系统遇到的大大小小的坑中的首篇——也是卡住我最多时间思考的地方。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;如何制作一个类似网易盖楼的评论系统？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;问题就分解成了：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如何设计数据库的评论表&lt;/li&gt;
+&lt;li&gt;如何在视图中展示出嵌套的样式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在网上查了一些资料，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;评论表有的是回复和评论功用一张表，但是必须要指定每一条评论的id以及它的回复对象pid，若是第一条回复，它的回复对象则是null。&lt;/li&gt;
+&lt;li&gt;也有方案是以回复和评论以两张表分开的形式存储&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;从降低耦合的角度出发，第二种方案更好，在第一种方案中假如需要删除评论，也许就会其他评论造成断档的问题。由于水平有限，我还是采取了第一种方案，理由是建表简单。&lt;/p&gt;
+&lt;p&gt;但是考虑到上述问题，我也设计了一个评论必须经过审核的逻辑，没有经过审核的评论是无法展示的，也就避免了展示后被删除的可能。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;CREATE TABLE &amp;quot;Comment&amp;quot; (
+    id INTEGER NOT NULL, 
+    uid VARCHAR(50) NOT NULL, 
+    rdr_name VARCHAR(20) NOT NULL, 
+    rdr_mail VARCHAR(20) NOT NULL, 
+    rdr_message VARCHAR(200) NOT NULL, 
+    reply_id VARCHAR(50) NOT NULL, 
+    reply_to_id VARCHAR(50), 
+    message_date DATETIME NOT NULL, 
+    approved BOOLEAN NOT NULL, 
+    PRIMARY KEY (id), 
+    UNIQUE (id), 
+    UNIQUE (reply_id), 
+    CHECK (approved IN (0, 1))
+);
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中uid指向文章编号，reply_id会在每一次插入自动生成，reply_to_id就是它回复的评论的id。&lt;/p&gt;
+&lt;p&gt;有了这样的数据库，接下来就是要考虑如何提取数据的问题了。在一个文章地下，会有数十条评论，每一条评论下面还有层层嵌套的评论。查询的开销非常大，幸运的是，这样的递归查询，已经有了解决方案了——就是使用CTE（Common Table Expression），在我所用的sqlite3中版本号需要 &amp;gt;3.8.3。&lt;/p&gt;
+&lt;p&gt;首先遍历出所有评论，对每一条评论递归查询出它所有的回复。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;with recursive
+     cte(id, reply_id, reply_to_id, rdr_message, rdr_name, message_date) as (
+     select id, reply_id, reply_to_id, rdr_message, rdr_name ,message_date from Comment where reply_id = &amp;#39;fa102480-dd21-11e6-b1ae-f4066974556c&amp;#39; and approved = 1 and uid = &amp;#39;3928f38e-d702-11e6-94&amp;#39;
+     union all
+     select Comment.id, Comment.reply_id, Comment.reply_to_id, Comment.rdr_message, Comment.rdr_name, Comment.message_date from Comment join cte on Comment.reply_id = cte.reply_to_id
+     )
+select * from cte
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样就获得了一个自下而上的的评论列表。这样结构的数据很难直接看出相互的继承关系，所以需要进一步处理使其结构嵌套起来。在python后端完成。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;def nest(lst):
+    &amp;quot;&amp;quot;&amp;quot;
+    aim to turn flatten list (which fetched from sql) to nested structure
+    :param lst: list
+    :return: nested list
+    &amp;quot;&amp;quot;&amp;quot;
+    if not lst:
+        return None
+    first = lst[0]
+    del lst[0]
+    return {&amp;quot;pid&amp;quot;: first, &amp;quot;id&amp;quot;: nest(lst)}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这个递归函数会形成一个嵌套的字典表示层级关系提供给jinja模板进行递归渲染。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;\{\% macro render_comment(comment, show_btn=True) \%\}
+    &lt;span class="nt"&gt;&amp;lt;li&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;comment&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+        \{\{ media(comment[&amp;quot;pid&amp;quot;], btn=show_btn) \}\}
+        &lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;comment&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;comment-ul&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;\{\{ render_comment(comment[&amp;quot;id&amp;quot;], False) \}\}&lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+        &lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;endif&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+\{\% endmacro \%\}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中的media也是一个宏，在我的界面里面我利用了bootstrap的media列表来展示评论，具体细节就不展示了，可以替换为任意的样式。&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Jinja"></category></entry></feed>

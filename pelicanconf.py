@@ -23,15 +23,16 @@ AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS = ((u'香阁公主', 'http://www.cxwloves.cc/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),
-         ('You can modify those links in your config file', '#'),)
+		 (u"酷酷马鹿", "http://www.kukumalu.cc"),
+	)
 
 # Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+SOCIAL = (('E-Mail', 'mailto:datingwithme@live.cn'),)
 
-DEFAULT_PAGINATION = 10
+DEFAULT_PAGINATION = 5
+
+# Archive 
+ARCHIVES_SAVE_AS = 'archives.html'
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True

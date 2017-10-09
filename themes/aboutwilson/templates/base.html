@@ -43,28 +43,21 @@
 			<div class="col-md-10 col-md-offset-1">
 				<div class="row">
 					<div class="col-md-3">
-						<h4>Navigation</h4>
+						<h4>Archive</h4>
 						<ul class="list-unstyled my-list-style">
-							<li><a href="{{SITEURL}}">{{ SITENAME }}</a></li>
-							{% for title, link in MENUITEMS %}
-							<li><a href="{{ SITEURL }}/{{ link }}"><i class="fa fa-{{ title }} "></i> {{title}}</a></li>
-							{% endfor %}
-							{% if DISPLAY_PAGES_ON_MENU %}
-							{% for page in pages %}
-							<li><a href="{{ SITEURL }}/{{ page.url }}"><i class="fa fa-{{ page.title }} "></i> {{page.title}}</a></li>
-							{% endfor %}
-							{% endif %}
-							{% if FEED_ALL_ATOM %}
-							<li><a href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
-							{% endif %}
-							{% if FEED_ALL_RSS %}
-							<li><a href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml"><i class="fa fa-rss "></i> rss</a></li>
-							{% endif %}
+							<li><a href="archives.html">存档</a></li>
 						</ul>
 					</div>
 					<div class="col-md-3">
 						<h4>Author</h4>
 						<ul class="list-unstyled my-list-style">
+						{% if FEED_ALL_ATOM %}
+						<li><a href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						{% endif %}
+						{% if FEED_ALL_RSS %}
+						<li><a href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml"><i class="fa fa-rss "></i> rss</a></li>
+						{% endif %}
+
 						{% for name, link in SOCIAL %}
 							<li><a href="{{ link }}">{{ name }}</a></li>
 						{% endfor %}
@@ -76,7 +69,7 @@
 							{% for cat, art in categories %}
 							<!-- <li><a href="{{SITEURL}}/category/{{cat | replace(" ", "-") | lower }}.html">{{cat}} ({{art | count}})</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
-							<li><a href="{{ SITEURL }}/{{ cat.url }}">{{cat}} ({{ art | count}})</a></li>
+							<li><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }} ({{ art | count }})</a></li>
 							{% endfor %}
 						</ul>
 					</div>
