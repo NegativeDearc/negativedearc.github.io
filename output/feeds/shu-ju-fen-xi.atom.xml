@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 数据分析</title><link href="https://negativedearc.github.io/" rel="alternate"></link><link href="https://negativedearc.github.io/feeds/shu-ju-fen-xi.atom.xml" rel="self"></link><id>https://negativedearc.github.io/</id><updated>2017-10-13T10:28:00+08:00</updated><entry><title>使用ggridge绘制年产运作图形</title><link href="https://negativedearc.github.io/shi-yong-ggridgehui-zhi-nian-chan-yun-zuo-tu-xing.html" rel="alternate"></link><published>2017-10-13T10:28:00+08:00</published><updated>2017-10-13T10:28:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-10-13:/shi-yong-ggridgehui-zhi-nian-chan-yun-zuo-tu-xing.html</id><summary type="html"></summary><content type="html">&lt;h4&gt;ggridge是什么&lt;/h4&gt;
+&lt;p&gt;&lt;a href="https://github.com/clauswilke/ggridges"&gt;ggride&lt;/a&gt;(原名&lt;del&gt;ggjoy&lt;/del&gt;)，是R语言著名可视化套件ggplot2的一个增强包。ridge提供了类似于山峦迭起，用以描述空间和时间的变化(&lt;em&gt;be quite useful for visualizing changes in distributions over time or space&lt;/em&gt;)。&lt;/p&gt;
+&lt;p&gt;它提供了三种基本的绘图形式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;geom_ridgeline(底部填充的折线图)&lt;/li&gt;
+&lt;li&gt;geom_joy(交错排列的密度图)&lt;/li&gt;
+&lt;li&gt;geom_joy2(较前者而言，图形与坐标轴闭合)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-1.png" alt="图-1" style="zoom: 70%"&gt;&lt;/p&gt;
+
+&lt;h4&gt;为什么要用ggrigde&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;ggridge本质上是density，比boxplot数据特征更加直观&lt;/li&gt;
+&lt;li&gt;提供了分组连续对比&lt;/li&gt;
+&lt;li&gt;作图面积利用率高&lt;/li&gt;
+&lt;li&gt;更高的美学价值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当然想要了解每个月的产量趋势，仍然可以可以使用采用了分面技术的折线图。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ggplot(df2, aes(x = date, y = num)) + 
+  geom_line() +
+  facet_wrap(~ mon, nrow = 4, scales = &amp;quot;free_x&amp;quot;) +
+  scale_x_date(date_labels = &amp;quot;%m-%d&amp;quot;) +
+  theme_bw()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-3.png" alt="图-3" style="zoom: 70%"&gt;&lt;/p&gt;
+
+&lt;h4&gt;怎么用ggridge&lt;/h4&gt;
+&lt;p&gt;想要做出12个月生产波动的对比图，&lt;/p&gt;
+&lt;p&gt;先来看一下数据集，df是&lt;code&gt;dataframe&lt;/code&gt;结构：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;date&lt;/code&gt;代表从2016-01-01到2016-12-31的日历&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;numbers&lt;/code&gt;是当日对应的生产量&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mon&lt;/code&gt;是对date进一步的处理，代表具体的月份。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;head(df, n=10)
+
+# date numbers mon
+# 1  2016-01-01     689    01
+# 2  2016-01-03     496    01
+# 3  2016-01-03     714    01
+# 4  2016-01-03     202    01
+# 5  2016-01-03     246    01
+# 6  2016-01-03     357    01
+# 7  2016-01-03     246    01
+# 8  2016-01-03     744    01
+# 9  2016-01-03     450    01
+# 10 2016-01-03     662    01
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;数据需要进一步处理以达到作图要求，需要按照月份对同一日的生产记录进行汇总，对R来说非常容易。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;dplyr&lt;span class="p"&gt;)&lt;/span&gt;
+
+df2 &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; df &lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt; 
+  group_by&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kp"&gt;date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; mon&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt; 
+  summarize&lt;span class="p"&gt;(&lt;/span&gt;num &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kp"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;numbers&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="c1"&gt;# &amp;gt; head(df2, n = 10)&lt;/span&gt;
+&lt;span class="c1"&gt;# # A tibble: 10 x 3&lt;/span&gt;
+&lt;span class="c1"&gt;# date   num   mon&lt;/span&gt;
+&lt;span class="c1"&gt;# &amp;lt;date&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;&lt;/span&gt;
+&lt;span class="c1"&gt;# 1 2016-01-01   689    01&lt;/span&gt;
+&lt;span class="c1"&gt;# 2 2016-01-03  4975    01&lt;/span&gt;
+&lt;span class="c1"&gt;# 3 2016-01-04  6093    01&lt;/span&gt;
+&lt;span class="c1"&gt;# 4 2016-01-05  3969    01&lt;/span&gt;
+&lt;span class="c1"&gt;# 5 2016-01-06  2645    01&lt;/span&gt;
+&lt;span class="c1"&gt;# 6 2016-01-07  3488    01&lt;/span&gt;
+&lt;span class="c1"&gt;# 7 2016-01-08  2261    01&lt;/span&gt;
+&lt;span class="c1"&gt;# 8 2016-01-09  5030    01&lt;/span&gt;
+&lt;span class="c1"&gt;# 9 2016-01-11  7359    01&lt;/span&gt;
+&lt;span class="c1"&gt;# 10 2016-01-12  9066    01&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;阅读ggridge的文档，需要确定x轴、y轴、group字段（单一的ridgeline图不需要），在这里我们确定，x轴为数值，y轴是分组后的月份。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;ggplot2&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="kn"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;ggjoy&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="kn"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;gridExtra&lt;span class="p"&gt;)&lt;/span&gt;
+
+P1 &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; ggplot&lt;span class="p"&gt;(&lt;/span&gt;df2&lt;span class="p"&gt;,&lt;/span&gt; aes&lt;span class="p"&gt;(&lt;/span&gt;x &lt;span class="o"&gt;=&lt;/span&gt; num&lt;span class="p"&gt;,&lt;/span&gt; y &lt;span class="o"&gt;=&lt;/span&gt; mon&lt;span class="p"&gt;,&lt;/span&gt; group &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kp"&gt;as.factor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;mon&lt;span class="p"&gt;),&lt;/span&gt; fill &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;..&lt;/span&gt;x..&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; 
+  geom_joy_gradient&lt;span class="p"&gt;(&lt;/span&gt;scale &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; rel_min_height &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;0.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; gradient_lwd &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; 
+  scale_x_continuous&lt;span class="p"&gt;(&lt;/span&gt;expand &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kt"&gt;c&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; 
+  scale_y_discrete&lt;span class="p"&gt;(&lt;/span&gt;expand &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kt"&gt;c&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; 
+  theme_joy&lt;span class="p"&gt;(&lt;/span&gt;font_size &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;13&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; grid &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;TRUE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; 
+  theme&lt;span class="p"&gt;(&lt;/span&gt;axis.title.y &lt;span class="o"&gt;=&lt;/span&gt; element_blank&lt;span class="p"&gt;())&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; 
+  labs&lt;span class="p"&gt;(&lt;/span&gt;x &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Production numbers&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; y &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Election Year&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; title &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Production of 2016&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; subtitle &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;From 2016-01 to 2016-12&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; caption &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Toll CI@XiaoWei&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+P2 &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; ggplot&lt;span class="p"&gt;(&lt;/span&gt;df2&lt;span class="p"&gt;,&lt;/span&gt; aes&lt;span class="p"&gt;(&lt;/span&gt;y &lt;span class="o"&gt;=&lt;/span&gt; num&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kp"&gt;as.factor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;mon&lt;span class="p"&gt;)))&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; geom_boxplot&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; 
+  labs&lt;span class="p"&gt;(&lt;/span&gt;x &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Month&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; y &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Produce amounts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+grid.arrange&lt;span class="p"&gt;(&lt;/span&gt;P1&lt;span class="p"&gt;,&lt;/span&gt; P2&lt;span class="p"&gt;,&lt;/span&gt; ncol &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-2.png" alt="图-2" style="zoom: 70%"&gt;&lt;/p&gt;</content><category term="R"></category><category term="ggplot"></category></entry></feed>

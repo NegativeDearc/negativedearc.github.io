@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>使用ggridge绘制年产运作图形 — 陈晓伟的个人博客</title>
+	<meta name="description" content="Title: 使用ggridge绘制年产运作图形; Date: 2017-10-13; Author: NegativeDearc">
+	<meta name="author" content="NegativeDearc">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://negativedearc.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://negativedearc.github.io/theme/css/ipython.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="https://negativedearc.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/bootswatch.min.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://negativedearc.github.io/">陈晓伟的个人博客</a>
+			<br>
+<small>Hello, I'm a Continues Improvement Engineer</small>
+		</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">使用ggridge绘制年产运作图形</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">NegativeDearc</h4>
+		</span>
+		<time datetime="2017-10-13T10:28:00+08:00" itemprop="datePublished">周五 13 十月 2017</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="https://negativedearc.github.io/category/shu-ju-fen-xi.html" rel="category">数据分析</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="https://negativedearc.github.io/tag/r.html" rel="tag">R</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://negativedearc.github.io/tag/ggplot.html" rel="tag">ggplot</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><h4>ggridge是什么</h4>
+<p><a href="https://github.com/clauswilke/ggridges">ggride</a>(原名<del>ggjoy</del>)，是R语言著名可视化套件ggplot2的一个增强包。ridge提供了类似于山峦迭起，用以描述空间和时间的变化(<em>be quite useful for visualizing changes in distributions over time or space</em>)。</p>
+<p>它提供了三种基本的绘图形式：</p>
+<ul>
+<li>geom_ridgeline(底部填充的折线图)</li>
+<li>geom_joy(交错排列的密度图)</li>
+<li>geom_joy2(较前者而言，图形与坐标轴闭合)</li>
+</ul>
+<p align="center"><img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-1.png" alt="图-1" style="zoom: 70%"></p>
+
+<h4>为什么要用ggrigde</h4>
+<ul>
+<li>ggridge本质上是density，比boxplot数据特征更加直观</li>
+<li>提供了分组连续对比</li>
+<li>作图面积利用率高</li>
+<li>更高的美学价值</li>
+</ul>
+<p>当然想要了解每个月的产量趋势，仍然可以可以使用采用了分面技术的折线图。</p>
+<div class="highlight"><pre><span></span>ggplot(df2, aes(x = date, y = num)) + 
+  geom_line() +
+  facet_wrap(~ mon, nrow = 4, scales = &quot;free_x&quot;) +
+  scale_x_date(date_labels = &quot;%m-%d&quot;) +
+  theme_bw()
+</pre></div>
+
+
+<p align="center"><img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-3.png" alt="图-3" style="zoom: 70%"></p>
+
+<h4>怎么用ggridge</h4>
+<p>想要做出12个月生产波动的对比图，</p>
+<p>先来看一下数据集，df是<code>dataframe</code>结构：</p>
+<ul>
+<li><code>date</code>代表从2016-01-01到2016-12-31的日历</li>
+<li><code>numbers</code>是当日对应的生产量</li>
+<li><code>mon</code>是对date进一步的处理，代表具体的月份。</li>
+</ul>
+<div class="highlight"><pre><span></span>head(df, n=10)
+
+# date numbers mon
+# 1  2016-01-01     689    01
+# 2  2016-01-03     496    01
+# 3  2016-01-03     714    01
+# 4  2016-01-03     202    01
+# 5  2016-01-03     246    01
+# 6  2016-01-03     357    01
+# 7  2016-01-03     246    01
+# 8  2016-01-03     744    01
+# 9  2016-01-03     450    01
+# 10 2016-01-03     662    01
+</pre></div>
+
+
+<p>数据需要进一步处理以达到作图要求，需要按照月份对同一日的生产记录进行汇总，对R来说非常容易。</p>
+<div class="highlight"><pre><span></span><span class="kn">library</span><span class="p">(</span>dplyr<span class="p">)</span>
+
+df2 <span class="o">&lt;-</span> df <span class="o">%&gt;%</span> 
+  group_by<span class="p">(</span><span class="kp">date</span><span class="p">,</span> mon<span class="p">)</span> <span class="o">%&gt;%</span> 
+  summarize<span class="p">(</span>num <span class="o">=</span> <span class="kp">sum</span><span class="p">(</span>numbers<span class="p">))</span>
+
+<span class="c1"># &gt; head(df2, n = 10)</span>
+<span class="c1"># # A tibble: 10 x 3</span>
+<span class="c1"># date   num   mon</span>
+<span class="c1"># &lt;date&gt; &lt;dbl&gt; &lt;chr&gt;</span>
+<span class="c1"># 1 2016-01-01   689    01</span>
+<span class="c1"># 2 2016-01-03  4975    01</span>
+<span class="c1"># 3 2016-01-04  6093    01</span>
+<span class="c1"># 4 2016-01-05  3969    01</span>
+<span class="c1"># 5 2016-01-06  2645    01</span>
+<span class="c1"># 6 2016-01-07  3488    01</span>
+<span class="c1"># 7 2016-01-08  2261    01</span>
+<span class="c1"># 8 2016-01-09  5030    01</span>
+<span class="c1"># 9 2016-01-11  7359    01</span>
+<span class="c1"># 10 2016-01-12  9066    01</span>
+</pre></div>
+
+
+<p>阅读ggridge的文档，需要确定x轴、y轴、group字段（单一的ridgeline图不需要），在这里我们确定，x轴为数值，y轴是分组后的月份。</p>
+<div class="highlight"><pre><span></span><span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>ggjoy<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>gridExtra<span class="p">)</span>
+
+P1 <span class="o">&lt;-</span> ggplot<span class="p">(</span>df2<span class="p">,</span> aes<span class="p">(</span>x <span class="o">=</span> num<span class="p">,</span> y <span class="o">=</span> mon<span class="p">,</span> group <span class="o">=</span> <span class="kp">as.factor</span><span class="p">(</span>mon<span class="p">),</span> fill <span class="o">=</span> <span class="m">..</span>x..<span class="p">))</span> <span class="o">+</span> 
+  geom_joy_gradient<span class="p">(</span>scale <span class="o">=</span> <span class="m">3</span><span class="p">,</span> rel_min_height <span class="o">=</span> <span class="m">0.01</span><span class="p">,</span> gradient_lwd <span class="o">=</span> <span class="m">1</span><span class="p">)</span> <span class="o">+</span> 
+  scale_x_continuous<span class="p">(</span>expand <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.01</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span> <span class="o">+</span> 
+  scale_y_discrete<span class="p">(</span>expand <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.01</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span> <span class="o">+</span> 
+  theme_joy<span class="p">(</span>font_size <span class="o">=</span> <span class="m">13</span><span class="p">,</span> grid <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">+</span> 
+  theme<span class="p">(</span>axis.title.y <span class="o">=</span> element_blank<span class="p">())</span> <span class="o">+</span> 
+  labs<span class="p">(</span>x <span class="o">=</span> <span class="s">&quot;Production numbers&quot;</span><span class="p">,</span> y <span class="o">=</span> <span class="s">&quot;Election Year&quot;</span><span class="p">,</span> title <span class="o">=</span> <span class="s">&quot;Production of 2016&quot;</span><span class="p">,</span> subtitle <span class="o">=</span> <span class="s">&quot;From 2016-01 to 2016-12&quot;</span><span class="p">,</span> caption <span class="o">=</span> <span class="s">&quot;Toll CI@XiaoWei&quot;</span><span class="p">)</span>
+
+P2 <span class="o">&lt;-</span> ggplot<span class="p">(</span>df2<span class="p">,</span> aes<span class="p">(</span>y <span class="o">=</span> num<span class="p">,</span> <span class="kp">as.factor</span><span class="p">(</span>mon<span class="p">)))</span> <span class="o">+</span> geom_boxplot<span class="p">()</span> <span class="o">+</span> 
+  labs<span class="p">(</span>x <span class="o">=</span> <span class="s">&quot;Month&quot;</span><span class="p">,</span> y <span class="o">=</span> <span class="s">&quot;Produce amounts&quot;</span><span class="p">)</span>
+
+grid.arrange<span class="p">(</span>P1<span class="p">,</span> P2<span class="p">,</span> ncol <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
+</pre></div>
+
+
+<p align="center"><img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-2.png" alt="图-2" style="zoom: 70%"></p></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Archive</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="archives.html">存档</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+						<li><a href="https://negativedearc.github.io/feeds/all.atom.xml" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+
+							<li><a href="mailto:datingwithme@live.cn">E-Mail</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<!-- <li><a href="https://negativedearc.github.io/category/编程.html">编程 (5)</a></li> -->
+							<!-- fix the bug that chinese name categories can not be parse to url -->
+							<li><a href="https://negativedearc.github.io/category/bian-cheng.html">编程 (5)</a></li>
+							<!-- <li><a href="https://negativedearc.github.io/category/工作.html">工作 (10)</a></li> -->
+							<!-- fix the bug that chinese name categories can not be parse to url -->
+							<li><a href="https://negativedearc.github.io/category/gong-zuo.html">工作 (10)</a></li>
+							<!-- <li><a href="https://negativedearc.github.io/category/数据分析.html">数据分析 (1)</a></li> -->
+							<!-- fix the bug that chinese name categories can not be parse to url -->
+							<li><a href="https://negativedearc.github.io/category/shu-ju-fen-xi.html">数据分析 (1)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://www.cxwloves.cc/">香阁公主</a></li>
+							<li><a href="http://www.kukumalu.cc">酷酷马鹿</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; NegativeDearc 2016-2017</p>
+			<p>Powered by Pelican, Themed by aboutwilson</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56532006-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
