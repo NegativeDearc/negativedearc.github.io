@@ -1,7 +1,8 @@
-title: 利用flask设计类似网易评论的回复系统
-tags: Python, Flask, Jinja
+title: 利用JinJa宏及SQLite CTE设计类似网易评论的回复系统
+tags: Python, Flask, Jinja, SQLite
 category: 编程
 date: 2017-01-20 10:05:00
+Modified: 2017-10-16 15:05:00
 
 
 本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。
@@ -13,7 +14,7 @@ date: 2017-01-20 10:05:00
 问题就分解成了：
 
 1. 如何设计数据库的评论表
-1. 如何在视图中展示出嵌套的样式
+2. 如何在视图中展示出嵌套的样式
 
 在网上查了一些资料，
 
@@ -58,7 +59,7 @@ with recursive
 select * from cte
 ```
 
-这样就获得了一个自下而上的的评论列表。这样结构的数据很难直接看出相互的继承关系，所以需要进一步处理使其结构嵌套起来。在python后端完成。
+这样就获得了一个自下而上的的评论列表。这样结构的数据很难直接看出相互的继承关系，所以需要进一步处理使其结构嵌套起来，在python后端完成。
 
 ```
 def nest(lst):
@@ -77,14 +78,16 @@ def nest(lst):
 这个递归函数会形成一个嵌套的字典表示层级关系提供给jinja模板进行递归渲染。
 
 ```
-\{\% macro render_comment(comment, show_btn=True) \%\}
+{% macro render_comment(comment, show_btn=True) %}
     <li class="comment">
-        \{\{ media(comment["pid"], btn=show_btn) \}\}
+        {{ media(comment["pid"], btn=show_btn) }}
         {% if comment["id"] %}
-            <ul class="comment-ul">\{\{ render_comment(comment["id"], False) \}\}</ul>
+            <ul class="comment-ul">{{ render_comment(comment["id"], False) }}</ul>
         {% endif %}
     </li>
-\{\% endmacro \%\}
+{% endmacro %}
 ```
 
 其中的media也是一个宏，在我的界面里面我利用了bootstrap的media列表来展示评论，具体细节就不展示了，可以替换为任意的样式。
+
+<p align="center"><img src="{filename}/images/2017-01-20-li-yong-JinJa-hong-ji-SQLite-CTE-she-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong-1.png" alt="图-1" style="zoom: 80%"></p>

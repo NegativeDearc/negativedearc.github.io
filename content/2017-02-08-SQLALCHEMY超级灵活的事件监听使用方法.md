@@ -41,14 +41,14 @@ db.session.commit()
 
 在此，我总结了一个常见事件对应的推荐写法供大家参考。
 
-1.使用after_insert/before_insert事件
+1.使用`after_insert`/`before_insert`事件
 ```
 user = User(name="susan",age=20)
 db.session.add(user)
 db.session.commit()
 ```
 
-2.使用after_update/before_update事件
+2.使用`after_update`/`before_update`事件
 
 ```
 #以下写法无效
@@ -58,9 +58,9 @@ db.session.commit()
 
 为什么会无效呢，是不是感觉很奇怪，查了API发现
 
-> The [MapperEvents.before_delete()](https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.before_delete)and [MapperEvents.after_delete()](https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.after_delete) events are not invoked from this method. Instead, the [SessionEvents.after_bulk_delete()](https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.SessionEvents.after_bulk_delete) method is provided to act upon a mass DELETE of entity rows
+>The [MapperEvents.before_delete()](https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.before_delete)and [MapperEvents.after_delete()](https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.after_delete) events are not invoked from this method. Instead, the [SessionEvents.after_bulk_delete()](https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.SessionEvents.after_bulk_delete) method is provided to act upon a mass DELETE of entity rows
 
-所以你想用上面的写法，你得把事件改为after_bulk_delete事件。在flask-sqlalchemy已经替你完成了session的自动化产生和销毁，并且全局唯一，想要使用这个事件，还需要做很多额外的工作去处理session问题。但如果你只想针对某个字段使用update监听，我们还有另外的方法——即使用Attribute Event中的[set](https://docs.sqlalchemy.org/en/latest/orm/events.html#attribute-events)方法
+所以你想用上面的写法，你得把事件改为after_bulk_delete事件。在flask-sqlalchemy已经替你完成了session的自动化产生和销毁，并且全局唯一，想要使用这个事件，还需要做很多额外的工作去处理session问题。但如果你只想针对某个字段使用`update`监听，我们还有另外的方法——即使用Attribute Event中的[set](https://docs.sqlalchemy.org/en/latest/orm/events.html#attribute-events)方法
 
 ```
 susan = db.session.query(User).filter(User.name == "susan")

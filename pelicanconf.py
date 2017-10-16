@@ -23,8 +23,7 @@ AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS = ((u'香阁公主', 'http://www.cxwloves.cc/'),
-		 (u"酷酷马鹿", "http://www.kukumalu.cc"),
-	)
+		 (u"酷酷马鹿", "http://www.kukumalu.cc"),)
 
 # Social widget
 SOCIAL = (('E-Mail', 'mailto:datingwithme@live.cn'),)
@@ -35,7 +34,7 @@ DEFAULT_PAGINATION = 5
 ARCHIVES_SAVE_AS = 'archives.html'
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+# RELATIVE_URLS = True
 
 # Theme path, will affect any css/js files related with the theme
 THEME = os.path.join(os.path.dirname(__file__), "themes", "aboutwilson")
