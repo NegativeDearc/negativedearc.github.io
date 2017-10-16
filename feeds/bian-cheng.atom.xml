@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 编程</title><link href="https://negativedearc.github.io/" rel="alternate"></link><link href="https://negativedearc.github.io/feeds/bian-cheng.atom.xml" rel="self"></link><id>https://negativedearc.github.io/</id><updated>2017-02-08T17:12:00+08:00</updated><entry><title>SQLALCHEMY超级灵活的事件监听使用方法</title><link href="https://negativedearc.github.io/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html" rel="alternate"></link><published>2017-02-08T17:12:00+08:00</published><updated>2017-02-08T17:12:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-02-08:/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html</id><summary type="html">&lt;p&gt;SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 编程</title><link href="https://negativedearc.github.io/" rel="alternate"></link><link href="https://negativedearc.github.io/feeds/bian-cheng.atom.xml" rel="self"></link><id>https://negativedearc.github.io/</id><updated>2017-10-16T15:08:00+08:00</updated><entry><title>SQLALCHEMY超级灵活的事件监听使用方法</title><link href="https://negativedearc.github.io/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html" rel="alternate"></link><published>2017-02-08T17:12:00+08:00</published><updated>2017-02-08T17:12:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-02-08:/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html</id><summary type="html">&lt;p&gt;SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;q = session.query(SomeClass)
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -45,14 +45,14 @@ db.session.commit()
 
 
 &lt;p&gt;在此，我总结了一个常见事件对应的推荐写法供大家参考。&lt;/p&gt;
-&lt;p&gt;1.使用after_insert/before_insert事件&lt;/p&gt;
+&lt;p&gt;1.使用&lt;code&gt;after_insert&lt;/code&gt;/&lt;code&gt;before_insert&lt;/code&gt;事件&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;user = User(name=&amp;quot;susan&amp;quot;,age=20)
 db.session.add(user)
 db.session.commit()
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;2.使用after_update/before_update事件&lt;/p&gt;
+&lt;p&gt;2.使用&lt;code&gt;after_update&lt;/code&gt;/&lt;code&gt;before_update&lt;/code&gt;事件&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#以下写法无效
 db.session.query(User).filter(User.name == &amp;quot;susan&amp;quot;).update({&amp;quot;age&amp;quot;: 18})
 db.session.commit()
@@ -63,7 +63,7 @@ db.session.commit()
 &lt;blockquote&gt;
 &lt;p&gt;The &lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.before_delete"&gt;MapperEvents.before_delete()&lt;/a&gt;and &lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.after_delete"&gt;MapperEvents.after_delete()&lt;/a&gt; events are not invoked from this method. Instead, the &lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.SessionEvents.after_bulk_delete"&gt;SessionEvents.after_bulk_delete()&lt;/a&gt; method is provided to act upon a mass DELETE of entity rows&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;所以你想用上面的写法，你得把事件改为after_bulk_delete事件。在flask-sqlalchemy已经替你完成了session的自动化产生和销毁，并且全局唯一，想要使用这个事件，还需要做很多额外的工作去处理session问题。但如果你只想针对某个字段使用update监听，我们还有另外的方法——即使用Attribute Event中的&lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#attribute-events"&gt;set&lt;/a&gt;方法&lt;/p&gt;
+&lt;p&gt;所以你想用上面的写法，你得把事件改为after_bulk_delete事件。在flask-sqlalchemy已经替你完成了session的自动化产生和销毁，并且全局唯一，想要使用这个事件，还需要做很多额外的工作去处理session问题。但如果你只想针对某个字段使用&lt;code&gt;update&lt;/code&gt;监听，我们还有另外的方法——即使用Attribute Event中的&lt;a href="https://docs.sqlalchemy.org/en/latest/orm/events.html#attribute-events"&gt;set&lt;/a&gt;方法&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;susan = db.session.query(User).filter(User.name == &amp;quot;susan&amp;quot;)
 susan.age = 18 # set 方法监听成功
 db.session.commit()
@@ -116,7 +116,7 @@ db.session.commit()
 &lt;li&gt;空格需要编码，使用urllib.quote_plus()会导致空格转换成+而非%20，应该使用urllib.quote()&lt;/li&gt;
 &lt;li&gt;"/"也需要进行编码，它的结果应该是%2F，应该使用&lt;code&gt;urllib.quote(string, safe="")&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;这两点如果没有满足，签名计算就会出错，通不过服务器的验证邮件是没有办法被发送的。&lt;/p&gt;</content><category term="Python"></category><category term="DirectMail"></category></entry><entry><title>利用sqlite3进行全文检索</title><link href="https://negativedearc.github.io/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html" rel="alternate"></link><published>2017-01-25T10:57:00+08:00</published><updated>2017-01-25T10:57:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-25:/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html</id><summary type="html">&lt;p&gt;在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：&lt;/p&gt;
+&lt;p&gt;这两点如果没有满足，签名计算就会出错，通不过服务器的验证邮件是没有办法被发送的。&lt;/p&gt;</content><category term="Python"></category><category term="DirectMail"></category></entry><entry><title>利用sqlite3进行全文检索</title><link href="https://negativedearc.github.io/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html" rel="alternate"></link><published>2017-01-25T10:57:00+08:00</published><updated>2017-10-16T15:08:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-25:/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html</id><summary type="html">&lt;p&gt;在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;根据图片名检索数据库，获取图片的使用情况&lt;/li&gt;
 &lt;/ul&gt;
@@ -200,14 +200,14 @@ WHERE  [docs] MATCH &amp;#39;&amp;quot;20170124165204*&amp;quot;&amp;#39;;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;结果如下：...img alt="" src="/static/upload/&lt;b style="color:red";&gt;20170124165204&lt;/b&gt;.jpeg" style="height:614px...&lt;/p&gt;
-&lt;p&gt;如果你使用最新的fts5搜索，它还多了一个highlight()函数，功能类似snippet()，参考： http://www.sqlite.org/fts5.html#the_highlight_function&lt;/p&gt;
+&lt;p&gt;结果如下：&lt;code&gt;...img alt="" src="/static/upload/&amp;lt;b style="color:red";&amp;gt;20170124165204&amp;lt;/b&amp;gt;.jpeg" style="height:614px...&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如果你使用最新的fts5搜索，它还多了一个&lt;code&gt;highlight()&lt;/code&gt;函数，功能类似&lt;code&gt;snippet()&lt;/code&gt;，参考&lt;a href="http://www.sqlite.org/fts5.html#the_highlight_function"&gt;地址&lt;/a&gt;。&lt;/p&gt;
 &lt;h4&gt;错误no such module: fts4&lt;/h4&gt;
 &lt;p&gt;在Python部署的时候遇到了no such module: fts4的错误，而我在使用SQLite Expert的时候并没有如上状况。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;windows 在http://www.sqlite.org/download.html 下载对应版本的sqlite.dll复制替换到python27/DLLs/文件夹&lt;/li&gt;
 &lt;li&gt;linux 重新编译sqlite 加上-DSQLITE_ENABLE_FTS4 flag&lt;/li&gt;
-&lt;/ul&gt;</content><category term="Sqlite"></category></entry><entry><title>利用flask-HTTPauth完成博客API构建</title><link href="https://negativedearc.github.io/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html" rel="alternate"></link><published>2017-01-24T16:13:00+08:00</published><updated>2017-01-24T16:13:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-24:/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html</id><summary type="html">&lt;p&gt;为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。&lt;/p&gt;
+&lt;/ul&gt;</content><category term="SQLite"></category></entry><entry><title>利用flask-HTTPauth完成博客API构建</title><link href="https://negativedearc.github.io/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html" rel="alternate"></link><published>2017-01-24T16:13:00+08:00</published><updated>2017-01-24T16:13:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-24:/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html</id><summary type="html">&lt;p&gt;为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;github地址 https://github.com/miguelgrinberg/Flask-HTTPAuth&lt;/li&gt;
 &lt;li&gt;中文文档地址 http://www.pythondoc.com/flask-restful/third.html&lt;/li&gt;
@@ -258,7 +258,7 @@ def main_verify_token(expires=600):
 &lt;li&gt;如何实现无状态？&lt;/li&gt;
 &lt;li&gt;如何设计一个合理的API？&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;学习之路漫漫，除了想象力还需要扎扎实实读源码的功力&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Flask-HTTPauth"></category></entry><entry><title>利用flask设计类似网易评论的回复系统</title><link href="https://negativedearc.github.io/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html" rel="alternate"></link><published>2017-01-20T10:05:00+08:00</published><updated>2017-01-20T10:05:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-20:/li-yong-flaskshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html</id><summary type="html">&lt;p&gt;本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。&lt;/p&gt;
+&lt;p&gt;学习之路漫漫，除了想象力还需要扎扎实实读源码的功力&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Flask-HTTPauth"></category></entry><entry><title>利用JinJa宏及SQLite CTE设计类似网易评论的回复系统</title><link href="https://negativedearc.github.io/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html" rel="alternate"></link><published>2017-01-20T10:05:00+08:00</published><updated>2017-10-16T15:05:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-20:/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html</id><summary type="html">&lt;p&gt;本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。&lt;/p&gt;
 &lt;p&gt;这篇文章将作为记录我开发博客系统遇到的大大小小的坑中的首篇——也是卡住我最多时间思考的地方。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;如何制作一个类似网易盖楼的评论系统？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;问题就分解成了：&lt;/p&gt;
@@ -323,7 +323,7 @@ select * from cte
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;这样就获得了一个自下而上的的评论列表。这样结构的数据很难直接看出相互的继承关系，所以需要进一步处理使其结构嵌套起来。在python后端完成。&lt;/p&gt;
+&lt;p&gt;这样就获得了一个自下而上的的评论列表。这样结构的数据很难直接看出相互的继承关系，所以需要进一步处理使其结构嵌套起来，在python后端完成。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;def nest(lst):
     &amp;quot;&amp;quot;&amp;quot;
     aim to turn flatten list (which fetched from sql) to nested structure
@@ -339,15 +339,16 @@ select * from cte
 
 
 &lt;p&gt;这个递归函数会形成一个嵌套的字典表示层级关系提供给jinja模板进行递归渲染。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;\{\% macro render_comment(comment, show_btn=True) \%\}
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;macro&lt;/span&gt; &lt;span class="nv"&gt;render_comment&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;comment&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nv"&gt;show_btn&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kp"&gt;True&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;lt;li&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;comment&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
-        \{\{ media(comment[&amp;quot;pid&amp;quot;], btn=show_btn) \}\}
+        &lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;media&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;comment&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;pid&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;],&lt;/span&gt; &lt;span class="nv"&gt;btn&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;show_btn&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;
         &lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;comment&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
-            &lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;comment-ul&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;\{\{ render_comment(comment[&amp;quot;id&amp;quot;], False) \}\}&lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;comment-ul&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;{{&lt;/span&gt; &lt;span class="nv"&gt;render_comment&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;comment&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;],&lt;/span&gt; &lt;span class="kp"&gt;False&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="cp"&gt;}}&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
         &lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;endif&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-\{\% endmacro \%\}
+&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;endmacro&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;其中的media也是一个宏，在我的界面里面我利用了bootstrap的media列表来展示评论，具体细节就不展示了，可以替换为任意的样式。&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Jinja"></category></entry></feed>
+&lt;p&gt;其中的media也是一个宏，在我的界面里面我利用了bootstrap的media列表来展示评论，具体细节就不展示了，可以替换为任意的样式。&lt;/p&gt;
+&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-01-20-li-yong-JinJa-hong-ji-SQLite-CTE-she-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong-1.png" alt="图-1" style="zoom: 80%"&gt;&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Jinja"></category><category term="SQLite"></category></entry></feed>

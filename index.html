@@ -41,7 +41,28 @@
 	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
 		<span itemprop="name">NegativeDearc</span>
 	</span>
-	<div class="summary"></div>
+	<div class="summary"><h4>ggridge是什么</h4>
+<p><a href="https://github.com/clauswilke/ggridges">ggridge</a>(原名<del>ggjoy</del>)，是R语言著名可视化套件ggplot2的一个增强包。ridge提供了类似于山峦迭起，用以描述空间和时间的变化(<em>be quite useful for visualizing changes in distributions over time or space</em>)。</p>
+<p>它提供了三种基本的绘图形式：</p>
+<ul>
+<li>geom_ridgeline(底部填充的折线图)</li>
+<li>geom_joy(交错排列的密度图)</li>
+<li>geom_joy2(较前者而言，图形与坐标轴闭合)</li>
+</ul>
+<p align="center"><img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-1.png" alt="图-1" style="zoom: 80%"></p>
+
+<h4>为什么要用ggridge</h4>
+<ul>
+<li>ggridge本质上是density，比boxplot数据特征更加直观</li>
+<li>提供了分组连续对比</li>
+<li>作图面积利用率高</li>
+<li>更高的美学价值</li>
+</ul>
+<p>当然想要了解每个月的产量趋势，仍然可以可以使用采用了分面技术的折线图。</p>
+<div class="highlight"><pre><span></span>ggplot(df2, aes(x = date, y = num)) + 
+  geom_line() +
+  facet_wrap(~ mon, nrow = 4, scales = &quot;free_x&quot;) +
+  scale_x_date …</pre></div></div>
 	Category:
 	<span itemprop="articleSection">
 		<a href="https://negativedearc.github.io/category/shu-ju-fen-xi.html" rel="category">数据分析</a>
@@ -137,7 +158,7 @@
 	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
 		<span itemprop="name">NegativeDearc</span>
 	</span>
-	<div class="summary"><p>VSM是当下时髦的工具，越来越多的组织正在把VSM当作召开Workshop、交流改善想法的第一语言。VSM是描述流程的“可视化的文档”，包含“信息流”和“实物流”，始于顾客需求，终于顾客满意。</p>
+	<div class="summary"><p>VSM是当下时髦的工具，越来越多的组织正在把VSM当作召开Workshop、交流改善想法的平台。VSM是描述流程的“可视化的文档”，包含“信息流”和“实物流”，始于顾客需求，终于顾客满意。</p>
 <p>大多数的VSM增值比率不会超过 5%，很多流程甚至会低于1%，这些数字令人吃惊但也蕴含了大量的机会，驱动着团队成员为之努力。</p>
 <h3>VSM与SIPOC的关系</h3>
 <p>SIPOC是美国质量管理大师戴明发明的，用来描述完整流程的5大要素，有时候也作COPIS。VSM是更加详细的流程描述工具，包含了具体的数值分析。</p>
