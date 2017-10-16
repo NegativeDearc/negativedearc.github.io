@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 数据分析</title><link href="https://negativedearc.github.io/" rel="alternate"></link><link href="https://negativedearc.github.io/feeds/shu-ju-fen-xi.atom.xml" rel="self"></link><id>https://negativedearc.github.io/</id><updated>2017-10-13T10:28:00+08:00</updated><entry><title>使用ggridge绘制年产运作图形</title><link href="https://negativedearc.github.io/shi-yong-ggridgehui-zhi-nian-chan-yun-zuo-tu-xing.html" rel="alternate"></link><published>2017-10-13T10:28:00+08:00</published><updated>2017-10-13T10:28:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-10-13:/shi-yong-ggridgehui-zhi-nian-chan-yun-zuo-tu-xing.html</id><summary type="html"></summary><content type="html">&lt;h4&gt;ggridge是什么&lt;/h4&gt;
-&lt;p&gt;&lt;a href="https://github.com/clauswilke/ggridges"&gt;ggride&lt;/a&gt;(原名&lt;del&gt;ggjoy&lt;/del&gt;)，是R语言著名可视化套件ggplot2的一个增强包。ridge提供了类似于山峦迭起，用以描述空间和时间的变化(&lt;em&gt;be quite useful for visualizing changes in distributions over time or space&lt;/em&gt;)。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 数据分析</title><link href="https://negativedearc.github.io/" rel="alternate"></link><link href="https://negativedearc.github.io/feeds/shu-ju-fen-xi.atom.xml" rel="self"></link><id>https://negativedearc.github.io/</id><updated>2017-10-16T14:47:00+08:00</updated><entry><title>使用ggridge绘制年产运作图形</title><link href="https://negativedearc.github.io/shi-yong-ggridgehui-zhi-nian-chan-yun-zuo-tu-xing.html" rel="alternate"></link><published>2017-10-13T10:28:00+08:00</published><updated>2017-10-16T14:47:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-10-13:/shi-yong-ggridgehui-zhi-nian-chan-yun-zuo-tu-xing.html</id><summary type="html">&lt;h4&gt;ggridge是什么&lt;/h4&gt;
+&lt;p&gt;&lt;a href="https://github.com/clauswilke/ggridges"&gt;ggridge&lt;/a&gt;(原名&lt;del&gt;ggjoy&lt;/del&gt;)，是R语言著名可视化套件ggplot2的一个增强包。ridge提供了类似于山峦迭起，用以描述空间和时间的变化(&lt;em&gt;be quite useful for visualizing changes in distributions over time or space&lt;/em&gt;)。&lt;/p&gt;
 &lt;p&gt;它提供了三种基本的绘图形式：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;geom_ridgeline(底部填充的折线图)&lt;/li&gt;
 &lt;li&gt;geom_joy(交错排列的密度图)&lt;/li&gt;
 &lt;li&gt;geom_joy2(较前者而言，图形与坐标轴闭合)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-1.png" alt="图-1" style="zoom: 70%"&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-1.png" alt="图-1" style="zoom: 80%"&gt;&lt;/p&gt;
 
-&lt;h4&gt;为什么要用ggrigde&lt;/h4&gt;
+&lt;h4&gt;为什么要用ggridge&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;ggridge本质上是density，比boxplot数据特征更加直观&lt;/li&gt;
+&lt;li&gt;提供了分组连续对比&lt;/li&gt;
+&lt;li&gt;作图面积利用率高&lt;/li&gt;
+&lt;li&gt;更高的美学价值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当然想要了解每个月的产量趋势，仍然可以可以使用采用了分面技术的折线图。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ggplot(df2, aes(x = date, y = num)) + 
+  geom_line() +
+  facet_wrap(~ mon, nrow = 4, scales = &amp;quot;free_x&amp;quot;) +
+  scale_x_date …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h4&gt;ggridge是什么&lt;/h4&gt;
+&lt;p&gt;&lt;a href="https://github.com/clauswilke/ggridges"&gt;ggridge&lt;/a&gt;(原名&lt;del&gt;ggjoy&lt;/del&gt;)，是R语言著名可视化套件ggplot2的一个增强包。ridge提供了类似于山峦迭起，用以描述空间和时间的变化(&lt;em&gt;be quite useful for visualizing changes in distributions over time or space&lt;/em&gt;)。&lt;/p&gt;
+&lt;p&gt;它提供了三种基本的绘图形式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;geom_ridgeline(底部填充的折线图)&lt;/li&gt;
+&lt;li&gt;geom_joy(交错排列的密度图)&lt;/li&gt;
+&lt;li&gt;geom_joy2(较前者而言，图形与坐标轴闭合)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-1.png" alt="图-1" style="zoom: 80%"&gt;&lt;/p&gt;
+
+&lt;h4&gt;为什么要用ggridge&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;ggridge本质上是density，比boxplot数据特征更加直观&lt;/li&gt;
 &lt;li&gt;提供了分组连续对比&lt;/li&gt;
@@ -95,4 +116,6 @@ grid.arrange&lt;span class="p"&gt;(&lt;/span&gt;P1&lt;span class="p"&gt;,&lt;/sp
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-2.png" alt="图-2" style="zoom: 70%"&gt;&lt;/p&gt;</content><category term="R"></category><category term="ggplot"></category></entry></feed>
+&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-10-13-shi-yong-ggridge-hui-zhi-nian-chan-yun-zuo-tu-xing-2.png" alt="图-2" style="zoom: 80%"&gt;&lt;/p&gt;
+
+&lt;p&gt;希望越来越多的具备统计学意义的图形可以能够更接地气的被大家所用。&lt;/p&gt;</content><category term="R"></category><category term="ggplot"></category></entry></feed>

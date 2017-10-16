@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>利用flask设计类似网易评论的回复系统 — 陈晓伟的个人博客</title>
-	<meta name="description" content="Title: 利用flask设计类似网易评论的回复系统; Date: 2017-01-20; Author: NegativeDearc">
+	<title>利用JinJa宏及SQLite CTE设计类似网易评论的回复系统 — 陈晓伟的个人博客</title>
+	<meta name="description" content="Title: 利用JinJa宏及SQLite CTE设计类似网易评论的回复系统; Date: 2017-01-20; Author: NegativeDearc">
 	<meta name="author" content="NegativeDearc">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -32,7 +32,7 @@
 		<div class="col-md-8 col-md-offset-2">
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
 	<div class="text-center article-header">
-		<h1 itemprop="name headline" class="article-title">利用flask设计类似网易评论的回复系统</h1>
+		<h1 itemprop="name headline" class="article-title">利用JinJa宏及SQLite CTE设计类似网易评论的回复系统</h1>
 		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 			<h4 itemprop="name">NegativeDearc</h4>
 		</span>
@@ -55,6 +55,9 @@
 		</span>
 		<span itemprop="keywords">
 			<a href="https://negativedearc.github.io/tag/jinja.html" rel="tag">Jinja</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://negativedearc.github.io/tag/sqlite.html" rel="tag">SQLite</a>
 		</span>
 	</div>
 	<div itemprop="articleBody" class="article-body"><p>本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。</p>
@@ -103,7 +106,7 @@ select * from cte
 </pre></div>
 
 
-<p>这样就获得了一个自下而上的的评论列表。这样结构的数据很难直接看出相互的继承关系，所以需要进一步处理使其结构嵌套起来。在python后端完成。</p>
+<p>这样就获得了一个自下而上的的评论列表。这样结构的数据很难直接看出相互的继承关系，所以需要进一步处理使其结构嵌套起来，在python后端完成。</p>
 <div class="highlight"><pre><span></span>def nest(lst):
     &quot;&quot;&quot;
     aim to turn flatten list (which fetched from sql) to nested structure
@@ -119,18 +122,19 @@ select * from cte
 
 
 <p>这个递归函数会形成一个嵌套的字典表示层级关系提供给jinja模板进行递归渲染。</p>
-<div class="highlight"><pre><span></span>\{\% macro render_comment(comment, show_btn=True) \%\}
+<div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">macro</span> <span class="nv">render_comment</span><span class="o">(</span><span class="nv">comment</span><span class="o">,</span> <span class="nv">show_btn</span><span class="o">=</span><span class="kp">True</span><span class="o">)</span> <span class="cp">%}</span>
     <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;comment&quot;</span><span class="nt">&gt;</span>
-        \{\{ media(comment[&quot;pid&quot;], btn=show_btn) \}\}
+        <span class="cp">{{</span> <span class="nv">media</span><span class="o">(</span><span class="nv">comment</span><span class="o">[</span><span class="s2">&quot;pid&quot;</span><span class="o">],</span> <span class="nv">btn</span><span class="o">=</span><span class="nv">show_btn</span><span class="o">)</span> <span class="cp">}}</span>
         <span class="cp">{%</span> <span class="k">if</span> <span class="nv">comment</span><span class="o">[</span><span class="s2">&quot;id&quot;</span><span class="o">]</span> <span class="cp">%}</span>
-            <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;comment-ul&quot;</span><span class="nt">&gt;</span>\{\{ render_comment(comment[&quot;id&quot;], False) \}\}<span class="nt">&lt;/ul&gt;</span>
+            <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;comment-ul&quot;</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">render_comment</span><span class="o">(</span><span class="nv">comment</span><span class="o">[</span><span class="s2">&quot;id&quot;</span><span class="o">],</span> <span class="kp">False</span><span class="o">)</span> <span class="cp">}}</span><span class="nt">&lt;/ul&gt;</span>
         <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
     <span class="nt">&lt;/li&gt;</span>
-\{\% endmacro \%\}
+<span class="cp">{%</span> <span class="k">endmacro</span> <span class="cp">%}</span>
 </pre></div>
 
 
-<p>其中的media也是一个宏，在我的界面里面我利用了bootstrap的media列表来展示评论，具体细节就不展示了，可以替换为任意的样式。</p></div>
+<p>其中的media也是一个宏，在我的界面里面我利用了bootstrap的media列表来展示评论，具体细节就不展示了，可以替换为任意的样式。</p>
+<p align="center"><img src="https://negativedearc.github.io/images/2017-01-20-li-yong-JinJa-hong-ji-SQLite-CTE-she-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong-1.png" alt="图-1" style="zoom: 80%"></p></div>
 	<hr>
 	<h2>Comments</h2>
 </div>

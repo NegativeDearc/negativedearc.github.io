@@ -48,7 +48,7 @@
 	<div>
 		Tags:
 		<span itemprop="keywords">
-			<a href="https://negativedearc.github.io/tag/sqlite.html" rel="tag">Sqlite</a>
+			<a href="https://negativedearc.github.io/tag/sqlite.html" rel="tag">SQLite</a>
 		</span>
 	</div>
 	<div itemprop="articleBody" class="article-body"><p>在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：</p>
@@ -123,8 +123,8 @@ WHERE  [docs] MATCH &#39;&quot;20170124165204*&quot;&#39;;
 </pre></div>
 
 
-<p>结果如下：...img alt="" src="/static/upload/<b style="color:red";>20170124165204</b>.jpeg" style="height:614px...</p>
-<p>如果你使用最新的fts5搜索，它还多了一个highlight()函数，功能类似snippet()，参考： http://www.sqlite.org/fts5.html#the_highlight_function</p>
+<p>结果如下：<code>...img alt="" src="/static/upload/&lt;b style="color:red";&gt;20170124165204&lt;/b&gt;.jpeg" style="height:614px...</code></p>
+<p>如果你使用最新的fts5搜索，它还多了一个<code>highlight()</code>函数，功能类似<code>snippet()</code>，参考<a href="http://www.sqlite.org/fts5.html#the_highlight_function">地址</a>。</p>
 <h4>错误no such module: fts4</h4>
 <p>在Python部署的时候遇到了no such module: fts4的错误，而我在使用SQLite Expert的时候并没有如上状况。</p>
 <ul>
