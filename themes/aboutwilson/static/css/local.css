@@ -30,15 +30,18 @@
 
 .article-body {
     margin-top: 2em;
-    color: black;
+	color: black;
+	font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
 
 .article-title {
-    margin-bottom: 1em;
+	margin-bottom: 1em;
+	font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
 
 .article-header {
-    margin-bottom: 1em;
+	margin-bottom: 1em;
+	font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
 
 /**
@@ -100,5 +103,5 @@ div.collapseheader {
 	background-color: #d3d3d3;
 	padding: 2px;
 	cursor: pointer;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
