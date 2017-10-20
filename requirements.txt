@@ -8,7 +8,9 @@ docutils==0.14
 enum34==1.1.6
 Fabric==1.14.0
 feedgenerator==1.9
+gevent==1.2.2
 ghp-import==0.5.5
+greenlet==0.4.12
 html5lib==0.9999999
 idna==2.6
 ipaddr==2.2.0
@@ -29,4 +31,5 @@ python-dateutil==2.6.1
 pytz==2017.2
 six==1.11.0
 Unidecode==0.4.21
+virtualenv==15.1.0
 Werkzeug==0.12.2
