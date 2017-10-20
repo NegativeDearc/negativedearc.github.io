@@ -1,3 +1,4 @@
-output
-venv
+/output
+/venv
 *.pyc
+*.save
