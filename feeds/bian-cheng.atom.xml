@@ -1,5 +1,341 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 编程</title><link href="http://www.kukumalu.cc/" rel="alternate"></link><link href="http://www.kukumalu.cc/feeds/bian-cheng.atom.xml" rel="self"></link><id>http://www.kukumalu.cc/</id><updated>2017-10-19T11:00:00+08:00</updated><entry><title>Nginx管理同一IP下多域名</title><link href="http://www.kukumalu.cc/nginxguan-li-tong-yi-ipxia-duo-yu-ming.html" rel="alternate"></link><published>2017-10-18T09:00:00+08:00</published><updated>2017-10-19T11:00:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:www.kukumalu.cc,2017-10-18:/nginxguan-li-tong-yi-ipxia-duo-yu-ming.html</id><summary type="html">&lt;h3&gt;需求&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 编程</title><link href="https://negativedearc.github.io/" rel="alternate"></link><link href="https://negativedearc.github.io/feeds/bian-cheng.atom.xml" rel="self"></link><id>https://negativedearc.github.io/</id><updated>2017-10-22T11:31:00+08:00</updated><entry><title>使用isso代替disqus搭建评论系统</title><link href="https://negativedearc.github.io/shi-yong-issodai-ti-disqusda-jian-ping-lun-xi-tong.html" rel="alternate"></link><published>2017-10-20T22:16:00+08:00</published><updated>2017-10-22T11:31:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-10-20:/shi-yong-issodai-ti-disqusda-jian-ping-lun-xi-tong.html</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
+&lt;p&gt;一直想搭建一个self-hosted的评论系统，心里种草很久。多说的倒闭、Disqus在国内无法访问，加上技术储备并不充分，虽然尝试写了一个非常简单评论功能，见&lt;a href=""&gt;文章&lt;/a&gt;，和预期相差甚远。&lt;/p&gt;
+&lt;p&gt;一方面在互联网搜索各式的开源评论系统设计，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;说吧，基于Node.js和MongoDB&amp;nbsp;&lt;a href="https://github.com/yuyouwen/shuoba"&gt;yuyouwen/shuoba&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Gitment，基于Github Issue&amp;nbsp;&lt;a href="https://github.com/imsun/gitment"&gt;imsun/gitment&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Isso，基于python和SQLite，Disqus的替代品&amp;nbsp;&lt;a href="https://github.com/posativ/isso"&gt;posativ/isso&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一方面也终于抽出时间尝试。这篇文章记录了基于Python的isso的搭建过程和一些“坑”及解决方案。&lt;/p&gt;
+&lt;h3&gt;准备工作&lt;/h3&gt;
+&lt;p&gt;Isso强烈建议评论系统不应直接暴露在公网环境，同时以作为sub URI作为评论访问地址，能够避免一些强隐私保护浏览器屏蔽评论。但同时会带来跨域资源共享问题(&lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"&gt;CORS&lt;/a&gt;)。&lt;/p&gt;
+&lt;h4&gt;二级域名解析&lt;/h4&gt;
+&lt;p&gt;以本博客(&lt;code&gt;kukumalu.cc&lt;/code&gt;)为例, 申请了&lt;code&gt;comment.kukumalu.cc&lt;/code&gt;作为二级域名，在阿里云设置了A解析到服务器。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;解析到自己网站，&lt;a href="https://help.aliyun.com/knowledge_detail/39785.html"&gt;说明 …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;h3&gt;前言&lt;/h3&gt;
+&lt;p&gt;一直想搭建一个self-hosted的评论系统，心里种草很久。多说的倒闭、Disqus在国内无法访问，加上技术储备并不充分，虽然尝试写了一个非常简单评论功能，见&lt;a href=""&gt;文章&lt;/a&gt;，和预期相差甚远。&lt;/p&gt;
+&lt;p&gt;一方面在互联网搜索各式的开源评论系统设计，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;说吧，基于Node.js和MongoDB&amp;nbsp;&lt;a href="https://github.com/yuyouwen/shuoba"&gt;yuyouwen/shuoba&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Gitment，基于Github Issue&amp;nbsp;&lt;a href="https://github.com/imsun/gitment"&gt;imsun/gitment&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Isso，基于python和SQLite，Disqus的替代品&amp;nbsp;&lt;a href="https://github.com/posativ/isso"&gt;posativ/isso&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一方面也终于抽出时间尝试。这篇文章记录了基于Python的isso的搭建过程和一些“坑”及解决方案。&lt;/p&gt;
+&lt;h3&gt;准备工作&lt;/h3&gt;
+&lt;p&gt;Isso强烈建议评论系统不应直接暴露在公网环境，同时以作为sub URI作为评论访问地址，能够避免一些强隐私保护浏览器屏蔽评论。但同时会带来跨域资源共享问题(&lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"&gt;CORS&lt;/a&gt;)。&lt;/p&gt;
+&lt;h4&gt;二级域名解析&lt;/h4&gt;
+&lt;p&gt;以本博客(&lt;code&gt;kukumalu.cc&lt;/code&gt;)为例, 申请了&lt;code&gt;comment.kukumalu.cc&lt;/code&gt;作为二级域名，在阿里云设置了A解析到服务器。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;解析到自己网站，&lt;a href="https://help.aliyun.com/knowledge_detail/39785.html"&gt;说明&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;解析到其他网站&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;配置准备&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;isso.cfg&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[general]&lt;/span&gt;
+&lt;span class="c1"&gt;# 数据库所在路径&lt;/span&gt;
+&lt;span class="na"&gt;dbpath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/var/lib/isso/comments.db&lt;/span&gt;
+
+&lt;span class="c1"&gt;# 你的主机域名，注意不是评论系统所在域名, Isso会自动处理CORS&lt;/span&gt;
+&lt;span class="na"&gt;host&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;http://www.kukumalu.cc&lt;/span&gt;
+
+&lt;span class="c1"&gt;# 允许用户移除、编辑评论的最大时间&lt;/span&gt;
+&lt;span class="na"&gt;max-age&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;15m&lt;/span&gt;
+
+&lt;span class="c1"&gt;# 获得评论相关通知的方式&lt;/span&gt;
+&lt;span class="c1"&gt;# stdout&lt;/span&gt;
+&lt;span class="c1"&gt;#     Log to standard output. Default, if none selected.&lt;/span&gt;
+&lt;span class="c1"&gt;# smtp&lt;/span&gt;
+&lt;span class="c1"&gt;#     Send notifications via SMTP on new comments with activation (if&lt;/span&gt;
+&lt;span class="c1"&gt;#     moderated) and deletion links.&lt;/span&gt;
+&lt;span class="na"&gt;notify&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;stdout&lt;/span&gt;
+
+&lt;span class="c1"&gt;# 日志文件存放路径&lt;/span&gt;
+&lt;span class="na"&gt;log-file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/var/log/isso/isso.log&lt;/span&gt;
+
+&lt;span class="c1"&gt;#################################&lt;/span&gt;
+&lt;span class="c1"&gt;#后面配置保持默认，可运行，按需修改#&lt;/span&gt;
+&lt;span class="c1"&gt;#################################&lt;/span&gt;
+
+&lt;span class="k"&gt;[moderation]&lt;/span&gt;
+&lt;span class="c1"&gt;# 评论审核相关配置&lt;/span&gt;
+&lt;span class="c1"&gt;# Comments in modertion queue are not visible to other users until you activate&lt;/span&gt;
+&lt;span class="c1"&gt;# them.&lt;/span&gt;
+&lt;span class="na"&gt;enabled&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;false&lt;/span&gt;
+
+&lt;span class="c1"&gt;# remove unprocessed comments in moderation queue after given time.&lt;/span&gt;
+&lt;span class="na"&gt;purge-after&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;30d&lt;/span&gt;
+
+
+&lt;span class="k"&gt;[server]&lt;/span&gt;
+&lt;span class="c1"&gt;# 服务端相关配置&lt;/span&gt;
+&lt;span class="c1"&gt;# interface to listen on. Isso supports TCP/IP and unix domain sockets: UNIX&lt;/span&gt;
+&lt;span class="c1"&gt;# domain socket listen = unix:///tmp/isso.sock TCP/IP listen =&lt;/span&gt;
+&lt;span class="c1"&gt;# http:///localhost:1234/&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# When gevent is available, it is automatically used for http:// Currently,&lt;/span&gt;
+&lt;span class="c1"&gt;# gevent can not handle http requests on unix domain socket (see #295 and #299&lt;/span&gt;
+&lt;span class="c1"&gt;# for details).  Does not apply for uWSGI.&lt;/span&gt;
+&lt;span class="na"&gt;listen&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;http://localhost:8080&lt;/span&gt;
+
+&lt;span class="c1"&gt;# reload application, when the source code has changed. Useful for development.&lt;/span&gt;
+&lt;span class="c1"&gt;# Only works with the internal webserver.&lt;/span&gt;
+&lt;span class="na"&gt;reload&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;off&lt;/span&gt;
+
+&lt;span class="c1"&gt;# show 10 most time consuming function in Isso after each request. Do not use&lt;/span&gt;
+&lt;span class="c1"&gt;# in production.&lt;/span&gt;
+&lt;span class="na"&gt;profile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;off&lt;/span&gt;
+
+
+&lt;span class="k"&gt;[smtp]&lt;/span&gt;
+&lt;span class="c1"&gt;# 邮件通知相关配置&lt;/span&gt;
+&lt;span class="c1"&gt;# Isso can notify you on new comments via SMTP. In the email notification, you&lt;/span&gt;
+&lt;span class="c1"&gt;# also can moderate (=activate or delete) comments.&lt;/span&gt;
+
+&lt;span class="c1"&gt;# self-explanatory, optional&lt;/span&gt;
+&lt;span class="na"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# self-explanatory (yes, plain text, create a dedicated account for&lt;/span&gt;
+&lt;span class="c1"&gt;# notifications), optional.&lt;/span&gt;
+&lt;span class="na"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# SMTP server&lt;/span&gt;
+&lt;span class="na"&gt;host&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;localhost&lt;/span&gt;
+
+&lt;span class="c1"&gt;# SMTP port&lt;/span&gt;
+&lt;span class="na"&gt;port&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;587&lt;/span&gt;
+
+&lt;span class="c1"&gt;# use a secure connection to the server, possible values: none, starttls or&lt;/span&gt;
+&lt;span class="c1"&gt;# ssl. Note, that there is no easy way for Python 2.7 and 3.3 to implement&lt;/span&gt;
+&lt;span class="c1"&gt;# certification validation and thus the connection is vulnerable to&lt;/span&gt;
+&lt;span class="c1"&gt;# Man-in-the-Middle attacks. You should definitely use a dedicated SMTP account&lt;/span&gt;
+&lt;span class="c1"&gt;# for Isso in that case.&lt;/span&gt;
+&lt;span class="na"&gt;security&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;starttls&lt;/span&gt;
+
+&lt;span class="c1"&gt;# recipient address, e.g. your email address&lt;/span&gt;
+&lt;span class="na"&gt;to&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# sender address, e.g. &amp;quot;Foo Bar&amp;quot; &amp;lt;isso@example.tld&amp;gt;&lt;/span&gt;
+&lt;span class="na"&gt;from&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# specify a timeout in seconds for blocking operations like the&lt;/span&gt;
+&lt;span class="c1"&gt;# connection attempt.&lt;/span&gt;
+&lt;span class="na"&gt;timeout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;10&lt;/span&gt;
+
+
+&lt;span class="k"&gt;[guard]&lt;/span&gt;
+&lt;span class="c1"&gt;# 反垃圾机制&lt;/span&gt;
+&lt;span class="c1"&gt;# Enable basic spam protection features, e.g. rate-limit per IP address (/24&lt;/span&gt;
+&lt;span class="c1"&gt;# for IPv4, /48 for IPv6).&lt;/span&gt;
+
+&lt;span class="c1"&gt;# enable guard, recommended in production. Not useful for debugging purposes.&lt;/span&gt;
+&lt;span class="na"&gt;enabled&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;true&lt;/span&gt;
+
+&lt;span class="c1"&gt;# limit to N new comments per minute.&lt;/span&gt;
+&lt;span class="na"&gt;ratelimit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;2&lt;/span&gt;
+
+&lt;span class="c1"&gt;# how many comments directly to the thread (prevent a simple while true; do&lt;/span&gt;
+&lt;span class="c1"&gt;# curl ...; done.&lt;/span&gt;
+&lt;span class="na"&gt;direct-reply&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;3&lt;/span&gt;
+
+&lt;span class="c1"&gt;# allow commenters to reply to their own comments when they could still edit&lt;/span&gt;
+&lt;span class="c1"&gt;# the comment. After the editing timeframe is gone, commenters can reply to&lt;/span&gt;
+&lt;span class="c1"&gt;# their own comments anyways. Do not forget to configure the client.&lt;/span&gt;
+&lt;span class="na"&gt;reply-to-self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;true&lt;/span&gt;
+
+&lt;span class="c1"&gt;# force commenters to enter a value into the author field. No validation is&lt;/span&gt;
+&lt;span class="c1"&gt;# performed on the provided value.  Do not forget to configure the client&lt;/span&gt;
+&lt;span class="c1"&gt;# accordingly.&lt;/span&gt;
+&lt;span class="na"&gt;require-author&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;true&lt;/span&gt;
+
+&lt;span class="c1"&gt;# require the commenter to enter an email address (note: no validation is&lt;/span&gt;
+&lt;span class="c1"&gt;# done on the provided address). Do not forget to configure the client.&lt;/span&gt;
+&lt;span class="na"&gt;require-email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;true&lt;/span&gt;
+
+
+&lt;span class="k"&gt;[markup]&lt;/span&gt;
+&lt;span class="c1"&gt;# 评论内容机制&lt;/span&gt;
+&lt;span class="c1"&gt;# Customize markup and sanitized HTML. Currently, only Markdown (via Misaka) is&lt;/span&gt;
+&lt;span class="c1"&gt;# supported, but new languages are relatively easy to add.&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Misaka-specific Markdown extensions, all flags starting with EXT_ can be used&lt;/span&gt;
+&lt;span class="c1"&gt;# there, separated by comma.&lt;/span&gt;
+&lt;span class="na"&gt;options&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;strikethrough, autolink, fenced_code, no_intra_emphasis&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Additional HTML tags to allow in the generated output, comma-separated. By&lt;/span&gt;
+&lt;span class="c1"&gt;# default, only a, blockquote, br, code, del, em, h1, h2, h3, h4, h5, h6, hr,&lt;/span&gt;
+&lt;span class="c1"&gt;# ins, li, ol, p, pre, strong, table, tbody, td, th, thead and ul are allowed.&lt;/span&gt;
+&lt;span class="na"&gt;allowed-elements&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Additional HTML attributes (independent from elements) to allow in the&lt;/span&gt;
+&lt;span class="c1"&gt;# generated output, comma-separated. By default, only align and href are&lt;/span&gt;
+&lt;span class="c1"&gt;# allowed.&lt;/span&gt;
+&lt;span class="na"&gt;allowed-attributes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+
+
+&lt;span class="k"&gt;[hash]&lt;/span&gt;
+&lt;span class="c1"&gt;# 安全相关&lt;/span&gt;
+&lt;span class="c1"&gt;# Customize used hash functions to hide the actual email addresses from&lt;/span&gt;
+&lt;span class="c1"&gt;# commenters but still be able to generate an identicon.&lt;/span&gt;
+
+
+&lt;span class="c1"&gt;# A salt is used to protect against rainbow tables. Isso does not make use of&lt;/span&gt;
+&lt;span class="c1"&gt;# pepper (yet). The default value has been in use since the release of Isso and&lt;/span&gt;
+&lt;span class="c1"&gt;# generates the same identicons for same addresses across installations.&lt;/span&gt;
+&lt;span class="na"&gt;salt&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;Eech7co8Ohloopo9Ol6baimi&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Hash algorithm to use -- either from Python&amp;#39;s hashlib or PBKDF2 (a&lt;/span&gt;
+&lt;span class="c1"&gt;# computational expensive hash function).&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# The actual identifier for PBKDF2 is pbkdf2:1000:6:sha1, which means 1000&lt;/span&gt;
+&lt;span class="c1"&gt;# iterations, 6 bytes to generate and SHA1 as pseudo-random family used for key&lt;/span&gt;
+&lt;span class="c1"&gt;# strengthening. Arguments have to be in that order, but can be reduced to&lt;/span&gt;
+&lt;span class="c1"&gt;# pbkdf2:4096 for example to override the iterations only.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;修改模板&lt;/h4&gt;
+&lt;p&gt;配置完服务端，客户段(JS)需要相应修改，由于我使用的是Pelican静态博客生成工具，在主题文件夹新增了一个isso.html模板。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;isso.html&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{% if ISSO_RUNNING %}
+
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;section&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;isso-thread&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;section&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;data-isso&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;//comment.kukumalu.cc/&amp;quot;&lt;/span&gt;  
+    &lt;span class="na"&gt;data-isso-css&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-isso-lang&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;en&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-isso-reply-to-self&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-isso-require-author&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-isso-require-email&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-isso-max-comments-top&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;10&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-isso-max-comments-nested&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;5&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-isso-reveal-on-click&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;5&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-isso-avatar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-isso-avatar-bg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;#f0f0f0&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-isso-avatar-fg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;#9abf88 #5698c4 #e279a3 #9163b6 ...&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-isso-vote&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;data-vote-levels&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;[-5,5,15]&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;//comment.kukumalu.cc/js/embed.min.js&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+
+{% endif %}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;要点：Isso 通常会自动检测 REST API, 但如果 JS 文件(Isso的JS实例)并不在默认位置则需要修改 &lt;code&gt;data-isso&lt;/code&gt;属性来覆写，值得注意的是&lt;code&gt;src&lt;/code&gt;中URI写法并未包含http头。&lt;/p&gt;
+&lt;p&gt;JS端配置成功后，可以在网页中看到整个评论的form，在&lt;code&gt;http://comment.kukumalu.cc/info&lt;/code&gt; 也能查到关于Isso的信息。&lt;/p&gt;
+&lt;h4&gt;Nginx 配置&lt;/h4&gt;
+&lt;p&gt;先提供一些CORS Nginx配置的参考内容&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://enable-cors.org/server_nginx.html"&gt;https://enable-cors.org/server_nginx.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://michielkalkman.com/snippets/nginx-cors-open-configuration/"&gt;https://michielkalkman.com/snippets/nginx-cors-open-configuration/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://m.blog.csdn.net/oyzl68/article/details/18741057"&gt;http://m.blog.csdn.net/oyzl68/article/details/18741057&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"&gt;https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://xiaorui.cc/2016/03/07/在nginx配置cors请求的headers头部信息/"&gt;http://xiaorui.cc/2016/03/07/在nginx配置cors请求的headers头部信息/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;CORS在Isso包文档中谈及的不多，但我仅使用文档中的模板配置没用办法成功运行(500错误，CORS头部丢失)。nohup.out的错误信息如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;127.0.0.1 - - [2017-10-22 15:04:10] &amp;quot;OPTIONS /count HTTP/1.0&amp;quot; 500 161 0.000654
+Traceback (most recent call last):
+  File &amp;quot;/home/app/negativedearc.github.io/venv/local/lib/python2.7/site-packages/gevent/pywsgi.py&amp;quot;, line 935, in handle_one_response
+    self.run_application()
+  File &amp;quot;/home/app/negativedearc.github.io/venv/local/lib/python2.7/site-packages/gevent/pywsgi.py&amp;quot;, line 908, in run_application
+    self.result = self.application(self.environ, self.start_response)
+  File &amp;quot;/home/app/negativedearc.github.io/venv/local/lib/python2.7/site-packages/werkzeug/contrib/fixers.py&amp;quot;, line 152, in __call__
+    return self.app(environ, start_response)
+  File &amp;quot;/home/app/negativedearc.github.io/venv/local/lib/python2.7/site-packages/isso/wsgi.py&amp;quot;, line 119, in __call__
+    return self.app(environ, start_response)
+  File &amp;quot;/home/app/negativedearc.github.io/venv/local/lib/python2.7/site-packages/isso/wsgi.py&amp;quot;, line 147, in __call__
+    add_cors_headers(&amp;quot;200 Ok&amp;quot;, [(&amp;quot;Content-Type&amp;quot;, &amp;quot;text/plain&amp;quot;)])
+  File &amp;quot;/home/app/negativedearc.github.io/venv/local/lib/python2.7/site-packages/isso/wsgi.py&amp;quot;, line 144, in add_cors_headers
+    return start_response(status, headers.to_list(), exc_info)
+  File &amp;quot;/home/app/negativedearc.github.io/venv/local/lib/python2.7/site-packages/gevent/pywsgi.py&amp;quot;, line 830, in start_response
+    raise UnicodeError(&amp;quot;The status string must be a native string&amp;quot;)
+UnicodeError: The status string must be a native string
+Sun Oct 22 15:04:10 2017 {&amp;#39;REMOTE_PORT&amp;#39;: &amp;#39;52242&amp;#39;, &amp;#39;HTTP_HOST&amp;#39;: &amp;#39;comment.kukumalu.cc&amp;#39;, &amp;#39;REMOTE_ADDR&amp;#39;: &amp;#39;114.216.124.225&amp;#39;, (hidden keys: 30)} failed with UnicodeError
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Isso在其&lt;a href="https://github.com/posativ/isso/blob/master/isso/wsgi.py#L122"&gt;wsgi.py&lt;/a&gt;中已经提前处理了CORS需要的头部信息。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CORSMiddleware&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Add Cross-origin resource sharing headers to every request.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+    &lt;span class="n"&gt;methods&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;HEAD&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;GET&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;POST&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;PUT&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;DELETE&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;allowed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;exposed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;allowed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;allowed&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exposed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;exposed&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__call__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;environ&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;start_response&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add_cors_headers&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;exc_info&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;headers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Headers&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Access-Control-Allow-Origin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;origin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;environ&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Access-Control-Allow-Credentials&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Access-Control-Allow-Methods&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;methods&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;allowed&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Access-Control-Allow-Headers&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;allowed&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exposed&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Access-Control-Expose-Headers&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exposed&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;start_response&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_list&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;exc_info&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;environ&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;REQUEST_METHOD&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;OPTIONS&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;add_cors_headers&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;200 Ok&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Content-Type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;text/plain&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;environ&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;add_cors_headers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;但似乎OPTIONS没有处理成功？推测原因：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx 没有(无法)正确处理OPTIONS请求，&lt;a href="https://stackoverflow.com/questions/14929347/how-to-handle-options-request-in-nginx"&gt;参考资料&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;wsgi MiddleWare 没有正确假如头部信息（需要确认，&lt;a href="https://github.com/posativ/isso/issues/347"&gt;参考资料&lt;/a&gt;）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;无论如何，在改动Nginx配置（手动加入OPTIONS判断）后运行成功了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;isso.conf&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kn"&gt;listen&lt;/span&gt;         &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;server_name&lt;/span&gt;    &lt;span class="s"&gt;comment.kukumalu.cc&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://127.0.0.1:8080&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Forwarded-For&lt;/span&gt; &lt;span class="nv"&gt;$proxy_add_x_forwarded_for&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;Host&lt;/span&gt; &lt;span class="nv"&gt;$http_host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Forwarded-Proto&lt;/span&gt; &lt;span class="nv"&gt;$scheme&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+
+        &lt;span class="kn"&gt;if&lt;/span&gt; &lt;span class="s"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$request_method&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;OPTIONS&amp;#39;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="kn"&gt;add_header&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Access-Control-Allow-Origin&amp;#39;&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;http://www.kukumalu.cc&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="kn"&gt;add_header&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Access-Control-Allow-Methods&amp;#39;&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;HEAD,&lt;/span&gt; &lt;span class="s"&gt;GET,&lt;/span&gt; &lt;span class="s"&gt;POST,&lt;/span&gt; &lt;span class="s"&gt;PUT,&lt;/span&gt; &lt;span class="s"&gt;DELETE&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="kn"&gt;add_header&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Access-Control-Allow-Credentials&amp;#39;&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;true&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="kn"&gt;add_header&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Access-Control-Allow-Headers&amp;#39;&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Origin,&lt;/span&gt; &lt;span class="s"&gt;Referer,&lt;/span&gt; &lt;span class="s"&gt;Content-Type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Tell client that this pre-flight info is valid for 20 days&lt;/span&gt;
+
+            &lt;span class="kn"&gt;add_header&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Access-Control-Max-Age&amp;#39;&lt;/span&gt; &lt;span class="mi"&gt;1728000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="kn"&gt;add_header&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Content-Type&amp;#39;&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;text/plain&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="kn"&gt;charset=utf-8&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="kn"&gt;add_header&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Content-Length&amp;#39;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="kn"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;204&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;放入vhost中与其它Nginx服务一起运行。&lt;/p&gt;
+&lt;h4&gt;运行&lt;/h4&gt;
+&lt;p&gt;生产环境下，运行isso最简单的方式是使用&lt;code&gt;gevent&lt;/code&gt;，两个步骤就可以搞定。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install gevent -i https://pypi.douban.com/simple
+isso -c isso.cfg run
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;至此，isso可以完美的运行起来。&lt;/p&gt;
+&lt;h3&gt;其他&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;评论后台管理，目前pip版本暂无此功能提供，只能手动操作评论数据库，但全能的网友PR了作者(https://github.com/posativ/isso/pull/256)，由于作者非常忙，还没有Merge。&lt;/li&gt;
+&lt;li&gt;感谢&lt;a href="https://www.pupboss.com/build-a-comment-system-using-isso/"&gt;https://www.pupboss.com/build-a-comment-system-using-isso/&lt;/a&gt;，可能是互联网找得到唯一一篇部署isso的博客。 &lt;/li&gt;
+&lt;li&gt;github issue非常有用，项目的知识库对整个project的leverage具有非常大的推进、参考、风险避免的作用。&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Python"></category></entry><entry><title>Nginx管理同一IP下多域名</title><link href="https://negativedearc.github.io/nginxguan-li-tong-yi-ipxia-duo-yu-ming.html" rel="alternate"></link><published>2017-10-18T09:00:00+08:00</published><updated>2017-10-19T11:00:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-10-18:/nginxguan-li-tong-yi-ipxia-duo-yu-ming.html</id><summary type="html">&lt;h3&gt;需求&lt;/h3&gt;
 &lt;p&gt;在阿里云申请了两个域名，一个已经给了&lt;a href="http://cxwloves.cc"&gt;fullmoon&lt;/a&gt;，是flask 的习作，给夫人写写小文章用。另一个计划给自己的静态博客&lt;a href="http://kukumalu.cc"&gt;kukumalu.cc&lt;/a&gt;使用，主要专注于内容。&lt;/p&gt;
 &lt;p&gt;只有一台服务器，原先计划是通过不同的端口访问。搜索许久，Nginx vhost更简便、更适合分开管理。&lt;/p&gt;
 &lt;h3&gt;方案&lt;/h3&gt;
@@ -114,7 +450,7 @@ drwxrwxrwt &lt;span class="m"&gt;10&lt;/span&gt; root     root &lt;span class="m
         &lt;span class="s"&gt;proxy_temp_path&lt;/span&gt;   &lt;span class="s"&gt;/tmp/nginx&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</content><category term="Nginx"></category></entry><entry><title>SQLALCHEMY超级灵活的事件监听使用方法</title><link href="http://www.kukumalu.cc/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html" rel="alternate"></link><published>2017-02-08T17:12:00+08:00</published><updated>2017-02-08T17:12:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:www.kukumalu.cc,2017-02-08:/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html</id><summary type="html">&lt;p&gt;SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="Nginx"></category></entry><entry><title>SQLALCHEMY超级灵活的事件监听使用方法</title><link href="https://negativedearc.github.io/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html" rel="alternate"></link><published>2017-02-08T17:12:00+08:00</published><updated>2017-02-08T17:12:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-02-08:/sqlalchemychao-ji-ling-huo-de-shi-jian-jian-ting-shi-yong-fang-fa.html</id><summary type="html">&lt;p&gt;SQLALCHEMY中ORM语句特别灵活，通常，我们使用来自session.query产生的Query对象进行增删改。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;q = session.query(SomeClass)
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -185,7 +521,7 @@ db.session.commit()
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;这样也完成了一次update操作。&lt;/p&gt;</content><category term="Python"></category><category term="Sqlalchemy"></category></entry><entry><title>使用阿里云DirectMail实现网站事件推送</title><link href="http://www.kukumalu.cc/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html" rel="alternate"></link><published>2017-02-04T11:06:00+08:00</published><updated>2017-02-04T11:06:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:www.kukumalu.cc,2017-02-04:/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html</id><summary type="html">&lt;p&gt;接上期文章，监听数据库事件之后，我们有了特定情形下通知的诉求，通常来说e-mail比较经济方便。起初在163注册了一个邮箱，结果发现什么admin@cxwloves.cc啊，web_admin@cxwloves.cc之类基本大家都能想到的账号全都被注册干净了，让人不得不怀疑背后是否存在一条产业链。&lt;/p&gt;
+&lt;p&gt;这样也完成了一次update操作。&lt;/p&gt;</content><category term="Python"></category><category term="Sqlalchemy"></category></entry><entry><title>使用阿里云DirectMail实现网站事件推送</title><link href="https://negativedearc.github.io/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html" rel="alternate"></link><published>2017-02-04T11:06:00+08:00</published><updated>2017-02-04T11:06:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-02-04:/shi-yong-a-li-yun-directmailshi-xian-wang-zhan-shi-jian-tui-song.html</id><summary type="html">&lt;p&gt;接上期文章，监听数据库事件之后，我们有了特定情形下通知的诉求，通常来说e-mail比较经济方便。起初在163注册了一个邮箱，结果发现什么admin@cxwloves.cc啊，web_admin@cxwloves.cc之类基本大家都能想到的账号全都被注册干净了，让人不得不怀疑背后是否存在一条产业链。&lt;/p&gt;
 &lt;p&gt;无奈选了一个比较冷门的地址注册，在邮箱设置里面打开SMTP/POP3服务，同时开启了第三方客户端登陆码。这样Python就能连接上了。兴冲冲的准备发出一份Hello World邮件，结果提示邮件被Rejected，原因是被认定为垃圾邮件。&lt;/p&gt;
 &lt;p&gt;百度了下发现个人注册的邮箱似乎以这种方式送达率很低，所以权衡之下找到了阿里云DirectMail做推送，每天200封的免费邮件已经足够。更让人惊喜的是邮箱地址绑定到了域名，这样浑然一体没有遗憾了。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;使用SMTP方式&lt;/strong&gt;&lt;/p&gt;
@@ -231,7 +567,7 @@ db.session.commit()
 &lt;li&gt;空格需要编码，使用urllib.quote_plus()会导致空格转换成+而非%20，应该使用urllib.quote()&lt;/li&gt;
 &lt;li&gt;"/"也需要进行编码，它的结果应该是%2F，应该使用&lt;code&gt;urllib.quote(string, safe="")&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;这两点如果没有满足，签名计算就会出错，通不过服务器的验证邮件是没有办法被发送的。&lt;/p&gt;</content><category term="Python"></category><category term="DirectMail"></category></entry><entry><title>利用sqlite3进行全文检索</title><link href="http://www.kukumalu.cc/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html" rel="alternate"></link><published>2017-01-25T10:57:00+08:00</published><updated>2017-10-16T15:08:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:www.kukumalu.cc,2017-01-25:/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html</id><summary type="html">&lt;p&gt;在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：&lt;/p&gt;
+&lt;p&gt;这两点如果没有满足，签名计算就会出错，通不过服务器的验证邮件是没有办法被发送的。&lt;/p&gt;</content><category term="Python"></category><category term="DirectMail"></category></entry><entry><title>利用sqlite3进行全文检索</title><link href="https://negativedearc.github.io/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html" rel="alternate"></link><published>2017-01-25T10:57:00+08:00</published><updated>2017-10-16T15:08:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-25:/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html</id><summary type="html">&lt;p&gt;在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;根据图片名检索数据库，获取图片的使用情况&lt;/li&gt;
 &lt;/ul&gt;
@@ -322,7 +658,7 @@ WHERE  [docs] MATCH &amp;#39;&amp;quot;20170124165204*&amp;quot;&amp;#39;;
 &lt;ul&gt;
 &lt;li&gt;windows 在http://www.sqlite.org/download.html 下载对应版本的sqlite.dll复制替换到python27/DLLs/文件夹&lt;/li&gt;
 &lt;li&gt;linux 重新编译sqlite 加上-DSQLITE_ENABLE_FTS4 flag&lt;/li&gt;
-&lt;/ul&gt;</content><category term="SQLite"></category></entry><entry><title>利用flask-HTTPauth完成博客API构建</title><link href="http://www.kukumalu.cc/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html" rel="alternate"></link><published>2017-01-24T16:13:00+08:00</published><updated>2017-01-24T16:13:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:www.kukumalu.cc,2017-01-24:/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html</id><summary type="html">&lt;p&gt;为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。&lt;/p&gt;
+&lt;/ul&gt;</content><category term="SQLite"></category></entry><entry><title>利用flask-HTTPauth完成博客API构建</title><link href="https://negativedearc.github.io/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html" rel="alternate"></link><published>2017-01-24T16:13:00+08:00</published><updated>2017-01-24T16:13:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-24:/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html</id><summary type="html">&lt;p&gt;为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;github地址 https://github.com/miguelgrinberg/Flask-HTTPAuth&lt;/li&gt;
 &lt;li&gt;中文文档地址 http://www.pythondoc.com/flask-restful/third.html&lt;/li&gt;
@@ -373,7 +709,7 @@ def main_verify_token(expires=600):
 &lt;li&gt;如何实现无状态？&lt;/li&gt;
 &lt;li&gt;如何设计一个合理的API？&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;学习之路漫漫，除了想象力还需要扎扎实实读源码的功力&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Flask-HTTPauth"></category></entry><entry><title>利用JinJa宏及SQLite CTE设计类似网易评论的回复系统</title><link href="http://www.kukumalu.cc/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html" rel="alternate"></link><published>2017-01-20T10:05:00+08:00</published><updated>2017-10-16T15:05:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:www.kukumalu.cc,2017-01-20:/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html</id><summary type="html">&lt;p&gt;本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。&lt;/p&gt;
+&lt;p&gt;学习之路漫漫，除了想象力还需要扎扎实实读源码的功力&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Flask-HTTPauth"></category></entry><entry><title>利用JinJa宏及SQLite CTE设计类似网易评论的回复系统</title><link href="https://negativedearc.github.io/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html" rel="alternate"></link><published>2017-01-20T10:05:00+08:00</published><updated>2017-10-16T15:05:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-01-20:/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html</id><summary type="html">&lt;p&gt;本人从事和流程优化的工作，和计算机本无多大关系。后来阴差阳错渐渐自学编程，倒也找到了很多乐趣，当然也有很多坑。&lt;/p&gt;
 &lt;p&gt;这篇文章将作为记录我开发博客系统遇到的大大小小的坑中的首篇——也是卡住我最多时间思考的地方。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;如何制作一个类似网易盖楼的评论系统？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;问题就分解成了：&lt;/p&gt;
@@ -466,4 +802,4 @@ select * from cte
 
 
 &lt;p&gt;其中的media也是一个宏，在我的界面里面我利用了bootstrap的media列表来展示评论，具体细节就不展示了，可以替换为任意的样式。&lt;/p&gt;
-&lt;p align="center"&gt;&lt;img src="http://www.kukumalu.cc/images/2017-01-20-li-yong-JinJa-hong-ji-SQLite-CTE-she-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong-1.png" alt="图-1" style="zoom: 80%"&gt;&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Jinja"></category><category term="SQLite"></category></entry></feed>
+&lt;p align="center"&gt;&lt;img src="https://negativedearc.github.io/images/2017-01-20-li-yong-JinJa-hong-ji-SQLite-CTE-she-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong-1.png" alt="图-1" style="zoom: 80%"&gt;&lt;/p&gt;</content><category term="Python"></category><category term="Flask"></category><category term="Jinja"></category><category term="SQLite"></category></entry></feed>

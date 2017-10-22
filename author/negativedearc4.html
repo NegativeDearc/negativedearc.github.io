@@ -8,22 +8,22 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 	<!--[if lt IE 9]>
-		<script src="/theme/html5.js"></script>
+		<script src="https://negativedearc.github.io/theme/html5.js"></script>
 		<![endif]-->
-	<link href="/theme/css/ipython.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/ipython.css" rel="stylesheet">
 	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
 	<!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
 	<!-- <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet"> -->
-	<link href="/theme/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/theme/css/font-awesome.min.css" rel="stylesheet">
-	<link href="/theme/css/bootswatch.min.css" rel="stylesheet">
-	<link href="/theme/css/local.css" rel="stylesheet">
-	<link href="/theme/css/pygments.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/bootswatch.min.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/pygments.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
 	<div class="page-header">
-		<h1><a href="/">陈晓伟的个人博客</a>
+		<h1><a href="https://negativedearc.github.io/">陈晓伟的个人博客</a>
 			<br>
 <small>Hello, I'm a Continues Improvement Engineer</small>
 		</h1>
@@ -33,7 +33,41 @@
         
         
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html">
+	<a href="https://negativedearc.github.io/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html">
+		<h2 itemprop="name headline">利用sqlite3进行全文检索</h2>
+	</a>
+	<time datetime="2017-01-25T10:57:00+08:00" itemprop="datePublished">2017/01/25</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">NegativeDearc</span>
+	</span>
+	<div class="summary"><p>在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：</p>
+<ul>
+<li>根据图片名检索数据库，获取图片的使用情况</li>
+</ul>
+<p>搜索了一番，找到了如下网页 http://www.sqlite.org/fts3.html 。 sqlite也能实现全文检索。官网介绍了fts3，fts4插件，需求的版本应分别高于3.5.0和3.7.4。而fts1，fts2因为年久失修不被推荐使用。据介绍，ft4显著快于ft4，但可能会多占用1~2%的磁盘空间。</p>
+<h4>如何使用？</h4>
+<div class="highlight"><pre><span></span>-- 不指定Column，将自动创建一个Column为content的fts3表，当然还有rowid:
+CREATE VIRTUAL TABLE data USING fts3();
+
+-- 传入一组逗号隔开的列表创建Column:
+CREATE VIRTUAL TABLE pages USING fts4(title, keywords, body);
+
+-- 更加详细的建表方式，但会忽略所有约束 …</pre></div></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="https://negativedearc.github.io/category/bian-cheng.html" rel="category">编程</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="https://negativedearc.github.io/tag/sqlite.html" rel="tag">SQLite</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="https://negativedearc.github.io/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html">
 		<h2 itemprop="name headline">利用flask-HTTPauth完成博客API构建</h2>
 	</a>
 	<time datetime="2017-01-24T16:13:00+08:00" itemprop="datePublished">2017/01/24</time>
@@ -52,24 +86,24 @@
 <p>The <code>verify_token</code> callback receives the authentication credentials provided by the client on the <code>Authorization</code> header. This can be a …</p></blockquote></div>
 	Category:
 	<span itemprop="articleSection">
-		<a href="/category/bian-cheng.html" rel="category">编程</a>
+		<a href="https://negativedearc.github.io/category/bian-cheng.html" rel="category">编程</a>
 	</span>
 	Tags:
  
 	<span itemprop="keywords">
-		<a href="/tag/python.html" rel="tag">Python</a>
+		<a href="https://negativedearc.github.io/tag/python.html" rel="tag">Python</a>
 	</span>
 	<span itemprop="keywords">
-		<a href="/tag/flask.html" rel="tag">Flask</a>
+		<a href="https://negativedearc.github.io/tag/flask.html" rel="tag">Flask</a>
 	</span>
 	<span itemprop="keywords">
-		<a href="/tag/flask-httpauth.html" rel="tag">Flask-HTTPauth</a>
+		<a href="https://negativedearc.github.io/tag/flask-httpauth.html" rel="tag">Flask-HTTPauth</a>
 	</span>
 </div>
 <hr>
         
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html">
+	<a href="https://negativedearc.github.io/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html">
 		<h2 itemprop="name headline">利用JinJa宏及SQLite CTE设计类似网易评论的回复系统</h2>
 	</a>
 	<time datetime="2017-01-20T10:05:00+08:00" itemprop="datePublished">2017/01/20</time>
@@ -99,21 +133,21 @@
     rdr_mail VARCHAR(20) NOT NULL …</pre></div></div>
 	Category:
 	<span itemprop="articleSection">
-		<a href="/category/bian-cheng.html" rel="category">编程</a>
+		<a href="https://negativedearc.github.io/category/bian-cheng.html" rel="category">编程</a>
 	</span>
 	Tags:
  
 	<span itemprop="keywords">
-		<a href="/tag/python.html" rel="tag">Python</a>
+		<a href="https://negativedearc.github.io/tag/python.html" rel="tag">Python</a>
 	</span>
 	<span itemprop="keywords">
-		<a href="/tag/flask.html" rel="tag">Flask</a>
+		<a href="https://negativedearc.github.io/tag/flask.html" rel="tag">Flask</a>
 	</span>
 	<span itemprop="keywords">
-		<a href="/tag/jinja.html" rel="tag">Jinja</a>
+		<a href="https://negativedearc.github.io/tag/jinja.html" rel="tag">Jinja</a>
 	</span>
 	<span itemprop="keywords">
-		<a href="/tag/sqlite.html" rel="tag">SQLite</a>
+		<a href="https://negativedearc.github.io/tag/sqlite.html" rel="tag">SQLite</a>
 	</span>
 </div>
 <hr>
@@ -146,6 +180,7 @@
 					<div class="col-md-3">
 						<h4>Author</h4>
 						<ul class="list-unstyled my-list-style">
+						<li><a href="https://negativedearc.github.io/feeds/all.atom.xml" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
 
 							<li><a href="mailto:datingwithme@live.cn">E-Mail</a></li>
 						</ul>
@@ -153,15 +188,15 @@
 					<div class="col-md-3">
 						<h4>Categories</h4>
 						<ul class="list-unstyled my-list-style">
-							<!-- <li><a href="/category/编程.html">编程 (6)</a></li> -->
+							<!-- <li><a href="https://negativedearc.github.io/category/编程.html">编程 (7)</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
-							<li><a href="/category/bian-cheng.html">编程 (6)</a></li>
-							<!-- <li><a href="/category/工作.html">工作 (10)</a></li> -->
+							<li><a href="https://negativedearc.github.io/category/bian-cheng.html">编程 (7)</a></li>
+							<!-- <li><a href="https://negativedearc.github.io/category/工作.html">工作 (10)</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
-							<li><a href="/category/gong-zuo.html">工作 (10)</a></li>
-							<!-- <li><a href="/category/数据分析.html">数据分析 (1)</a></li> -->
+							<li><a href="https://negativedearc.github.io/category/gong-zuo.html">工作 (10)</a></li>
+							<!-- <li><a href="https://negativedearc.github.io/category/数据分析.html">数据分析 (1)</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
-							<li><a href="/category/shu-ju-fen-xi.html">数据分析 (1)</a></li>
+							<li><a href="https://negativedearc.github.io/category/shu-ju-fen-xi.html">数据分析 (1)</a></li>
 						</ul>
 					</div>
 					<div class="col-md-3">
@@ -199,6 +234,16 @@ jQuery(document).ready(function($) {
 		});
 	});
 });
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56532006-2', 'auto');
+  ga('send', 'pageview');
+
 </script>
 </body>
 </html>
