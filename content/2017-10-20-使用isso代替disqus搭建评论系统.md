@@ -6,7 +6,7 @@ Modified: 2017-10-22 11:31:00
 
 
 ### 前言
-一直想搭建一个self-hosted的评论系统，心里种草很久。多说的倒闭、Disqus在国内无法访问，加上技术储备并不充分，虽然尝试写了一个非常简单评论功能，见[文章]()，和预期相差甚远。
+一直想搭建一个self-hosted的评论系统，心里种草很久。多说的倒闭、Disqus在国内无法访问，加上技术储备并不充分，虽然尝试写了一个非常简单评论功能，见[文章](http://www.kukumalu.cc/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html)，和预期相差甚远。
 
 一方面在互联网搜索各式的开源评论系统设计，
 
@@ -18,14 +18,14 @@ Modified: 2017-10-22 11:31:00
 
 
 ### 准备工作
-Isso强烈建议评论系统不应直接暴露在公网环境，同时以作为sub URI作为评论访问地址，能够避免一些强隐私保护浏览器屏蔽评论。但同时会带来跨域资源共享问题([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS))。
+Isso强烈建议评论系统不应直接暴露在公网环境，同时以作为sub URI作为评论访问地址，能够避免一些强隐私保护浏览器屏蔽评论。但会带来跨域资源共享问题([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS))。
 
 
 #### 二级域名解析
-以本博客(`kukumalu.cc`)为例, 申请了`comment.kukumalu.cc`作为二级域名，在阿里云设置了A解析到服务器。
+以本博客[kukumalu.cc](http://www.kukumalu.cc)为例, 申请了[comment.kukumalu.cc](comment.kukumalu.cc)作为二级域名，在阿里云设置了A纪录解析到服务器。
 
 - 解析到自己网站，[说明](https://help.aliyun.com/knowledge_detail/39785.html)
-- 解析到其他网站
+- 解析到其他网站，[??]()
 
 
 #### 配置准备
@@ -223,9 +223,9 @@ salt = Eech7co8Ohloopo9Ol6baimi
 {% endif %}
 ```
 
-要点：Isso 通常会自动检测 REST API, 但如果 JS 文件(Isso的JS实例)并不在默认位置则需要修改 `data-isso`属性来覆写，值得注意的是`src`中URI写法并未包含http头。
+Isso 通常会自动检测 REST API, 但如果 JS 文件(Isso的JS实例)并不在默认位置则需要修改 `data-isso`属性来覆写，值得注意的是`src`中URI写法并未包含http头。
 
-JS端配置成功后，可以在网页中看到整个评论的form，在`http://comment.kukumalu.cc/info` 也能查到关于Isso的信息。
+JS端配置成功后，可以在网页中看到整个评论的form，在[http://comment.kukumalu.cc/info](http://comment.kukumalu.cc/info)也能查到关于Isso的信息。
 
 #### Nginx 配置
 先提供一些CORS Nginx配置的参考内容
