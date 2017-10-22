@@ -33,6 +33,76 @@
         
         
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="https://negativedearc.github.io/li-yong-sqlite3jin-xing-quan-wen-jian-suo.html">
+		<h2 itemprop="name headline">利用sqlite3进行全文检索</h2>
+	</a>
+	<time datetime="2017-01-25T10:57:00+08:00" itemprop="datePublished">2017/01/25</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">NegativeDearc</span>
+	</span>
+	<div class="summary"><p>在设计后台的时候，需要管理blog当中的静态图片，于是就有了这样的需求：</p>
+<ul>
+<li>根据图片名检索数据库，获取图片的使用情况</li>
+</ul>
+<p>搜索了一番，找到了如下网页 http://www.sqlite.org/fts3.html 。 sqlite也能实现全文检索。官网介绍了fts3，fts4插件，需求的版本应分别高于3.5.0和3.7.4。而fts1，fts2因为年久失修不被推荐使用。据介绍，ft4显著快于ft4，但可能会多占用1~2%的磁盘空间。</p>
+<h4>如何使用？</h4>
+<div class="highlight"><pre><span></span>-- 不指定Column，将自动创建一个Column为content的fts3表，当然还有rowid:
+CREATE VIRTUAL TABLE data USING fts3();
+
+-- 传入一组逗号隔开的列表创建Column:
+CREATE VIRTUAL TABLE pages USING fts4(title, keywords, body);
+
+-- 更加详细的建表方式，但会忽略所有约束 …</pre></div></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="https://negativedearc.github.io/category/bian-cheng.html" rel="category">编程</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="https://negativedearc.github.io/tag/sqlite.html" rel="tag">SQLite</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="https://negativedearc.github.io/li-yong-flask-httpauthwan-cheng-bo-ke-apigou-jian.html">
+		<h2 itemprop="name headline">利用flask-HTTPauth完成博客API构建</h2>
+	</a>
+	<time datetime="2017-01-24T16:13:00+08:00" itemprop="datePublished">2017/01/24</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">NegativeDearc</span>
+	</span>
+	<div class="summary"><p>为了配合页面各种ajax的使用需求，设计自己博客的API需求日益增加。由于我采用flask作为我的web框架，自然想到使用flask-HTTPauth作为扩展，由flask作者亲自开发，质量自然有保证。</p>
+<ul>
+<li>github地址 https://github.com/miguelgrinberg/Flask-HTTPAuth</li>
+<li>中文文档地址 http://www.pythondoc.com/flask-restful/third.html</li>
+<li>英文文档地址 http://flask-httpauth.readthedocs.io/en/latest/</li>
+</ul>
+<p>建议阅读英文文档，之前由于对HTTP协议一无所知，在带token认证这一步卡了很久。后来查到如下：</p>
+<blockquote>
+<p>The <code>verify_token</code> callback receives the authentication credentials provided by the client on the <code>Authorization</code> header. This can be a …</p></blockquote></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="https://negativedearc.github.io/category/bian-cheng.html" rel="category">编程</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="https://negativedearc.github.io/tag/python.html" rel="tag">Python</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="https://negativedearc.github.io/tag/flask.html" rel="tag">Flask</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="https://negativedearc.github.io/tag/flask-httpauth.html" rel="tag">Flask-HTTPauth</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
 	<a href="https://negativedearc.github.io/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html">
 		<h2 itemprop="name headline">利用JinJa宏及SQLite CTE设计类似网易评论的回复系统</h2>
 	</a>
@@ -118,9 +188,9 @@
 					<div class="col-md-3">
 						<h4>Categories</h4>
 						<ul class="list-unstyled my-list-style">
-							<!-- <li><a href="https://negativedearc.github.io/category/编程.html">编程 (5)</a></li> -->
+							<!-- <li><a href="https://negativedearc.github.io/category/编程.html">编程 (7)</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
-							<li><a href="https://negativedearc.github.io/category/bian-cheng.html">编程 (5)</a></li>
+							<li><a href="https://negativedearc.github.io/category/bian-cheng.html">编程 (7)</a></li>
 							<!-- <li><a href="https://negativedearc.github.io/category/工作.html">工作 (10)</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
 							<li><a href="https://negativedearc.github.io/category/gong-zuo.html">工作 (10)</a></li>

@@ -33,6 +33,87 @@
         
         
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="https://negativedearc.github.io/shi-yong-issodai-ti-disqusda-jian-ping-lun-xi-tong.html">
+		<h2 itemprop="name headline">使用isso代替disqus搭建评论系统</h2>
+	</a>
+	<time datetime="2017-10-20T22:16:00+08:00" itemprop="datePublished">2017/10/20</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">NegativeDearc</span>
+	</span>
+	<div class="summary"><h3>前言</h3>
+<p>一直想搭建一个self-hosted的评论系统，心里种草很久。多说的倒闭、Disqus在国内无法访问，加上技术储备并不充分，虽然尝试写了一个非常简单评论功能，见<a href="">文章</a>，和预期相差甚远。</p>
+<p>一方面在互联网搜索各式的开源评论系统设计，</p>
+<ul>
+<li>说吧，基于Node.js和MongoDB&nbsp;<a href="https://github.com/yuyouwen/shuoba">yuyouwen/shuoba</a></li>
+<li>Gitment，基于Github Issue&nbsp;<a href="https://github.com/imsun/gitment">imsun/gitment</a></li>
+<li>Isso，基于python和SQLite，Disqus的替代品&nbsp;<a href="https://github.com/posativ/isso">posativ/isso</a></li>
+</ul>
+<p>一方面也终于抽出时间尝试。这篇文章记录了基于Python的isso的搭建过程和一些“坑”及解决方案。</p>
+<h3>准备工作</h3>
+<p>Isso强烈建议评论系统不应直接暴露在公网环境，同时以作为sub URI作为评论访问地址，能够避免一些强隐私保护浏览器屏蔽评论。但同时会带来跨域资源共享问题(<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS</a>)。</p>
+<h4>二级域名解析</h4>
+<p>以本博客(<code>kukumalu.cc</code>)为例, 申请了<code>comment.kukumalu.cc</code>作为二级域名，在阿里云设置了A解析到服务器。</p>
+<ul>
+<li>解析到自己网站，<a href="https://help.aliyun.com/knowledge_detail/39785.html">说明 …</a></li></ul></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="https://negativedearc.github.io/category/bian-cheng.html" rel="category">编程</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="https://negativedearc.github.io/tag/python.html" rel="tag">Python</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="https://negativedearc.github.io/nginxguan-li-tong-yi-ipxia-duo-yu-ming.html">
+		<h2 itemprop="name headline">Nginx管理同一IP下多域名</h2>
+	</a>
+	<time datetime="2017-10-18T09:00:00+08:00" itemprop="datePublished">2017/10/18</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<span itemprop="name">NegativeDearc</span>
+	</span>
+	<div class="summary"><h3>需求</h3>
+<p>在阿里云申请了两个域名，一个已经给了<a href="http://cxwloves.cc">fullmoon</a>，是flask 的习作，给夫人写写小文章用。另一个计划给自己的静态博客<a href="http://kukumalu.cc">kukumalu.cc</a>使用，主要专注于内容。</p>
+<p>只有一台服务器，原先计划是通过不同的端口访问。搜索许久，Nginx vhost更简便、更适合分开管理。</p>
+<h3>方案</h3>
+<ul>
+<li>在<code>/etc/nginx</code> 新建文件夹vhost</li>
+</ul>
+<div class="highlight"><pre><span></span>mkdir vhost
+</pre></div>
+
+
+<ul>
+<li>链接，将下面两份文件链接或复制到vhost</li>
+</ul>
+<p>&emsp;<strong>静态博客配置</strong></p>
+<div class="highlight"><pre><span></span><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span>         <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">server_name</span>    <span class="s">kukumalu.cc</span> <span class="s">www.kukumalu.cc</span><span class="p">;</span>
+
+    <span class="kn">charset</span>        <span class="s">utf-8</span><span class="p">;</span>
+
+    <span class="kn">root</span>           <span class="s">/home/app/negativedearc.github.io/output</span><span class="p">;</span>
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">index</span>     <span class="s">index.html …</span></pre></div></div>
+	Category:
+	<span itemprop="articleSection">
+		<a href="https://negativedearc.github.io/category/bian-cheng.html" rel="category">编程</a>
+	</span>
+	Tags:
+ 
+	<span itemprop="keywords">
+		<a href="https://negativedearc.github.io/tag/nginx.html" rel="tag">Nginx</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
 	<a href="https://negativedearc.github.io/shi-yong-ggridgehui-zhi-nian-chan-yun-zuo-tu-xing.html">
 		<h2 itemprop="name headline">使用ggridge绘制年产运作图形</h2>
 	</a>
@@ -148,75 +229,6 @@
 	</span>
 </div>
 <hr>
-        
-<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="https://negativedearc.github.io/dang-wo-men-zai-tan-lun-vsmde-shi-hou-wo-men-zai-tan-lun-shi-yao.html">
-		<h2 itemprop="name headline">当我们在谈论VSM的时候我们在谈论什么？</h2>
-	</a>
-	<time datetime="2017-09-21T11:26:00+08:00" itemprop="datePublished">2017/09/21</time>
-	&nbsp;—&nbsp;
-	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-		<span itemprop="name">NegativeDearc</span>
-	</span>
-	<div class="summary"><p>VSM是当下时髦的工具，越来越多的组织正在把VSM当作召开Workshop、交流改善想法的平台。VSM是描述流程的“可视化的文档”，包含“信息流”和“实物流”，始于顾客需求，终于顾客满意。</p>
-<p>大多数的VSM增值比率不会超过 5%，很多流程甚至会低于1%，这些数字令人吃惊但也蕴含了大量的机会，驱动着团队成员为之努力。</p>
-<h3>VSM与SIPOC的关系</h3>
-<p>SIPOC是美国质量管理大师戴明发明的，用来描述完整流程的5大要素，有时候也作COPIS。VSM是更加详细的流程描述工具，包含了具体的数值分析。</p>
-<p>SIPOC更加关注流程转换活动中的KPIV，KPOV，进而确定客户的关键需求。SIPOC并不包含测量内容，在DMAIC框架里，测量将依据SIPOC开展。</p>
-<p>VSM则把重心放在了对流程活动的描述之上，这个时候往往已经确定了关键需求，VSM是SIPOC的展开，SIPOC是VSM的基础。</p>
-<h3>VSM的目标</h3>
-<ul>
-<li>创造高层次的视图(Visual Map)，学习真实的“实物流”，“信息流”</li>
-<li>识别增值的步骤和非增值的浪费，并且量化</li>
-<li>识别约束(constraint)，会用到TAKT、Line Balancing的原理</li>
-<li>创造开展改善项目、或者六西格玛项目的可能</li>
-<li>降低Lead Time和无效的库存 …</li></ul></div>
-	Category:
-	<span itemprop="articleSection">
-		<a href="https://negativedearc.github.io/category/gong-zuo.html" rel="category">工作</a>
-	</span>
-	Tags:
- 
-	<span itemprop="keywords">
-		<a href="https://negativedearc.github.io/tag/lean.html" rel="tag">Lean</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="https://negativedearc.github.io/tag/jing-yi.html" rel="tag">精益</a>
-	</span>
-</div>
-<hr>
-        
-<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="https://negativedearc.github.io/xin-ren-shou-huo-gfrneng-gou-gai-jin-leng-lian-gong-ying-ma.html">
-		<h2 itemprop="name headline">信任收货(GFR)能够改进冷链供应吗？</h2>
-	</a>
-	<time datetime="2017-09-05T10:28:00+08:00" itemprop="datePublished">2017/09/05</time>
-	&nbsp;—&nbsp;
-	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-		<span itemprop="name">NegativeDearc</span>
-	</span>
-	<div class="summary"><p>在冷链(chilled sector)环节，速度是最重要的&mdash;&mdash;产品在分拨中心（DC）只待几个小时就被送往商店。时间的压力意味着一些零售商(retails)并没有足够的时间去把所有东西都清点清楚。然而，尽管有一些好的理由，但是变化无处不在（change is in the air，and on the ground.这里意指空中的订单信息流和落地的实物流）。</p>
-<p>&nbsp;</p>
-<p><strong>举个例子</strong></p>
-<p>假设(let&#39;s say)你收到了一票100箱的货物，如果它有10层高，你可以很快确认是否有短少。但是，当托盘都被堆满，并且混合了多种产品，这时问题就来了。你只能在司机卸货完成后，依赖(reliant on)某个人去接收、清点、记录收货的准确度。</p>
-<p>在冷链环节下，这很有挑战。托盘经常都被堆满了非常类似(similar-looking)的商品，标签难以辨识，在清点之前 …</p></div>
-	Category:
-	<span itemprop="articleSection">
-		<a href="https://negativedearc.github.io/category/gong-zuo.html" rel="category">工作</a>
-	</span>
-	Tags:
- 
-	<span itemprop="keywords">
-		<a href="https://negativedearc.github.io/tag/lean.html" rel="tag">Lean</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="https://negativedearc.github.io/tag/scm.html" rel="tag">SCM</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="https://negativedearc.github.io/tag/jing-yi.html" rel="tag">精益</a>
-	</span>
-</div>
-<hr>
  <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
@@ -254,9 +266,9 @@
 					<div class="col-md-3">
 						<h4>Categories</h4>
 						<ul class="list-unstyled my-list-style">
-							<!-- <li><a href="https://negativedearc.github.io/category/编程.html">编程 (5)</a></li> -->
+							<!-- <li><a href="https://negativedearc.github.io/category/编程.html">编程 (7)</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
-							<li><a href="https://negativedearc.github.io/category/bian-cheng.html">编程 (5)</a></li>
+							<li><a href="https://negativedearc.github.io/category/bian-cheng.html">编程 (7)</a></li>
 							<!-- <li><a href="https://negativedearc.github.io/category/工作.html">工作 (10)</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
 							<li><a href="https://negativedearc.github.io/category/gong-zuo.html">工作 (10)</a></li>

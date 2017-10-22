@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Nginx管理同一IP下多域名 — 陈晓伟的个人博客</title>
+	<meta name="description" content="Title: Nginx管理同一IP下多域名; Date: 2017-10-18; Author: NegativeDearc">
+	<meta name="author" content="NegativeDearc">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://negativedearc.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://negativedearc.github.io/theme/css/ipython.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="https://negativedearc.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/bootswatch.min.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="https://negativedearc.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://negativedearc.github.io/">陈晓伟的个人博客</a>
+			<br>
+<small>Hello, I'm a Continues Improvement Engineer</small>
+		</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Nginx管理同一IP下多域名</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">NegativeDearc</h4>
+		</span>
+		<time datetime="2017-10-18T09:00:00+08:00" itemprop="datePublished">Wed 18 October 2017</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="https://negativedearc.github.io/category/bian-cheng.html" rel="category">编程</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="https://negativedearc.github.io/tag/nginx.html" rel="tag">Nginx</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><h3>需求</h3>
+<p>在阿里云申请了两个域名，一个已经给了<a href="http://cxwloves.cc">fullmoon</a>，是flask 的习作，给夫人写写小文章用。另一个计划给自己的静态博客<a href="http://kukumalu.cc">kukumalu.cc</a>使用，主要专注于内容。</p>
+<p>只有一台服务器，原先计划是通过不同的端口访问。搜索许久，Nginx vhost更简便、更适合分开管理。</p>
+<h3>方案</h3>
+<ul>
+<li>在<code>/etc/nginx</code> 新建文件夹vhost</li>
+</ul>
+<div class="highlight"><pre><span></span>mkdir vhost
+</pre></div>
+
+
+<ul>
+<li>链接，将下面两份文件链接或复制到vhost</li>
+</ul>
+<p>&emsp;<strong>静态博客配置</strong></p>
+<div class="highlight"><pre><span></span><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span>         <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">server_name</span>    <span class="s">kukumalu.cc</span> <span class="s">www.kukumalu.cc</span><span class="p">;</span>
+
+    <span class="kn">charset</span>        <span class="s">utf-8</span><span class="p">;</span>
+
+    <span class="kn">root</span>           <span class="s">/home/app/negativedearc.github.io/output</span><span class="p">;</span>
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">index</span>     <span class="s">index.html</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>&emsp;<strong>动态博客配置</strong></p>
+<div class="highlight"><pre><span></span><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span>       <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">server_name</span>  <span class="s">cxwloves.cc</span> <span class="s">www.cxwloves.cc</span><span class="p">;</span>
+
+    <span class="kn">charset</span>      <span class="s">utf-8</span><span class="p">;</span>
+
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">proxy_pass</span>        <span class="s">http://localhost:5000</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span>  <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span>  <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span>  <span class="s">Host</span> <span class="nv">$host</span><span class="p">;</span>
+        <span class="kn">proxy_pass_header</span> <span class="s">Set-Cookies</span><span class="p">;</span>
+        <span class="kn">proxy_temp_path</span>   <span class="s">/tmp/nginx</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<ul>
+<li>
+<p>修改nginx主conf，在<code>/ect/nginx/nginx.conf</code>的virtual host configs加入一行<code>include /etc/nginx/vhost/*.conf;</code></p>
+</li>
+<li>
+<p>重启nginx 服务生效，在之前可能要关掉原有服务</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span>ps -ef<span class="p">|</span>grep nginx
+<span class="nb">kill</span> -s <span class="m">9</span> xxxxx
+sudo service nginx restart
+</pre></div>
+
+
+<h3>遭遇错误</h3>
+<p>然而重启服务测试网站却遭遇了错唔<code>net::ERR_CONTENT_LENGTH_MISMATCH</code>，查看<code>/var/log/nginx/error.log</code>发现</p>
+<div class="highlight"><pre><span></span>2017/10/18 23:23:51 [crit] 6443#6443: *628 open() &quot;/var/lib/nginx/proxy/6/02/0000000026&quot; failed (13: Permission denied) while reading upstream, client: 49.75.65.34, server: cxwloves.cc, request: &quot;GET /cxw/static/highlight.js/highlight.min.js HTTP/1.1&quot;, upstream: &quot;http://127.0.1.1:5000/cxw/static/highlight.js/highlight.min.js&quot;, host: &quot;cxwloves.cc&quot;, referrer: &quot;http://cxwloves.cc/cxw/blog/article/59f71dde-e2a4-11e6-b834-f4066974556c&quot;
+</pre></div>
+
+
+<p>推测可能是修改了nginx配置后，用户没有权限写入缓存文件夹导致错误。解决方法如下</p>
+<ul>
+<li>新建一个tmp文件夹</li>
+<li>赋予nginx配置文件中的用户权限</li>
+<li>在配置中更新tmp目录</li>
+</ul>
+<div class="highlight"><pre><span></span>root@dearc:/# <span class="nb">cd</span> /tmp/
+root@dearc:/tmp# mkdir nginx
+root@dearc:/tmp# chown www-data nginx/
+root@dearc:/tmp# ll nginx/
+total <span class="m">8</span>
+drwxr-xr-x  <span class="m">2</span> www-data root <span class="m">4096</span> Oct <span class="m">19</span> <span class="m">11</span>:38 ./
+drwxrwxrwt <span class="m">10</span> root     root <span class="m">4096</span> Oct <span class="m">19</span> <span class="m">13</span>:42 ../
+</pre></div>
+
+
+<p>最后不要忘记在服务配置中写入缓存目录</p>
+<div class="highlight"><pre><span></span><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">...</span>
+    <span class="s">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">...</span>
+        <span class="s">proxy_temp_path</span>   <span class="s">/tmp/nginx</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div></div>
+	<hr>
+	<h2>Comments</h2>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Archive</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="archives.html">存档</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+						<li><a href="https://negativedearc.github.io/feeds/all.atom.xml" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+
+							<li><a href="mailto:datingwithme@live.cn">E-Mail</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<!-- <li><a href="https://negativedearc.github.io/category/编程.html">编程 (7)</a></li> -->
+							<!-- fix the bug that chinese name categories can not be parse to url -->
+							<li><a href="https://negativedearc.github.io/category/bian-cheng.html">编程 (7)</a></li>
+							<!-- <li><a href="https://negativedearc.github.io/category/工作.html">工作 (10)</a></li> -->
+							<!-- fix the bug that chinese name categories can not be parse to url -->
+							<li><a href="https://negativedearc.github.io/category/gong-zuo.html">工作 (10)</a></li>
+							<!-- <li><a href="https://negativedearc.github.io/category/数据分析.html">数据分析 (1)</a></li> -->
+							<!-- fix the bug that chinese name categories can not be parse to url -->
+							<li><a href="https://negativedearc.github.io/category/shu-ju-fen-xi.html">数据分析 (1)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://www.cxwloves.cc/">香阁公主</a></li>
+							<li><a href="http://www.kukumalu.cc">酷酷马鹿</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; NegativeDearc 2016-2017</p>
+			<p>Powered by Pelican, Themed by aboutwilson</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56532006-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
