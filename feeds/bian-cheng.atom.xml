@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>陈晓伟的个人博客 - 编程</title><link href="https://negativedearc.github.io/" rel="alternate"></link><link href="https://negativedearc.github.io/feeds/bian-cheng.atom.xml" rel="self"></link><id>https://negativedearc.github.io/</id><updated>2017-10-22T11:31:00+08:00</updated><entry><title>使用isso代替disqus搭建评论系统</title><link href="https://negativedearc.github.io/shi-yong-issodai-ti-disqusda-jian-ping-lun-xi-tong.html" rel="alternate"></link><published>2017-10-20T22:16:00+08:00</published><updated>2017-10-22T11:31:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-10-20:/shi-yong-issodai-ti-disqusda-jian-ping-lun-xi-tong.html</id><summary type="html">&lt;h3&gt;前言&lt;/h3&gt;
-&lt;p&gt;一直想搭建一个self-hosted的评论系统，心里种草很久。多说的倒闭、Disqus在国内无法访问，加上技术储备并不充分，虽然尝试写了一个非常简单评论功能，见&lt;a href=""&gt;文章&lt;/a&gt;，和预期相差甚远。&lt;/p&gt;
+&lt;p&gt;一直想搭建一个self-hosted的评论系统，心里种草很久。多说的倒闭、Disqus在国内无法访问，加上技术储备并不充分，虽然尝试写了一个非常简单评论功能，见&lt;a href="http://www.kukumalu.cc/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html"&gt;文章&lt;/a&gt;，和预期相差甚远。&lt;/p&gt;
 &lt;p&gt;一方面在互联网搜索各式的开源评论系统设计，&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;说吧，基于Node.js和MongoDB&amp;nbsp;&lt;a href="https://github.com/yuyouwen/shuoba"&gt;yuyouwen/shuoba&lt;/a&gt;&lt;/li&gt;
@@ -9,12 +9,12 @@
 &lt;/ul&gt;
 &lt;p&gt;一方面也终于抽出时间尝试。这篇文章记录了基于Python的isso的搭建过程和一些“坑”及解决方案。&lt;/p&gt;
 &lt;h3&gt;准备工作&lt;/h3&gt;
-&lt;p&gt;Isso强烈建议评论系统不应直接暴露在公网环境，同时以作为sub URI作为评论访问地址，能够避免一些强隐私保护浏览器屏蔽评论。但同时会带来跨域资源共享问题(&lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"&gt;CORS&lt;/a&gt;)。&lt;/p&gt;
+&lt;p&gt;Isso强烈建议评论系统不应直接暴露在公网环境，同时以作为sub URI作为评论访问地址，能够避免一些强隐私保护浏览器屏蔽评论。但会带来跨域资源共享问题(&lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"&gt;CORS&lt;/a&gt;)。&lt;/p&gt;
 &lt;h4&gt;二级域名解析&lt;/h4&gt;
-&lt;p&gt;以本博客(&lt;code&gt;kukumalu.cc&lt;/code&gt;)为例, 申请了&lt;code&gt;comment.kukumalu.cc&lt;/code&gt;作为二级域名，在阿里云设置了A解析到服务器。&lt;/p&gt;
+&lt;p&gt;以本博客&lt;a href="http://www.kukumalu.cc"&gt;kukumalu.cc&lt;/a&gt;为例, 申请了&lt;a href="comment.kukumalu.cc"&gt;comment.kukumalu.cc&lt;/a&gt;作为二级域名，在阿里云设置了A纪录解析到服务器。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;解析到自己网站，&lt;a href="https://help.aliyun.com/knowledge_detail/39785.html"&gt;说明 …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;h3&gt;前言&lt;/h3&gt;
-&lt;p&gt;一直想搭建一个self-hosted的评论系统，心里种草很久。多说的倒闭、Disqus在国内无法访问，加上技术储备并不充分，虽然尝试写了一个非常简单评论功能，见&lt;a href=""&gt;文章&lt;/a&gt;，和预期相差甚远。&lt;/p&gt;
+&lt;p&gt;一直想搭建一个self-hosted的评论系统，心里种草很久。多说的倒闭、Disqus在国内无法访问，加上技术储备并不充分，虽然尝试写了一个非常简单评论功能，见&lt;a href="http://www.kukumalu.cc/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html"&gt;文章&lt;/a&gt;，和预期相差甚远。&lt;/p&gt;
 &lt;p&gt;一方面在互联网搜索各式的开源评论系统设计，&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;说吧，基于Node.js和MongoDB&amp;nbsp;&lt;a href="https://github.com/yuyouwen/shuoba"&gt;yuyouwen/shuoba&lt;/a&gt;&lt;/li&gt;
@@ -23,12 +23,12 @@
 &lt;/ul&gt;
 &lt;p&gt;一方面也终于抽出时间尝试。这篇文章记录了基于Python的isso的搭建过程和一些“坑”及解决方案。&lt;/p&gt;
 &lt;h3&gt;准备工作&lt;/h3&gt;
-&lt;p&gt;Isso强烈建议评论系统不应直接暴露在公网环境，同时以作为sub URI作为评论访问地址，能够避免一些强隐私保护浏览器屏蔽评论。但同时会带来跨域资源共享问题(&lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"&gt;CORS&lt;/a&gt;)。&lt;/p&gt;
+&lt;p&gt;Isso强烈建议评论系统不应直接暴露在公网环境，同时以作为sub URI作为评论访问地址，能够避免一些强隐私保护浏览器屏蔽评论。但会带来跨域资源共享问题(&lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"&gt;CORS&lt;/a&gt;)。&lt;/p&gt;
 &lt;h4&gt;二级域名解析&lt;/h4&gt;
-&lt;p&gt;以本博客(&lt;code&gt;kukumalu.cc&lt;/code&gt;)为例, 申请了&lt;code&gt;comment.kukumalu.cc&lt;/code&gt;作为二级域名，在阿里云设置了A解析到服务器。&lt;/p&gt;
+&lt;p&gt;以本博客&lt;a href="http://www.kukumalu.cc"&gt;kukumalu.cc&lt;/a&gt;为例, 申请了&lt;a href="comment.kukumalu.cc"&gt;comment.kukumalu.cc&lt;/a&gt;作为二级域名，在阿里云设置了A纪录解析到服务器。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;解析到自己网站，&lt;a href="https://help.aliyun.com/knowledge_detail/39785.html"&gt;说明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;解析到其他网站&lt;/li&gt;
+&lt;li&gt;解析到其他网站，&lt;a href=""&gt;??&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4&gt;配置准备&lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;isso.cfg&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
@@ -220,8 +220,8 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;要点：Isso 通常会自动检测 REST API, 但如果 JS 文件(Isso的JS实例)并不在默认位置则需要修改 &lt;code&gt;data-isso&lt;/code&gt;属性来覆写，值得注意的是&lt;code&gt;src&lt;/code&gt;中URI写法并未包含http头。&lt;/p&gt;
-&lt;p&gt;JS端配置成功后，可以在网页中看到整个评论的form，在&lt;code&gt;http://comment.kukumalu.cc/info&lt;/code&gt; 也能查到关于Isso的信息。&lt;/p&gt;
+&lt;p&gt;Isso 通常会自动检测 REST API, 但如果 JS 文件(Isso的JS实例)并不在默认位置则需要修改 &lt;code&gt;data-isso&lt;/code&gt;属性来覆写，值得注意的是&lt;code&gt;src&lt;/code&gt;中URI写法并未包含http头。&lt;/p&gt;
+&lt;p&gt;JS端配置成功后，可以在网页中看到整个评论的form，在&lt;a href="http://comment.kukumalu.cc/info"&gt;http://comment.kukumalu.cc/info&lt;/a&gt;也能查到关于Isso的信息。&lt;/p&gt;
 &lt;h4&gt;Nginx 配置&lt;/h4&gt;
 &lt;p&gt;先提供一些CORS Nginx配置的参考内容&lt;/p&gt;
 &lt;ul&gt;
@@ -332,7 +332,7 @@ isso -c isso.cfg run
 &lt;p&gt;至此，isso可以完美的运行起来。&lt;/p&gt;
 &lt;h3&gt;其他&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;评论后台管理，目前pip版本暂无此功能提供，只能手动操作评论数据库，但全能的网友PR了作者(https://github.com/posativ/isso/pull/256)，由于作者非常忙，还没有Merge。&lt;/li&gt;
+&lt;li&gt;评论后台管理，目前pip版本暂无此功能提供，只能手动操作评论数据库，但全能的网友PR了作者&lt;a href="https://github.com/posativ/isso/pull/256"&gt;https://github.com/posativ/isso/pull/256&lt;/a&gt;，由于作者非常忙，还没有Merge。&lt;/li&gt;
 &lt;li&gt;感谢&lt;a href="https://www.pupboss.com/build-a-comment-system-using-isso/"&gt;https://www.pupboss.com/build-a-comment-system-using-isso/&lt;/a&gt;，可能是互联网找得到唯一一篇部署isso的博客。 &lt;/li&gt;
 &lt;li&gt;github issue非常有用，项目的知识库对整个project的leverage具有非常大的推进、参考、风险避免的作用。&lt;/li&gt;
 &lt;/ul&gt;</content><category term="Python"></category></entry><entry><title>Nginx管理同一IP下多域名</title><link href="https://negativedearc.github.io/nginxguan-li-tong-yi-ipxia-duo-yu-ming.html" rel="alternate"></link><published>2017-10-18T09:00:00+08:00</published><updated>2017-10-19T11:00:00+08:00</updated><author><name>NegativeDearc</name></author><id>tag:negativedearc.github.io,2017-10-18:/nginxguan-li-tong-yi-ipxia-duo-yu-ming.html</id><summary type="html">&lt;h3&gt;需求&lt;/h3&gt;
