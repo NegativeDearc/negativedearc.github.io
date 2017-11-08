@@ -347,6 +347,6 @@ isso -c isso.cfg run
 至此，isso可以完美的运行起来。
 
 ### 其他
-- 评论后台管理，目前pip版本暂无此功能提供，只能手动操作评论数据库，但全能的网友PR了作者(https://github.com/posativ/isso/pull/256)，由于作者非常忙，还没有Merge。
+- 评论后台管理，目前pip版本暂无此功能提供，只能手动操作评论数据库，但全能的网友PR了作者[https://github.com/posativ/isso/pull/256](https://github.com/posativ/isso/pull/256)，由于作者非常忙，还没有Merge。
 - 感谢[https://www.pupboss.com/build-a-comment-system-using-isso/](https://www.pupboss.com/build-a-comment-system-using-isso/)，可能是互联网找得到唯一一篇部署isso的博客。 
 - github issue非常有用，项目的知识库对整个project的leverage具有非常大的推进、参考、风险避免的作用。

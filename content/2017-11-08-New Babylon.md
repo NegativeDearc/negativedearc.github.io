@@ -5,6 +5,8 @@ Date: 2017-11-08 17:10:00
 Status: draft
 Modified: 2017-11-08 17:17:00
 
+<p align="center"><img src="{filename}/images/2017-11-08-new-babylon-1.jpg" alt="图-1" style="zoom: 100%"></p>
+
 <h4 align='center'>Take the artisan and soldier</h4>
 <h4 align='center'>Name a everything-can-be-changed ship</h4>
 <h4 align='center'>Across the river and tower</h4>
