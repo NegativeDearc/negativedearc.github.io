@@ -52,7 +52,7 @@
 		</span>
 	</div>
 	<div itemprop="articleBody" class="article-body"><h3>前言</h3>
-<p>一直想搭建一个self-hosted的评论系统，心里种草很久。多说的倒闭、Disqus在国内无法访问，加上技术储备并不充分，虽然尝试写了一个非常简单评论功能，见<a href="">文章</a>，和预期相差甚远。</p>
+<p>一直想搭建一个self-hosted的评论系统，心里种草很久。多说的倒闭、Disqus在国内无法访问，加上技术储备并不充分，虽然尝试写了一个非常简单评论功能，见<a href="http://www.kukumalu.cc/li-yong-jinjahong-ji-sqlite-cteshe-ji-lei-si-wang-yi-ping-lun-de-hui-fu-xi-tong.html">文章</a>，和预期相差甚远。</p>
 <p>一方面在互联网搜索各式的开源评论系统设计，</p>
 <ul>
 <li>说吧，基于Node.js和MongoDB&nbsp;<a href="https://github.com/yuyouwen/shuoba">yuyouwen/shuoba</a></li>
@@ -61,12 +61,12 @@
 </ul>
 <p>一方面也终于抽出时间尝试。这篇文章记录了基于Python的isso的搭建过程和一些“坑”及解决方案。</p>
 <h3>准备工作</h3>
-<p>Isso强烈建议评论系统不应直接暴露在公网环境，同时以作为sub URI作为评论访问地址，能够避免一些强隐私保护浏览器屏蔽评论。但同时会带来跨域资源共享问题(<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS</a>)。</p>
+<p>Isso强烈建议评论系统不应直接暴露在公网环境，同时以作为sub URI作为评论访问地址，能够避免一些强隐私保护浏览器屏蔽评论。但会带来跨域资源共享问题(<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS</a>)。</p>
 <h4>二级域名解析</h4>
-<p>以本博客(<code>kukumalu.cc</code>)为例, 申请了<code>comment.kukumalu.cc</code>作为二级域名，在阿里云设置了A解析到服务器。</p>
+<p>以本博客<a href="http://www.kukumalu.cc">kukumalu.cc</a>为例, 申请了<a href="comment.kukumalu.cc">comment.kukumalu.cc</a>作为二级域名，在阿里云设置了A纪录解析到服务器。</p>
 <ul>
 <li>解析到自己网站，<a href="https://help.aliyun.com/knowledge_detail/39785.html">说明</a></li>
-<li>解析到其他网站</li>
+<li>解析到其他网站，<a href="">??</a></li>
 </ul>
 <h4>配置准备</h4>
 <p><strong><em>isso.cfg</em></strong></p>
@@ -258,8 +258,8 @@
 </pre></div>
 
 
-<p>要点：Isso 通常会自动检测 REST API, 但如果 JS 文件(Isso的JS实例)并不在默认位置则需要修改 <code>data-isso</code>属性来覆写，值得注意的是<code>src</code>中URI写法并未包含http头。</p>
-<p>JS端配置成功后，可以在网页中看到整个评论的form，在<code>http://comment.kukumalu.cc/info</code> 也能查到关于Isso的信息。</p>
+<p>Isso 通常会自动检测 REST API, 但如果 JS 文件(Isso的JS实例)并不在默认位置则需要修改 <code>data-isso</code>属性来覆写，值得注意的是<code>src</code>中URI写法并未包含http头。</p>
+<p>JS端配置成功后，可以在网页中看到整个评论的form，在<a href="http://comment.kukumalu.cc/info">http://comment.kukumalu.cc/info</a>也能查到关于Isso的信息。</p>
 <h4>Nginx 配置</h4>
 <p>先提供一些CORS Nginx配置的参考内容</p>
 <ul>
@@ -370,7 +370,7 @@ isso -c isso.cfg run
 <p>至此，isso可以完美的运行起来。</p>
 <h3>其他</h3>
 <ul>
-<li>评论后台管理，目前pip版本暂无此功能提供，只能手动操作评论数据库，但全能的网友PR了作者(https://github.com/posativ/isso/pull/256)，由于作者非常忙，还没有Merge。</li>
+<li>评论后台管理，目前pip版本暂无此功能提供，只能手动操作评论数据库，但全能的网友PR了作者<a href="https://github.com/posativ/isso/pull/256">https://github.com/posativ/isso/pull/256</a>，由于作者非常忙，还没有Merge。</li>
 <li>感谢<a href="https://www.pupboss.com/build-a-comment-system-using-isso/">https://www.pupboss.com/build-a-comment-system-using-isso/</a>，可能是互联网找得到唯一一篇部署isso的博客。 </li>
 <li>github issue非常有用，项目的知识库对整个project的leverage具有非常大的推进、参考、风险避免的作用。</li>
 </ul></div>
@@ -388,7 +388,7 @@ isso -c isso.cfg run
 					<div class="col-md-3">
 						<h4>Archive</h4>
 						<ul class="list-unstyled my-list-style">
-							<li><a href="archives.html">存档</a></li>
+							<li><a href="https://negativedearc.github.io/archives.html">存档</a></li>
 						</ul>
 					</div>
 					<div class="col-md-3">
@@ -408,6 +408,9 @@ isso -c isso.cfg run
 							<!-- <li><a href="https://negativedearc.github.io/category/工作.html">工作 (10)</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
 							<li><a href="https://negativedearc.github.io/category/gong-zuo.html">工作 (10)</a></li>
+							<!-- <li><a href="https://negativedearc.github.io/category/情感.html">情感 (1)</a></li> -->
+							<!-- fix the bug that chinese name categories can not be parse to url -->
+							<li><a href="https://negativedearc.github.io/category/qing-gan.html">情感 (1)</a></li>
 							<!-- <li><a href="https://negativedearc.github.io/category/数据分析.html">数据分析 (1)</a></li> -->
 							<!-- fix the bug that chinese name categories can not be parse to url -->
 							<li><a href="https://negativedearc.github.io/category/shu-ju-fen-xi.html">数据分析 (1)</a></li>
@@ -429,7 +432,8 @@ isso -c isso.cfg run
 	<div class="row">
 		<div class="col-md-12 text-center center-block aw-bottom">
 			<p>&copy; NegativeDearc 2016-2017</p>
-			<p>Powered by Pelican, Themed by aboutwilson</p>
+			<p>Powered by <a href="https://github.com/getpelican/pelican">Pelican</a>, Themed by <a href="https://github.com/getpelican/pelican-themes/tree/master/aboutwilson">aboutwilson</a></p>
+			<p><a href="http://www.miitbeian.gov.cn/">苏ICP备:17001932-2</a></p>
 		</div>
 	</div>
 </div>
