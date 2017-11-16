@@ -23,3 +23,12 @@ DELETE_OUTPUT_DIRECTORY = True
 #DISQUS_SITENAME = ""
 GOOGLE_ANALYTICS = "UA-56532006-2"
 #BAIDU_ANALYTICS = ""
+
+MARKDOWN = {
+    'extension_configs': {
+        'markdown.extensions.codehilite': {'css_class': 'highlight'},
+        'markdown.extensions.extra': {},
+        'markdown.extensions.meta': {},
+    },
+    'output_format': 'html5',
+}

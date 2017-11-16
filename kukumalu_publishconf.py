@@ -24,3 +24,12 @@ DELETE_OUTPUT_DIRECTORY = True
 GOOGLE_ANALYTICS = "UA-56532006-2"
 #BAIDU_ANALYTICS = ""
 ISSO_RUNNING = True
+
+MARKDOWN = {
+    'extension_configs': {
+        'markdown.extensions.codehilite': {'css_class': 'highlight'},
+        'markdown.extensions.extra': {},
+        'markdown.extensions.meta': {},
+    },
+    'output_format': 'html5',
+}
