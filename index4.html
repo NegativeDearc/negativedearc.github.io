@@ -159,11 +159,11 @@ CREATE VIRTUAL TABLE pages USING fts4(title, keywords, body);
 </ul>
 <p>从降低耦合的角度出发，第二种方案更好，在第一种方案中假如需要删除评论，也许就会其他评论造成断档的问题。由于水平有限，我还是采取了第一种方案，理由是建表简单。</p>
 <p>但是考虑到上述问题，我也设计了一个评论必须经过审核的逻辑，没有经过审核的评论是无法展示的，也就避免了展示后被删除的可能。</p>
-<div class="highlight"><pre><span></span>CREATE TABLE &quot;Comment&quot; (
-    id INTEGER NOT NULL, 
-    uid VARCHAR(50) NOT NULL, 
-    rdr_name VARCHAR(20) NOT NULL, 
-    rdr_mail VARCHAR(20) NOT NULL …</pre></div></div>
+<div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">&quot;Comment&quot;</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">INTEGER</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span> 
+    <span class="n">uid</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span> 
+    <span class="n">rdr_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span> 
+    <span class="n">rdr_mail</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL …</span></pre></div></div>
 	Category:
 	<span itemprop="articleSection">
 		<a href="https://negativedearc.github.io/category/bian-cheng.html" rel="category">编程</a>
@@ -250,9 +250,9 @@ CREATE VIRTUAL TABLE pages USING fts4(title, keywords, body);
 <div class="container">
 	<div class="row">
 		<div class="col-md-12 text-center center-block aw-bottom">
-			<p>&copy; NegativeDearc 2016-2017</p>
+			<p>&copy; NegativeDearc 2016-2020</p>
 			<p>Powered by <a href="https://github.com/getpelican/pelican">Pelican</a>, Themed by <a href="https://github.com/getpelican/pelican-themes/tree/master/aboutwilson">aboutwilson</a></p>
-			<p><a href="http://www.miitbeian.gov.cn/">苏ICP备:17001932-2</a></p>
+			<p><a href="http://beian.miit.gov.cn">苏ICP备:17001932-2</a></p>
 		</div>
 	</div>
 </div>
