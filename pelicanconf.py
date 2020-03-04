@@ -4,9 +4,9 @@ from __future__ import unicode_literals
 import os
 
 AUTHOR = u'NegativeDearc'
-SITENAME = u'\u9648\u6653\u4f1f\u7684\u4e2a\u4eba\u535a\u5ba2'
+SITENAME = u'Home of Kukumalu'
 SITEURL = ''
-SITESUBTITLE = "Hello, I'm a Continues Improvement Engineer"
+SITESUBTITLE = "seeking for inner peace"
 
 PATH = 'content'
 
