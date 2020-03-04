@@ -22,7 +22,7 @@ Markdown==2.6.9
 MarkupSafe==1.0
 misaka==1.0.2
 paramiko==2.3.0
-pelican==3.7.1
+pelican==4.2.0
 pyasn1==0.3.6
 pycparser==2.18
 Pygments==2.2.0
