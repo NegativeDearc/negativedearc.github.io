@@ -11,7 +11,7 @@ feedgenerator==1.9
 gevent==1.2.2
 ghp-import==0.5.5
 greenlet==0.4.12
-html5lib==0.9999999
+html5lib==0.99999999
 idna==2.6
 ipaddr==2.2.0
 ipaddress==1.0.18
